@@ -9,6 +9,7 @@ public class SmartphoneON {
         Frame frame = new Frame();
         frame.setSize(323,645);
         //200 sur le pc fixe
+        //je fais des tests github
         frame.setLocation(800,100);
         frame.setVisible(true);
     }
