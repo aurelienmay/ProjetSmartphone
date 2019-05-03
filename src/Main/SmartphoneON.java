@@ -12,5 +12,6 @@ public class SmartphoneON {
         //je fais des tests github
         frame.setLocation(800,100);
         frame.setVisible(true);
+        System.out.println("bonjour du con");
     }
 }
