@@ -5,10 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Calculatrice extends JFrame {
+public class Calculatrice extends JPanel {
 
-    Font policeEcranCalcul = new Font("Rockwell", Font.BOLD, 30);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 10);
+    Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
+    Font policeCaracter = new Font("Arial", Font.BOLD, 18);
 
     Float nombre, resultat ;
     String operateur, plus ="+", moins="-", fois="*", divise="/";
@@ -20,41 +20,71 @@ public class Calculatrice extends JFrame {
             "0", ".", "="};
 
     //Dimension des boutons de la calculette, attention le bouton 0 (2x plus grand)
-    Dimension buttonsSize = new Dimension(55, 40);
-    Dimension button0Size = new Dimension(115, 40);
+    Dimension buttonsSize = new Dimension(60, 60);
+    Dimension button0Size = new Dimension(125, 60);
+    Dimension westEastEmptyPannelDim = new Dimension(10,200);
 
     JButton[] tabBtn = new JButton[calculetteCaracter.length];
 
     JPanel chiffreBtn = new JPanel();
+    JPanel panelEast = new JPanel();
+    JPanel panelWest = new JPanel();
+    JPanel panelEast2 = new JPanel();
+    JPanel panelWest2 = new JPanel();
+    JPanel panelNorth = new JPanel();
 
     JLabel ecranChiffre = new JLabel("0");
 
     JLabel test = new JLabel("testeu");
 
     public Calculatrice() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(250, 275);
-        setTitle("Calculette");
+        //taille du panel principal
+        setPreferredSize(new Dimension(300, 550));
+        setLayout(new BorderLayout());
+        //setBackground(Color.orange);
+
+        boolean onoff = true ;
+        panelWest.setOpaque(onoff);
+        panelWest.setPreferredSize(westEastEmptyPannelDim);
+        panelWest.setBackground(Color.BLACK);
+
+        panelEast.setOpaque(onoff);
+        panelEast.setPreferredSize(westEastEmptyPannelDim);
+        panelEast.setBackground(Color.BLACK);
+
+        panelWest2.setOpaque(onoff);
+        panelWest2.setPreferredSize(new Dimension(20,200));
+        panelWest2.setBackground(Color.BLACK);
+
+        panelEast2.setOpaque(onoff);
+        panelEast2.setPreferredSize(new Dimension(20,200));
+        panelEast2.setBackground(Color.BLACK);
 
         //Paramètre de l'écran de la calculette
         ecranChiffre.setFont(policeEcranCalcul);
         ecranChiffre.setHorizontalAlignment(JLabel.RIGHT);
-        ecranChiffre.setPreferredSize(new Dimension(220, 50));
+        //ecranChiffre.setPreferredSize(new Dimension(300, 150));
         //ecranChiffre.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         ecranChiffre.setBackground(Color.black);
         ecranChiffre.setForeground(Color.white);
         ecranChiffre.setOpaque(true);
-        //ecranChiffre.setBorder(Border border);
+
+        panelNorth.setLayout(new BorderLayout());
+        panelNorth.add(ecranChiffre, BorderLayout.CENTER);
+        panelNorth.add(panelWest2, BorderLayout.WEST);
+        panelNorth.add(panelEast2, BorderLayout.EAST);
 
         //Paramètre du tableau des boutons de la calculette
-        chiffreBtn.setPreferredSize(new Dimension(250, 230));
+        //chiffreBtn.setPreferredSize(new Dimension(200, 480));
         chiffreBtn.setBackground(Color.black);
 
         buttonInitializer();
-        add(ecranChiffre, BorderLayout.NORTH);
-        add(chiffreBtn, BorderLayout.SOUTH);
+        add(panelEast, BorderLayout.EAST);
+        add(panelWest, BorderLayout.WEST);
+        add(panelNorth, BorderLayout.NORTH);
+        //add(ecranChiffre, BorderLayout.NORTH);
+        add(chiffreBtn, BorderLayout.CENTER);
 
-        pack();
     }
 
     public void buttonInitializer(){
@@ -92,36 +122,36 @@ public class Calculatrice extends JFrame {
 
                 //Paramètre du bouton /
                 case 3:
-                    tabBtn[i].setBackground(Color.orange);
-                    tabBtn[i].setForeground(Color.white);
+                    tabBtn[i].setBackground(Color.green);
+                    tabBtn[i].setForeground(Color.black);
 
                     break;
 
                 //Paramètre du bouton *
                 case 7:
-                    tabBtn[i].setBackground(Color.orange);
-                    tabBtn[i].setForeground(Color.white);
+                    tabBtn[i].setBackground(Color.green);
+                    tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new FoisListener());
                     break;
 
                 //Paramètre du bouton -
                 case 11:
-                    tabBtn[i].setBackground(Color.orange);
-                    tabBtn[i].setForeground(Color.white);
+                    tabBtn[i].setBackground(Color.green);
+                    tabBtn[i].setForeground(Color.black);
 
                     break;
 
                 //Paramètre du bouton +
                 case 15:
-                    tabBtn[i].setBackground(Color.orange);
-                    tabBtn[i].setForeground(Color.white);
+                    tabBtn[i].setBackground(Color.green);
+                    tabBtn[i].setForeground(Color.black);
 
                     break;
 
                 //Paramètre du bouton =
                 case 18:
-                    tabBtn[i].setBackground(Color.orange);
-                    tabBtn[i].setForeground(Color.white);
+                    tabBtn[i].setBackground(Color.green);
+                    tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new EgalListener());
                     break;
 

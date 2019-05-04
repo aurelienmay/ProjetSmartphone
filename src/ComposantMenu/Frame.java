@@ -13,6 +13,8 @@ import java.io.IOException;
         JPanel panelNorth = new JPanel();
         JPanel panelWest = new JPanel();
         JPanel panelEast = new JPanel();
+
+        Calculatrice calculatrice = new Calculatrice();
         JPanel panelCenter = new JPanel();
 
         public Frame(){
@@ -20,7 +22,9 @@ import java.io.IOException;
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));
 
-            putImage();
+            //ajoute le background, contour du smartphone
+            backgroundImage();
+
             boolean onoff = false ;
 
             panelCenter.setOpaque(onoff);
@@ -37,17 +41,18 @@ import java.io.IOException;
             panelSouth.setOpaque(onoff);
             panelSouth.setPreferredSize(new Dimension(323, 66));
 
-            JLabel test = new JLabel("test du cul");
 
+            panelCenter.add(calculatrice);
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);
             add(panelSouth, BorderLayout.SOUTH);
+            add(panelCenter, BorderLayout.CENTER);
 
             pack();
         }
 
-        public void putImage(){
+        public void backgroundImage(){
             try {
                 Image backgroundImage = javax.imageio.ImageIO.read(new File("Images\\Smartphone.png"));
                 setContentPane(new JPanel(new BorderLayout()) {
