@@ -10,7 +10,7 @@ public class SmartphoneON {
         frame.setSize(323,645);
         //200 sur le pc fixe
         //je fais des tests github
-        frame.setLocation(800,100);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         System.out.println("bonjour du con");
     }

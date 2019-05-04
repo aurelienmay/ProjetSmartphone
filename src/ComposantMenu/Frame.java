@@ -1,5 +1,7 @@
 package ComposantMenu;
 
+import ComposantCalculatrice.Calculatrice;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -16,18 +18,18 @@ import java.io.IOException;
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setUndecorated(true);
+            setBackground(new Color(0,0,0,0));
 
             putImage();
             boolean onoff = false ;
 
             panelCenter.setOpaque(onoff);
-            //panelCenter.setPreferredSize();
 
             panelNorth.setOpaque(onoff);
-            panelNorth.setPreferredSize(new Dimension(323, 66));
+            panelNorth.setPreferredSize(new Dimension(323, 67));
 
             panelWest.setOpaque(onoff);
-            panelWest.setPreferredSize(new Dimension(14,100));
+            panelWest.setPreferredSize(new Dimension(15,100));
 
             panelEast.setOpaque(onoff);
             panelEast.setPreferredSize(new Dimension(14, 100));
@@ -41,7 +43,6 @@ import java.io.IOException;
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);
             add(panelSouth, BorderLayout.SOUTH);
-            add(test, BorderLayout.CENTER);
 
             pack();
         }
