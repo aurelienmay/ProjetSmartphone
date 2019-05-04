@@ -30,16 +30,16 @@ import java.io.IOException;
             panelCenter.setOpaque(onoff);
 
             panelNorth.setOpaque(onoff);
-            panelNorth.setPreferredSize(new Dimension(323, 67));
+            panelNorth.setPreferredSize(new Dimension(323, 60));
 
             panelWest.setOpaque(onoff);
-            panelWest.setPreferredSize(new Dimension(15,100));
+            panelWest.setPreferredSize(new Dimension(13,100));
 
             panelEast.setOpaque(onoff);
-            panelEast.setPreferredSize(new Dimension(14, 100));
+            panelEast.setPreferredSize(new Dimension(13, 100));
 
             panelSouth.setOpaque(onoff);
-            panelSouth.setPreferredSize(new Dimension(323, 66));
+            panelSouth.setPreferredSize(new Dimension(323, 57));
 
 
             panelCenter.add(calculatrice);

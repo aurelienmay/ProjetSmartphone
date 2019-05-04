@@ -191,7 +191,7 @@ public class Calculatrice extends JPanel {
             String temp = ecranChiffre.getText();
             nombre = Float.parseFloat(temp);
             operateur = fois ; //= "*"
-            ecranChiffre.setText("0");
+            //ecranChiffre.setText("0");
         }
     }
 
