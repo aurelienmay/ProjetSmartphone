@@ -7,11 +7,15 @@ import java.awt.event.ActionListener;
 
 public class Calculatrice extends JPanel {
 
+    String temp ;
+
     Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
     Font policeCaracter = new Font("Arial", Font.BOLD, 18);
 
     Float nombre, resultat ;
     String operateur, plus ="+", moins="-", fois="*", divise="/";
+    Boolean operateurOnOff = false;
+    Boolean on = true, off = false;
 
     String[] calculetteCaracter = { "AC", "+/-", "%", "/",
             "7", "8", "9", "*",
@@ -87,8 +91,8 @@ public class Calculatrice extends JPanel {
 
     }
 
-    public void buttonInitializer(){
-        for(int i=0; i<calculetteCaracter.length; i++){
+    public void buttonInitializer() {
+        for (int i = 0; i < calculetteCaracter.length; i++) {
             //Ajout des caractères dans le tableau à "boutons"
             tabBtn[i] = new JButton(calculetteCaracter[i]);
             //Ajout du tableau dans le panel
@@ -98,7 +102,7 @@ public class Calculatrice extends JPanel {
             tabBtn[i].setFont(policeCaracter);
             tabBtn[i].setBackground(Color.gray);
             tabBtn[i].setForeground(Color.white);
-            switch(i){
+            switch (i) {
                 //Paramètre du bouton AC
                 case 0:
                     tabBtn[i].setBackground(Color.lightGray);
@@ -117,6 +121,7 @@ public class Calculatrice extends JPanel {
                 case 2:
                     tabBtn[i].setBackground(Color.lightGray);
                     tabBtn[i].setForeground(Color.black);
+                    tabBtn[i].addActionListener(new PourcentListener());
 
                     break;
 
@@ -124,6 +129,7 @@ public class Calculatrice extends JPanel {
                 case 3:
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
+                    tabBtn[i].addActionListener(new DiviseListener());
 
                     break;
 
@@ -138,6 +144,7 @@ public class Calculatrice extends JPanel {
                 case 11:
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
+                    tabBtn[i].addActionListener(new MoinsListener());
 
                     break;
 
@@ -145,6 +152,7 @@ public class Calculatrice extends JPanel {
                 case 15:
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
+                    tabBtn[i].addActionListener(new PlusListener());
 
                     break;
 
@@ -169,29 +177,49 @@ public class Calculatrice extends JPanel {
             }
             tabBtn[i].setOpaque(true);
         }
-
     }
+
+        public void calculAuto() {
+            if(operateur.equals("/")){
+                nombre = nombre/Float.parseFloat(ecranChiffre.getText());
+                ecranChiffre.setText(String.valueOf(nombre));
+            }
+        }
+
+
 
     class EgalListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            String temp = ecranChiffre.getText();
-            float t = Float.parseFloat(temp);
-            if(operateur == "*"){
-                resultat = nombre*t ;
-                temp = String.valueOf(resultat);
-                ecranChiffre.setText(temp);
-            }
 
+        }
+    }
+
+    class DiviseListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(operateurOnOff){
+                calculAuto();
+            }
+            nombre = Float.parseFloat(ecranChiffre.getText());
+            operateur = divise ;
+            operateurOnOff = on ;
+        }
+    }
+
+    class PlusListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+
+        }
+    }
+
+    class MoinsListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
 
         }
     }
 
     class FoisListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            String temp = ecranChiffre.getText();
-            nombre = Float.parseFloat(temp);
-            operateur = fois ; //= "*"
-            //ecranChiffre.setText("0");
+
         }
     }
 
@@ -205,12 +233,16 @@ public class Calculatrice extends JPanel {
                 nombre = ecranChiffre.getText() + nombre;
 
             //Ajout du chiffre sur l'écran de la calculette
-            ecranChiffre.setText(nombre);
+            if(!operateurOnOff){
+                ecranChiffre.setText(nombre);
+            }else{
+
+            }
+
         }
     }
 
     class PlusMoinsListener implements ActionListener{
-        private String temp ;
         private float chiffre ;
         public void actionPerformed(ActionEvent e){
             temp = ecranChiffre.getText() ;
@@ -222,8 +254,20 @@ public class Calculatrice extends JPanel {
         }
     }
 
+    class PourcentListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            temp = ecranChiffre.getText();
+            nombre = Float.parseFloat(temp);
+            nombre /= 100 ;
+
+            ecranChiffre.setText(String.valueOf(nombre));
+        }
+    }
+
     class ACListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            operateurOnOff = off ;
+            operateur = "" ;
             ecranChiffre.setText("0");
         }
     }
