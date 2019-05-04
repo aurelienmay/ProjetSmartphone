@@ -53,11 +53,11 @@ public class Calculatrice extends JPanel {
         panelEast.setBackground(Color.BLACK);
 
         panelWest2.setOpaque(onoff);
-        panelWest2.setPreferredSize(new Dimension(20,200));
+        panelWest2.setPreferredSize(new Dimension(20,150));
         panelWest2.setBackground(Color.BLACK);
 
         panelEast2.setOpaque(onoff);
-        panelEast2.setPreferredSize(new Dimension(20,200));
+        panelEast2.setPreferredSize(new Dimension(20,150));
         panelEast2.setBackground(Color.BLACK);
 
         //Paramètre de l'écran de la calculette
