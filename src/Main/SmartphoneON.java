@@ -10,5 +10,6 @@ public class SmartphoneON {
         frame.setSize(323,645);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        System.out.println("Bonjour");
     }
 }
