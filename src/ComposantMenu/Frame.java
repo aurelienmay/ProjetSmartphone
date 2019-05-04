@@ -42,7 +42,7 @@ import java.io.IOException;
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
 
-            panelCenter.add(calculatrice);
+            panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);
