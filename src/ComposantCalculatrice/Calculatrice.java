@@ -202,6 +202,12 @@ public class Calculatrice extends JPanel {
             }
         }
 
+        public void testCalculAuto(){
+            if(operateur == "/" || operateur == "*" || operateur == "+" || operateur == "-"){
+                calculAuto();
+            }
+        }
+
 
 
     class EgalListener implements ActionListener{
@@ -212,9 +218,8 @@ public class Calculatrice extends JPanel {
 
     class DiviseListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            if(operateur == "/"){
-                calculAuto();
-            }
+            //méthode qui test lors de changement d'opérateur durant le calcul
+            testCalculAuto();
             nombre = Float.parseFloat(ecranChiffre.getText());
             operateur = divise ;
             operateurOnOff = on ;
@@ -223,9 +228,8 @@ public class Calculatrice extends JPanel {
 
     class PlusListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            if(operateur == "+"){
-                calculAuto();
-            }
+            //méthode qui test lors de changement d'opérateur durant le calcul
+            testCalculAuto();
             nombre = Float.parseFloat(ecranChiffre.getText());
             operateur = plus ;
             operateurOnOff = on ;
@@ -234,13 +238,21 @@ public class Calculatrice extends JPanel {
 
     class MoinsListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
+            //méthode qui test lors de changement d'opérateur durant le calcul
+            testCalculAuto();
+            nombre = Float.parseFloat(ecranChiffre.getText());
+            operateur = moins ;
+            operateurOnOff = on ;
         }
     }
 
     class FoisListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
+            //méthode qui test lors de changement d'opérateur durant le calcul
+            testCalculAuto();
+            nombre = Float.parseFloat(ecranChiffre.getText());
+            operateur = fois ;
+            operateurOnOff = on ;
         }
     }
 
@@ -290,7 +302,7 @@ public class Calculatrice extends JPanel {
             temp = ecranChiffre.getText();
             nombre = Float.parseFloat(temp);
             nombre /= 100 ;
-
+            //operateurOnOff = on ;
             ecranChiffre.setText(String.valueOf(nombre));
         }
     }
