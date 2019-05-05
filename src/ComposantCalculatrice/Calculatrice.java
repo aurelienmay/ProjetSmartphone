@@ -212,6 +212,7 @@ public class Calculatrice extends JPanel {
 
     class EgalListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            ecranChiffre.setFont(policeEcranCalcul);
             calculAuto();
         }
     }
@@ -258,14 +259,16 @@ public class Calculatrice extends JPanel {
 
     class ChiffreListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            ecranChiffre.setFont(policeEcranCalcul);
             int compteur = 0;
             float nb = 0;
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
 
             //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
-            if (!ecranChiffre.getText().equals("0"))
+            if (!ecranChiffre.getText().equals("0") || !ecranChiffre.getText().equals("0")) {
                 nombre = ecranChiffre.getText() + nombre;
+            }
 
             if(ecranChiffre.getText().equals("-0.0")) {
                 nb = Float.parseFloat(nombre);
@@ -282,6 +285,16 @@ public class Calculatrice extends JPanel {
                 operateurOnOff = off ;
             }
 
+            //changement de la police selon la longueur du nombre entré
+            if(ecranChiffre.getText().length()>9){
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
+            }
+            if(ecranChiffre.getText().length()>10){
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
+            }
+            if(ecranChiffre.getText().length()>11){
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
+            }
         }
     }
 
@@ -293,22 +306,29 @@ public class Calculatrice extends JPanel {
             //inverser le signe
             chiffre *= -1 ;
             temp = "" + chiffre ;
-            ecranChiffre.setText(temp);
+            if(ecranChiffre.getText() == "0")
+                ecranChiffre.setText("-0");
+            else
+                ecranChiffre.setText(temp);
+
+
         }
     }
 
     class PourcentListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            //création d'un float temporaire pour garder en mémoire le chiffre précédent en cas de 100*8% (garder le 100 en mémoire)
+            float t ;
             temp = ecranChiffre.getText();
-            nombre = Float.parseFloat(temp);
-            nombre /= 100 ;
-            //operateurOnOff = on ;
-            ecranChiffre.setText(String.valueOf(nombre));
+            t = Float.parseFloat(temp);
+            t /= 100 ;
+            ecranChiffre.setText(String.valueOf(t));
         }
     }
 
     class ACListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            ecranChiffre.setFont(policeEcranCalcul);
             operateurOnOff = off ;
             operateur = "" ;
             ecranChiffre.setText("0");
