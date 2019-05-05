@@ -183,6 +183,22 @@ public class Calculatrice extends JPanel {
             if(operateur.equals("/")){
                 nombre = nombre/Float.parseFloat(ecranChiffre.getText());
                 ecranChiffre.setText(String.valueOf(nombre));
+                operateur = "" ;
+            }
+            if(operateur.equals("*")){
+                nombre = nombre * Float.parseFloat(ecranChiffre.getText());
+                ecranChiffre.setText(String.valueOf(nombre));
+                operateur = "" ;
+            }
+            if(operateur.equals("-")){
+                nombre = nombre - Float.parseFloat(ecranChiffre.getText());
+                ecranChiffre.setText(String.valueOf(nombre));
+                operateur = "" ;
+            }
+            if(operateur.equals("+")){
+                nombre = nombre + Float.parseFloat(ecranChiffre.getText());
+                ecranChiffre.setText(String.valueOf(nombre));
+                operateur = "" ;
             }
         }
 
@@ -190,13 +206,13 @@ public class Calculatrice extends JPanel {
 
     class EgalListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
+            calculAuto();
         }
     }
 
     class DiviseListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            if(operateurOnOff){
+            if(operateur == "/"){
                 calculAuto();
             }
             nombre = Float.parseFloat(ecranChiffre.getText());
@@ -207,7 +223,12 @@ public class Calculatrice extends JPanel {
 
     class PlusListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
+            if(operateur == "+"){
+                calculAuto();
+            }
+            nombre = Float.parseFloat(ecranChiffre.getText());
+            operateur = plus ;
+            operateurOnOff = on ;
         }
     }
 
@@ -225,6 +246,8 @@ public class Calculatrice extends JPanel {
 
     class ChiffreListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            int compteur = 0;
+            float nb = 0;
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
 
@@ -232,11 +255,19 @@ public class Calculatrice extends JPanel {
             if (!ecranChiffre.getText().equals("0"))
                 nombre = ecranChiffre.getText() + nombre;
 
+            if(ecranChiffre.getText().equals("-0.0")) {
+                nb = Float.parseFloat(nombre);
+                nb = nb * -1;
+                ecranChiffre.setText(String.valueOf(nb));
+            }
+
             //Ajout du chiffre sur l'écran de la calculette
             if(!operateurOnOff){
                 ecranChiffre.setText(nombre);
             }else{
-
+                ecranChiffre.setText("");
+                ecranChiffre.setText(((JButton) e.getSource()).getText());
+                operateurOnOff = off ;
             }
 
         }
@@ -248,7 +279,7 @@ public class Calculatrice extends JPanel {
             temp = ecranChiffre.getText() ;
             chiffre = Float.parseFloat(temp);
             //inverser le signe
-            chiffre *= -1.0 ;
+            chiffre *= -1 ;
             temp = "" + chiffre ;
             ecranChiffre.setText(temp);
         }
