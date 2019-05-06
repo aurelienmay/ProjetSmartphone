@@ -23,7 +23,7 @@ public class Icon extends JButton {
 
         setPreferredSize(new Dimension(large, length));
 
-        setBorderPainted(true);
+        setBorderPainted(false);
         setContentAreaFilled(true);
         setFocusPainted(true);
         setOpaque(false);
