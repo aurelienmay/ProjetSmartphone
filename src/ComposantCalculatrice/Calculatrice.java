@@ -10,7 +10,7 @@ public class Calculatrice extends JPanel {
     String temp ;
 
     Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 18);
+    Font policeCaracter = new Font("Arial", Font.BOLD, 17);
 
     Float nombre, resultat ;
     String operateur, plus ="+", moins="-", fois="*", divise="/";
@@ -262,17 +262,18 @@ public class Calculatrice extends JPanel {
             ecranChiffre.setFont(policeEcranCalcul);
             int compteur = 0;
             float nb = 0;
+            int n = 0 ;
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
 
             //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
-            if (!ecranChiffre.getText().equals("0") || !ecranChiffre.getText().equals("0")) {
+            if (!ecranChiffre.getText().equals("0")){
                 nombre = ecranChiffre.getText() + nombre;
             }
 
             if(ecranChiffre.getText().equals("-0.0")) {
-                nb = Float.parseFloat(nombre);
-                nb = nb * -1;
+                n = Integer.parseInt(nombre);
+                n = n * -1;
                 ecranChiffre.setText(String.valueOf(nb));
             }
 
@@ -310,7 +311,6 @@ public class Calculatrice extends JPanel {
                 ecranChiffre.setText("-0");
             else
                 ecranChiffre.setText(temp);
-
 
         }
     }
