@@ -3,6 +3,7 @@ package Bouton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import ComposantIcon.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,20 +11,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.*;
-import ComposantIcon.*;
+
 import java.lang.String;
 public class Shutdown extends JPanel{
 
-    int large=50,length=50;
-    Icon icone =new Icon("src//Shut down.png",large,length);
+    int large=50,height=50;
+    ImageIcon icone =new ImageIcon("Images//Shut down.png");
+
     JButton buttonexit = new JButton(icone);
     public Shutdown () {
-        setPreferredSize(new Dimension(large, length));
+        Image im = icone.getImage();
+        im.getScaledInstance(large,height,Image.SCALE_DEFAULT);
+        //setPreferredSize(new Dimension(large, height));
         Ecouteur ecouteur=new Ecouteur();
         buttonexit.addActionListener(ecouteur);
         //this.setLocationRelativeTo(null);
         //setUndecorated(true);
-        buttonexit.setSize(50,50);
+        //buttonexit.setSize(50,50);
         add(buttonexit,BorderLayout.NORTH);
         buttonexit.setBorderPainted(false);
         buttonexit.setContentAreaFilled(false);

@@ -29,6 +29,7 @@ import java.io.IOException;
             boolean onoff = false ;
 
             panelCenter.setOpaque(onoff);
+            panelCenter.setBackground(new Color(0,0,0,0));
 
             panelNorth.setOpaque(onoff);
             panelNorth.setPreferredSize(new Dimension(323, 60));
@@ -43,6 +44,7 @@ import java.io.IOException;
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
             panelCenter.add(shutdown);
+
             //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);

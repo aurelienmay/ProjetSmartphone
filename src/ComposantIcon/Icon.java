@@ -29,21 +29,7 @@ public class Icon extends JButton {
         setOpaque(false);
     }
 
-    public void paintComponent(Graphics g){
 
-        try {
-            Image img = ImageIO.read(new File(location));
-            g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-        } catch (IOException e) {
-            Image img;
-            try {
-                img = ImageIO.read(new File(fileLocation));
-                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
 
 }
 
