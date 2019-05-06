@@ -18,6 +18,8 @@ import ComposantIcon.Icon;
         Calculatrice calculatrice = new Calculatrice();
         JPanel panelCenter = new JPanel();
 
+        Icon image1 = new Icon("Images\\settings.png", 50, 50);
+
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setUndecorated(true);
@@ -43,7 +45,8 @@ import ComposantIcon.Icon;
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
 
-            panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
+            //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
+            panelCenter.add(image1);
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);

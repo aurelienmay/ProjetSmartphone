@@ -13,7 +13,7 @@ public class Icon extends JButton {
     private String location;
     private int large;
     private int length;
-    private String fileLocation = "images/icons/Contacts-48.png";
+    private String fileLocation = "";
 
     //Constructeur
     public Icon(String location, int large, int length) {
