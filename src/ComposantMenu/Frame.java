@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import ComposantIcon.Icon;
 
     public class Frame extends JFrame {
 
@@ -17,6 +18,8 @@ import java.io.IOException;
         Shutdown shutdown = new Shutdown();
         Calculatrice calculatrice = new Calculatrice();
         JPanel panelCenter = new JPanel();
+
+        Icon image1 = new Icon("Images\\settings.png", 50, 50);
 
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -46,6 +49,7 @@ import java.io.IOException;
             panelCenter.add(shutdown);
 
             //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
+
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);

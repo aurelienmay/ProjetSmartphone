@@ -39,8 +39,6 @@ public class Calculatrice extends JPanel {
 
     JLabel ecranChiffre = new JLabel("0");
 
-    JLabel test = new JLabel("testeu");
-
     public Calculatrice() {
         //taille du panel principal
         setPreferredSize(new Dimension(300, 550));
@@ -259,43 +257,57 @@ public class Calculatrice extends JPanel {
 
     class ChiffreListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            int length = ecranChiffre.getText().length();
             ecranChiffre.setFont(policeEcranCalcul);
             int compteur = 0;
             float nb = 0;
-            int n = 0 ;
+            int n = 0;
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
 
-            //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
-            if (!ecranChiffre.getText().equals("0")){
-                nombre = ecranChiffre.getText() + nombre;
-            }
+            if(length < 13) {
+                //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
+                if (!ecranChiffre.getText().equals("0")) {
+                    nombre = ecranChiffre.getText() + nombre;
+                }
 
-            if(ecranChiffre.getText().equals("-0.0")) {
-                n = Integer.parseInt(nombre);
-                n = n * -1;
-                ecranChiffre.setText(String.valueOf(nb));
-            }
+                //en cas de changement de signe, si la calculette affiche 0.0
+                if (ecranChiffre.getText().equals("0.0")) {
+                    ecranChiffre.setText("0");
+                    nombre = ((JButton) e.getSource()).getText();
+                }
 
-            //Ajout du chiffre sur l'écran de la calculette
-            if(!operateurOnOff){
-                ecranChiffre.setText(nombre);
-            }else{
-                ecranChiffre.setText("");
-                ecranChiffre.setText(((JButton) e.getSource()).getText());
-                operateurOnOff = off ;
-            }
+                if (ecranChiffre.getText().equals("-0.0") || ecranChiffre.getText().equals("-0")) {
+                    ecranChiffre.setText("-0");
+                    nombre = "-" + ((JButton) e.getSource()).getText();
+                }
 
-            //changement de la police selon la longueur du nombre entré
-            if(ecranChiffre.getText().length()>9){
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
-            }
-            if(ecranChiffre.getText().length()>10){
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
-            }
-            if(ecranChiffre.getText().length()>11){
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
-            }
+                //Ajout du chiffre sur l'écran de la calculette
+                if (!operateurOnOff) {
+                    ecranChiffre.setText(nombre);
+                } else {
+                    ecranChiffre.setText("");
+                    ecranChiffre.setText(((JButton) e.getSource()).getText());
+                    operateurOnOff = off;
+                }
+
+                //changement de la police selon la longueur du nombre entré
+                switch (length) {
+                    case 9:
+                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
+                        break;
+                    case 10:
+                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
+                        break;
+                    case 11:
+                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
+                        break;
+                    case 12:
+                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
+                        break;
+                }
+            }else
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
         }
     }
 
@@ -304,14 +316,17 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             temp = ecranChiffre.getText() ;
             chiffre = Float.parseFloat(temp);
-            //inverser le signe
-            chiffre *= -1 ;
-            temp = "" + chiffre ;
-            if(ecranChiffre.getText() == "0")
-                ecranChiffre.setText("-0");
-            else
+            if(temp == "0" || temp == "-0"){
+                if(temp == "0")
+                    ecranChiffre.setText("-0");
+                if(temp == "-0")
+                    ecranChiffre.setText("0");
+            }else{
+                //inverser le signe
+                chiffre *= -1 ;
+                temp = "" + chiffre ;
                 ecranChiffre.setText(temp);
-
+            }
         }
     }
 
