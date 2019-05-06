@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import ComposantIcon.Icon;
 
     public class Frame extends JFrame {
 
