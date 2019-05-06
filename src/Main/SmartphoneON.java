@@ -1,7 +1,6 @@
 package Main;
+import ComposantMenu.Frame ;
 
-import ComposantCalculatrice.Calculatrice;
-import ComposantMenu.Frame;
 
 public class SmartphoneON {
 
