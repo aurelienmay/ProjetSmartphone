@@ -1,5 +1,6 @@
 package ComposantMenu;
 
+import Bouton.Shutdown;
 import ComposantCalculatrice.Calculatrice;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import ComposantIcon.Icon;
         JPanel panelNorth = new JPanel();
         JPanel panelWest = new JPanel();
         JPanel panelEast = new JPanel();
-
+        Shutdown shutdown = new Shutdown();
         Calculatrice calculatrice = new Calculatrice();
         JPanel panelCenter = new JPanel();
 
@@ -31,6 +32,7 @@ import ComposantIcon.Icon;
             boolean onoff = false ;
 
             panelCenter.setOpaque(onoff);
+            panelCenter.setBackground(new Color(0,0,0,0));
 
             panelNorth.setOpaque(onoff);
             panelNorth.setPreferredSize(new Dimension(323, 60));
@@ -44,9 +46,10 @@ import ComposantIcon.Icon;
             panelSouth.setOpaque(onoff);
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
+            panelCenter.add(shutdown);
 
             //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
-            panelCenter.add(image1);
+
             add(panelNorth, BorderLayout.NORTH);
             add(panelWest, BorderLayout.WEST);
             add(panelEast, BorderLayout.EAST);
