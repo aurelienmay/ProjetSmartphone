@@ -10,5 +10,6 @@ public class SmartphoneON {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         System.out.println();
+        //salut
     }
 }
