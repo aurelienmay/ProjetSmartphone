@@ -46,7 +46,7 @@ import ComposantIcon.Icon;
             panelSouth.setOpaque(onoff);
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
-            panelCenter.add(shutdown);
+            panelCenter.add(image1);
 
             //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
 

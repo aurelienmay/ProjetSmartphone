@@ -206,8 +206,6 @@ public class Calculatrice extends JPanel {
             }
         }
 
-
-
     class EgalListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             ecranChiffre.setFont(policeEcranCalcul);
