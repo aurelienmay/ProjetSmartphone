@@ -18,24 +18,23 @@ public class PanelEcranNorth extends JPanel {
     public PanelEcranNorth(){
 
         setLayout(new BorderLayout());
-        //setPreferredSize(new Dimension(297, 20));
-        //setBackground(Color.CYAN);
+        setBackground(Color.gray);
         setOpaque(true);
 
-        reseau.setSize(dimReseau);
-        heure.setSize(dimHeure);
-        batterie.setSize(dimBatterie);
+        //reseau.setSize(dimReseau);
+        //heure.setSize(dimHeure);
+        //batterie.setSize(dimBatterie);
 
         reseau.setFont(police);
-        reseau.setBackground(Color.green);
+        //reseau.setBackground(Color.green);
         reseau.setOpaque(true);
 
         heure.setFont(police);
-        heure.setBackground(Color.blue);
+        //heure.setBackground(Color.blue);
         heure.setOpaque(true);
 
         batterie.setFont(police);
-        batterie.setBackground(Color.red);
+        //batterie.setBackground(Color.red);
         batterie.setOpaque(true);
 
         this.add(heure, BorderLayout.CENTER);

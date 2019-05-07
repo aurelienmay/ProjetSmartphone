@@ -31,8 +31,8 @@ public class Icon extends JButton {
     public void paintComponent(Graphics g){
 
         try {
-            Image img = ImageIO.read(new File(location));
-            g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            Image i = ImageIO.read(new File(location));
+            g.drawImage(i, 0, 0, this.getWidth(), this.getHeight(), this);
         } catch (IOException e) {
             Image img;
             try {

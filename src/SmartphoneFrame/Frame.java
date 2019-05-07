@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import ComposantEcran.PanelEcranNorth;
+import ComposantEcran.*;
 import ComposantIcon.Icon;
 
     public class Frame extends JFrame {
@@ -21,23 +21,11 @@ import ComposantIcon.Icon;
         JPanel panelEast = new JPanel();
         JPanel panelEcran = new JPanel();
 
-        //panels de l'écran du smartphone
-        JPanel panelEcranCenter = new JPanel();
-
         //Applications
         Calculatrice calculatrice = new Calculatrice();
 
-        int applicationSize = 60 ;
-        //Icon imageCalculatrice = new Icon("Images\\Calculatrice.png", applicationSize, applicationSize);
-        Icon imageCalculatrice = new Icon("Images\\Calculator.png", applicationSize, applicationSize);
-        //Icon imageShutDown = new Icon("Images\\shutdown.png", applicationSize, applicationSize);
-        Icon imageShutDown = new Icon("Images\\shut down.png", applicationSize, applicationSize);
-        //Icon imageContact = new Icon("Images\\contact.png", applicationSize, applicationSize);
-        Icon imageContact = new Icon("Images\\contact1.png", applicationSize, applicationSize);
-        Icon imageGallery = new Icon("Images\\gallery.png", applicationSize, applicationSize);
-        Icon imageSettings = new Icon("Images\\settings.png", applicationSize, applicationSize);
-
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
+        PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -46,15 +34,13 @@ import ComposantIcon.Icon;
 
             //set les différents Layout
             panelEcran.setLayout(new BorderLayout());
-            panelEcranCenter.setLayout(new FlowLayout());
 
-            //Paramètres du panel écran nord (barre de contrôle)
-
-            //Paramètre du panel écran centre (
-            panelEcranCenter.setBackground(Color.white);
-
-            //ajoute le background, contour du smartphone
+            //Ajout du background, contour du smartphone
             backgroundImage();
+
+            //Ajout des listener des applications
+            panelEcranCenter.imageShutDown.addActionListener(new Frame.ShutDownListener());
+            panelEcranCenter.imageCalculatrice.addActionListener(new Frame.CalculatriceListener());
 
             //Tracement des panels nord, est, ouest et sud ; pour
             boolean onoff = false ;
@@ -68,17 +54,6 @@ import ComposantIcon.Icon;
             panelEast.setPreferredSize(new Dimension(12, 100));
             panelSouth.setOpaque(onoff);
             panelSouth.setPreferredSize(new Dimension(323, 57));
-
-            //Listener des applications
-            imageShutDown.addActionListener(new ShutDownListener());
-            imageCalculatrice.addActionListener(new CalculatriceListener());
-
-            //Ajout des icon des applications sur l'écran
-            panelEcranCenter.add(imageShutDown);
-            panelEcranCenter.add(imageCalculatrice);
-            panelEcranCenter.add(imageGallery);
-            panelEcranCenter.add(imageContact);
-            panelEcranCenter.add(imageSettings);
 
             //Ajout du panel écran centre (application) et le panel écran nord (barre de contrôle)
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
@@ -109,7 +84,7 @@ import ComposantIcon.Icon;
             }
         }
 
-        class ShutDownListener implements ActionListener{
+        class ShutDownListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
                 dispose();
             }
@@ -117,8 +92,9 @@ import ComposantIcon.Icon;
 
         class CalculatriceListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
-                panelNorth.add(calculatrice);
-                add(panelNorth, BorderLayout.NORTH);
+                //panelNorth.add(calculatrice);
+                //add(panelNorth, BorderLayout.NORTH);
             }
         }
+
     }
