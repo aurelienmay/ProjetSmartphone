@@ -23,7 +23,6 @@ import ComposantIcon.Icon;
 
         //panels de l'écran du smartphone
         JPanel panelEcranCenter = new JPanel();
-        //JPanel panelEcranNorth = new JPanel();
 
         //Applications
         Calculatrice calculatrice = new Calculatrice();
