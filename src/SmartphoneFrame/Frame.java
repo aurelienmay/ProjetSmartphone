@@ -13,7 +13,6 @@ import ComposantEcran.*;
 import ComposantIcon.Icon;
 
     public class Frame extends JFrame {
-
         //panels de la frame
         JPanel panelSouth = new JPanel();
         JPanel panelNorth = new JPanel();
@@ -37,10 +36,6 @@ import ComposantIcon.Icon;
 
             //Ajout du background, contour du smartphone
             backgroundImage();
-
-            //Ajout des listener des applications
-            panelEcranCenter.imageShutDown.addActionListener(new Frame.ShutDownListener());
-            panelEcranCenter.imageCalculatrice.addActionListener(new Frame.CalculatriceListener());
 
             //Tracement des panels nord, est, ouest et sud ; pour
             boolean onoff = false ;
@@ -86,7 +81,7 @@ import ComposantIcon.Icon;
 
         class ShutDownListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
-                dispose();
+                System.exit(0);
             }
         }
 
