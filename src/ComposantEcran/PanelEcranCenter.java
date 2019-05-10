@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelEcranCenter extends JPanel {
+public class PanelEcranCenter extends JPanel implements ActionListener{
 
     private int applicationSize = 50 ;
 
@@ -22,37 +22,40 @@ public class PanelEcranCenter extends JPanel {
     public Icon imageSettings = new Icon("Images\\settings.png", applicationSize, applicationSize);
 
     JPanel card1Calculatrice = new Calculatrice();
-    JPanel cards = new JPanel();
-    CardLayout gestionnaireCards = new CardLayout();
+    public JPanel ecran = new JPanel();
+    public CardLayout gestionnaireCards = new CardLayout();
+    FlowLayout flowLayout = new FlowLayout( 30, 30, 30);
 
     public PanelEcranCenter(){
-        //setLayout(new FlowLayout( 30, 30, 30));
         setLayout(gestionnaireCards);
         setBackground(Color.white);
 
-        imageShutDown.addActionListener(new ShutDownListener());
-        imageCalculatrice.addActionListener(new CalculatriceListener());
+        //imageShutDown.addActionListener(new ShutDownListener());
+        //imageCalculatrice.addActionListener(new CalculatriceListener());
 
-        this.add(imageShutDown);
-        this.add(imageCalculatrice);
-        this.add(imageGallery);
-        this.add(imageContact);
-        this.add(imageSettings);
+        imageCalculatrice.addActionListener(this);
+        imageShutDown.addActionListener(this);
 
-        cards.setLayout(gestionnaireCards);
-        cards.add(this, "menu");
-        cards.add(card1Calculatrice, "calculatrice");
+        ecran.setLayout(flowLayout);
+        ecran.add(imageShutDown);
+        ecran.add(imageCalculatrice);
+        ecran.add(imageGallery);
+        ecran.add(imageContact);
+        ecran.add(imageSettings);
+
+        this.add(ecran, "menu");
+        this.add(card1Calculatrice, "calculatrice");
+
     }
 
-    class ShutDownListener implements ActionListener {
-        public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e){
+        Object o = e.getSource();
+        if(o == imageCalculatrice){
+            gestionnaireCards.show(this, "calculatrice");
+        }
+        if(o == imageShutDown){
             System.exit(0);
         }
-    }
 
-    class CalculatriceListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            gestionnaireCards.previous(cards);
         }
-    }
 }

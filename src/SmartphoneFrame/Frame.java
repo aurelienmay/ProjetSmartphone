@@ -13,12 +13,15 @@ import ComposantEcran.*;
 import ComposantIcon.Icon;
 
     public class Frame extends JFrame {
-        //panels de la frame
+        //pannels of the frame
         JPanel panelSouth = new JPanel();
         JPanel panelNorth = new JPanel();
         JPanel panelWest = new JPanel();
         JPanel panelEast = new JPanel();
         JPanel panelEcran = new JPanel();
+
+        //button to go back to the application menu
+        Icon btnBack = new ComposantIcon.Icon("Images\\btnback.png", 75, 30);
 
         //Applications
         Calculatrice calculatrice = new Calculatrice();
@@ -54,7 +57,9 @@ import ComposantIcon.Icon;
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
             panelEcran.add(panelEcranCenter, BorderLayout.CENTER);
 
-            //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
+            //btnBack parameters
+            btnBack.addActionListener(new BtnBackListener());
+            panelSouth.add(btnBack);
 
             //Ajout des panels au smartphone (frame)
             add(panelNorth, BorderLayout.NORTH);
@@ -79,16 +84,9 @@ import ComposantIcon.Icon;
             }
         }
 
-        class ShutDownListener implements ActionListener {
+        class BtnBackListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
-                System.exit(0);
-            }
-        }
-
-        class CalculatriceListener implements ActionListener{
-            public void actionPerformed(ActionEvent e){
-                //panelNorth.add(calculatrice);
-                //add(panelNorth, BorderLayout.NORTH);
+                panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
             }
         }
 
