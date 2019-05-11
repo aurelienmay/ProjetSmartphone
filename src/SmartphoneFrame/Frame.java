@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ComposantEcran.*;
-import ComposantIcon.Icon;
+import ComposantIcon.*;
 
     public class Frame extends JFrame {
         //pannels of the frame
@@ -21,13 +21,16 @@ import ComposantIcon.Icon;
         JPanel panelEcran = new JPanel();
 
         //button to go back to the application menu
-        Icon btnBack = new ComposantIcon.Icon("Images\\btnback.png", 75, 30);
+        IconButton btnBack = new IconButton("Images\\btnback.png", 77, 30);
+        JPanel panelNorthofPanelSouth = new JPanel();
 
         //Applications
         Calculatrice calculatrice = new Calculatrice();
 
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
         PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
+
+        public IconPanel wallpaper = new IconPanel("Images\\wallpaper.jpg", 298, 529);
 
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -54,12 +57,20 @@ import ComposantIcon.Icon;
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
             //Ajout du panel écran centre (application) et le panel écran nord (barre de contrôle)
+
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
             panelEcran.add(panelEcranCenter, BorderLayout.CENTER);
 
+            //panelNorthOfPanelSouth parameters
+            panelNorthofPanelSouth.setBackground(new Color(0,0,0,0));
+            panelNorthofPanelSouth.setPreferredSize(new Dimension(323, 1));
+            panelSouth.add(panelNorthofPanelSouth, BorderLayout.NORTH);
+            panelSouth.add(btnBack, BorderLayout.CENTER);
+
             //btnBack parameters
             btnBack.addActionListener(new BtnBackListener());
-            panelSouth.add(btnBack);
+            btnBack.setHorizontalAlignment(0);
+            btnBack.setVerticalAlignment(0);
 
             //Ajout des panels au smartphone (frame)
             add(panelNorth, BorderLayout.NORTH);

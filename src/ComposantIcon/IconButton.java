@@ -9,14 +9,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class Icon extends JButton {
+public class IconButton extends JButton {
     private String location;
     private int large;
     private int length;
     private String fileLocation = "";
 
     //Constructeur
-    public Icon(String location, int large, int length) {
+    public IconButton(String location, int large, int length) {
         this.location=location;
         this.length=length;
         this.large=large;

@@ -42,8 +42,7 @@ public class PanelEcranNorth extends JPanel {
         //batterie.setBackground(Color.red);
         batterie.setOpaque(true);
 
-        SourisListenerHeure sourisHeure = new SourisListenerHeure();
-        addMouseListener(sourisHeure);
+        heure.addMouseListener(new SourisListenerHeure());
         clock.start();
         clockSS.start();
 
@@ -56,7 +55,7 @@ public class PanelEcranNorth extends JPanel {
         int cpt = 0 ;
         public void mouseClicked(MouseEvent e) {
             //System.out.println(e.getX() + " " + e.getY());
-            if(e.getX()>136 && e.getX()<162 && e.getY()>3 && e.getY()<9) {
+            //if(e.getX()>136 && e.getX()<162 && e.getY()>3 && e.getY()<9) {
                 if(cpt==0) {
                     clicHeure = false;
                     cpt++;
@@ -64,7 +63,7 @@ public class PanelEcranNorth extends JPanel {
                     clicHeure=true;
                     cpt=0;
                 }
-            }
+            //}
         }
 
         public void mousePressed(MouseEvent e) {}
