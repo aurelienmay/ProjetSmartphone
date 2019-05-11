@@ -20,9 +20,18 @@ public class IconPanel extends JPanel {
         this.large=large;
 
         setPreferredSize(new Dimension(large, length));
-        
         setOpaque(false);
     }
+
+    public void setIconPanel(String location, int large, int length){
+        this.location=location;
+        this.length=length;
+        this.large=large;
+
+        setPreferredSize(new Dimension(large, length));
+        setOpaque(false);
+    }
+
     public void paintComponent(Graphics g){
 
         try {

@@ -11,6 +11,7 @@ Aurélien
  - 6h
  - 3h
  - 1h30
+ - 2h
  
  Léonard :
  - 3h

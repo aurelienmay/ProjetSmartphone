@@ -1,5 +1,6 @@
 package ComposantEcran;
 
+import ComponentSettings.Settings;
 import ComposantCalculatrice.Calculatrice;
 import ComposantIcon.IconButton;
 
@@ -22,7 +23,8 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
 
     public IconPanel wallpaper = new IconPanel("Images\\Wallpapers\\wallpaper1.jpg", 298, 529);
 
-    JPanel card1Calculatrice = new Calculatrice();
+    JPanel cardCalculatrice = new Calculatrice();
+    JPanel cardSettings = new Settings();
     public CardLayout gestionnaireCards = new CardLayout();
     FlowLayout flowLayout = new FlowLayout( 30, 37, 30);
 
@@ -32,6 +34,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
 
         imageCalculatrice.addActionListener(this);
         imageShutDown.addActionListener(this);
+        imageSettings.addActionListener(this);
 
         wallpaper.setLayout(flowLayout);
         wallpaper.add(imageShutDown);
@@ -41,7 +44,8 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
         wallpaper.add(imageContact);
 
         this.add(wallpaper, "menu");
-        this.add(card1Calculatrice, "calculatrice");
+        this.add(cardCalculatrice, "calculatrice");
+        this.add(cardSettings, "settings");
     }
 
     public void actionPerformed(ActionEvent e){
@@ -51,6 +55,10 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
         }
         if(o == imageShutDown){
             System.exit(0);
+        }
+        if(o == imageSettings){
+            //wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper2.jpg", 1080, 2320);
+            gestionnaireCards.show(this, "settings");
         }
 
     }
