@@ -6,6 +6,7 @@ import ComposantIcon.IconButton;
 
 import javax.swing.*;
 import ComposantIcon.*;
+import ComponentSettings.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

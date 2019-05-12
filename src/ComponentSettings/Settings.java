@@ -8,44 +8,56 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Settings extends JPanel {
+public class Settings extends JPanel implements ListSelectionListener {
 
     Font policeTitre = new Font("Arial", Font.BOLD, 50);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 17);
+    Font policeCaracter = new Font("Arial", Font.BOLD, 20);
 
     JLabel settingsName = new JLabel("Settings");
-    JLabel creators = new JLabel("This smartphone was created by" + "\n" + "Aurélien May and Léonard Favre");
+    JLabel creators = new JLabel();
 
-    JPanel smartphoneInformations = new JPanel();
+    JPanel cardSettings = new JPanel();
+    JPanel cardInformations = new JPanel();
+    JPanel cardWallpaper = new JPanel();
 
-    String choices[]= {"Smartphone informations", "Change the wallpaper"};
+    String settingsList[]= {"Smartphone informations", "Change the wallpaper"};
 
-    JList list = new JList(choices);
+    JList list = new JList(settingsList);
+
+    Dimension westEastEmptyPannelDim = new Dimension(10,200);
+
+
+    CardLayout cardManager = new CardLayout();
 
     public Settings(){
-        setLayout(new BorderLayout());
+        setLayout(cardManager);
 
         //North Panel
         settingsName.setFont(policeTitre);
-        list.addListSelectionListener(new smartphoneInfosListener());
+        list.addListSelectionListener(this::valueChanged);
+        list.setFont(policeCaracter);
 
         //Smartphone informations
         creators.setText("<html><body>This smartphone was created by :<p><b>" +
                 "<font size=\"-1\">Aurélien May</font></b><p>" +
                 "<font size=\"-1\">Léonard Favre</font></body></html>" );
         creators.setFont(policeCaracter);
-        smartphoneInformations.add(creators);
+        creators.setHorizontalTextPosition(JLabel.CENTER);
+        creators.setVerticalTextPosition(JLabel.CENTER);
+        cardInformations.add(creators);
 
-        add(settingsName, BorderLayout.NORTH);
-        add(list, BorderLayout.CENTER);
+        cardSettings.add(settingsName, BorderLayout.NORTH);
+        cardSettings.add(list, BorderLayout.CENTER);
+
+        this.add(cardSettings, "settings");
+        this.add(cardInformations, "informations");
+        this.add(cardWallpaper, "wallpaper");
     }
 
-    class smartphoneInfosListener implements ListSelectionListener {
-        public void valueChanged(ListSelectionEvent e){
-            String t = list.getSelectedValue().toString();
-            if(t == "Smartphone informations"){
-                add(smartphoneInformations, BorderLayout.CENTER);
-            }
+    public void valueChanged(ListSelectionEvent e){
+        String t = list.getSelectedValue().toString();
+        if(t == "Smartphone informations"){
+                cardManager.show(this, "informations");
         }
     }
 

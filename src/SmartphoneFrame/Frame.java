@@ -24,13 +24,8 @@ import ComposantIcon.*;
         IconButton btnBack = new IconButton("Images\\btnback.png", 77, 30);
         JPanel panelNorthofPanelSouth = new JPanel();
 
-        //Applications
-        Calculatrice calculatrice = new Calculatrice();
-
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
         PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
-
-        public IconPanel wallpaper = new IconPanel("Images\\wallpaper.jpg", 298, 529);
 
         public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
