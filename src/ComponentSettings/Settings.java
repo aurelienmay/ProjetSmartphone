@@ -7,11 +7,12 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import ComposantIcon.*;
 
 public class Settings extends JPanel implements ListSelectionListener {
 
     Font policeTitre = new Font("Arial", Font.BOLD, 50);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 20);
+    Font policeCaracter = new Font("Arial", Font.BOLD, 18);
 
     JLabel settingsName = new JLabel("Settings");
     JLabel creators = new JLabel();
@@ -20,17 +21,23 @@ public class Settings extends JPanel implements ListSelectionListener {
     JPanel cardInformations = new JPanel();
     JPanel cardWallpaper = new JPanel();
 
+    JPanel panelNorth = new JPanel();
+    JPanel panelCenter = new JPanel();
+
     String settingsList[]= {"Smartphone informations", "Change the wallpaper"};
 
     JList list = new JList(settingsList);
 
+    JPanel panelWest = new JPanel();
     Dimension westEastEmptyPannelDim = new Dimension(10,200);
 
+    IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
 
     CardLayout cardManager = new CardLayout();
 
     public Settings(){
-        setLayout(cardManager);
+        setLayout(new BorderLayout());
+        panelCenter.setLayout(cardManager);
 
         //North Panel
         settingsName.setFont(policeTitre);
@@ -38,26 +45,40 @@ public class Settings extends JPanel implements ListSelectionListener {
         list.setFont(policeCaracter);
 
         //Smartphone informations
+        creators.setFont(policeCaracter);
         creators.setText("<html><body>This smartphone was created by :<p><b>" +
                 "<font size=\"-1\">Aurélien May</font></b><p>" +
                 "<font size=\"-1\">Léonard Favre</font></body></html>" );
-        creators.setFont(policeCaracter);
-        creators.setHorizontalTextPosition(JLabel.CENTER);
-        creators.setVerticalTextPosition(JLabel.CENTER);
-        cardInformations.add(creators);
+        cardInformations.add(creators, BorderLayout.CENTER);
 
-        cardSettings.add(settingsName, BorderLayout.NORTH);
+        backBtn.addActionListener(new btnBackListener());
+
+
+        panelNorth.add(backBtn, BorderLayout.WEST);
+        panelNorth.add(settingsName, BorderLayout.NORTH);
         cardSettings.add(list, BorderLayout.CENTER);
 
-        this.add(cardSettings, "settings");
-        this.add(cardInformations, "informations");
-        this.add(cardWallpaper, "wallpaper");
+        panelCenter.add(cardSettings, "settings");
+        panelCenter.add(cardInformations, "informations");
+        panelCenter.add(cardWallpaper, "wallpaper");
+
+        add(panelCenter, BorderLayout.CENTER);
+        add(panelNorth, BorderLayout.NORTH);
     }
 
     public void valueChanged(ListSelectionEvent e){
         String t = list.getSelectedValue().toString();
         if(t == "Smartphone informations"){
-                cardManager.show(this, "informations");
+            cardManager.show(panelCenter, "informations");
+        }
+        if(t == "Change the wallpaper"){
+            cardManager.show(panelCenter, "wallpaper");
+        }
+    }
+
+    class btnBackListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            cardManager.show(panelCenter, "settings");
         }
     }
 
