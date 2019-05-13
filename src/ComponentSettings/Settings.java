@@ -1,6 +1,5 @@
 package ComponentSettings;
 
-import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,16 +14,15 @@ public class Settings extends JPanel implements ListSelectionListener {
     Font policeCaracter = new Font("Arial", Font.BOLD, 18);
 
     JLabel settingsName = new JLabel("Settings");
-    JLabel creators = new JLabel();
 
     JPanel cardSettings = new JPanel();
-    JPanel cardInformations = new JPanel();
-    JPanel cardWallpaper = new JPanel();
+    Informations cardInformations = new Informations();
+    Wallpaper cardWallpaper = new Wallpaper();
 
     JPanel panelNorth = new JPanel();
     JPanel panelCenter = new JPanel();
 
-    String settingsList[]= {"Smartphone informations", "Change the wallpaper"};
+    String settingsList[]= {"Informations smartphone", "Changer le fond d'écran"};
 
     JList list = new JList(settingsList);
 
@@ -44,15 +42,7 @@ public class Settings extends JPanel implements ListSelectionListener {
         list.addListSelectionListener(this::valueChanged);
         list.setFont(policeCaracter);
 
-        //Smartphone informations
-        creators.setFont(policeCaracter);
-        creators.setText("<html><body>This smartphone was created by :<p><b>" +
-                "<font size=\"-1\">Aurélien May</font></b><p>" +
-                "<font size=\"-1\">Léonard Favre</font></body></html>" );
-        cardInformations.add(creators, BorderLayout.CENTER);
-
         backBtn.addActionListener(new btnBackListener());
-
 
         panelNorth.add(backBtn, BorderLayout.WEST);
         panelNorth.add(settingsName, BorderLayout.NORTH);
@@ -68,10 +58,10 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     public void valueChanged(ListSelectionEvent e){
         String t = list.getSelectedValue().toString();
-        if(t == "Smartphone informations"){
+        if(t == "Informations smartphone"){
             cardManager.show(panelCenter, "informations");
         }
-        if(t == "Change the wallpaper"){
+        if(t == "Changer le fond d'écran"){
             cardManager.show(panelCenter, "wallpaper");
         }
     }

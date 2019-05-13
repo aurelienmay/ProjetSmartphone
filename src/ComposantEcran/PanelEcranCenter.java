@@ -22,7 +22,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
     public IconButton imageGallery = new IconButton("Images\\Icons\\gallery.png", applicationSize, applicationSize);
     public IconButton imageSettings = new IconButton("Images\\Icons\\settings.png", applicationSize, applicationSize);
 
-    public IconPanel wallpaper = new IconPanel("Images\\Wallpapers\\wallpaper1.jpg", 298, 529);
+    public static IconPanel wallpaper = new IconPanel("Images\\Wallpapers\\wallpaper1.jpg", 298, 529);
 
     JPanel cardCalculatrice = new Calculatrice();
     JPanel cardSettings = new Settings();
@@ -61,6 +61,5 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
             //wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper2.jpg", 1080, 2320);
             gestionnaireCards.show(this, "settings");
         }
-
     }
 }

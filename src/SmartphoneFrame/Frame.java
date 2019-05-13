@@ -21,8 +21,11 @@ import ComposantIcon.*;
         JPanel panelEcran = new JPanel();
 
         //button to go back to the application menu
-        IconButton btnBack = new IconButton("Images\\btnback.png", 77, 30);
+        IconButton homeButton = new IconButton("Images\\btnback.png", 77, 30);
         JPanel panelNorthofPanelSouth = new JPanel();
+        JPanel panelNorthofPanelNorth = new JPanel();
+
+        IconButton shutdownBtn = new IconButton("Images\\Icons\\shutdown.png", 20, 20);
 
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
         PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
@@ -52,20 +55,26 @@ import ComposantIcon.*;
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
             //Ajout du panel écran centre (application) et le panel écran nord (barre de contrôle)
-
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
             panelEcran.add(panelEcranCenter, BorderLayout.CENTER);
+
+            //Shutdown en haut de l'écran
+            panelNorthofPanelNorth.setOpaque(onoff);
+            panelNorthofPanelNorth.setPreferredSize(new Dimension(323, 25));
+            shutdownBtn.addActionListener(new BtnShutDownListener());
+            panelNorth.add(panelNorthofPanelNorth, BorderLayout.NORTH);
+            panelNorth.add(shutdownBtn, BorderLayout.SOUTH);
 
             //panelNorthOfPanelSouth parameters
             panelNorthofPanelSouth.setBackground(new Color(0,0,0,0));
             panelNorthofPanelSouth.setPreferredSize(new Dimension(323, 1));
             panelSouth.add(panelNorthofPanelSouth, BorderLayout.NORTH);
-            panelSouth.add(btnBack, BorderLayout.CENTER);
+            panelSouth.add(homeButton, BorderLayout.CENTER);
 
             //btnBack parameters
-            btnBack.addActionListener(new BtnBackListener());
-            btnBack.setHorizontalAlignment(0);
-            btnBack.setVerticalAlignment(0);
+            homeButton.addActionListener(new BtnBackListener());
+            homeButton.setHorizontalAlignment(0);
+            homeButton.setVerticalAlignment(0);
 
             //Ajout des panels au smartphone (frame)
             add(panelNorth, BorderLayout.NORTH);
@@ -93,6 +102,12 @@ import ComposantIcon.*;
         class BtnBackListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
                 panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
+            }
+        }
+
+        class  BtnShutDownListener implements ActionListener{
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
             }
         }
 
