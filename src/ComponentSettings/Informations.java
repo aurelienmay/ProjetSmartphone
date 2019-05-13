@@ -37,12 +37,13 @@ public class Informations extends JPanel {
         panelCenter.add(host);
         panelCenter.add(ip);
 
+        System.out.println(System.getProperty("host.name"));
+
         add(panelCenter, BorderLayout.CENTER);
     }
 
     public String getHost(){
         String host = "";
-
         try {
             InetAddress inetadr = InetAddress.getLocalHost();
             //nom de l'host
