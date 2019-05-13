@@ -11,9 +11,9 @@ public class PanelEcranNorth extends JPanel {
 
     private Font police = new Font("Arial", Font.BOLD, 10);
 
-    private Dimension dimReseau = new Dimension(100, 20);
-    private Dimension dimHeure = new Dimension(100, 20);
-    private Dimension dimBatterie = new Dimension(100, 20);
+    private Dimension dimReseau = new Dimension(100, 10);
+    private Dimension dimHeure = new Dimension(20, 10);
+    private Dimension dimBatterie = new Dimension(100, 10);
 
     private JLabel reseau = new JLabel(" ");
     private JLabel heure = new JLabel("14:00", SwingConstants.CENTER);
@@ -26,20 +26,20 @@ public class PanelEcranNorth extends JPanel {
         setBackground(Color.gray);
         setOpaque(true);
 
-        //reseau.setSize(dimReseau);
-        //heure.setSize(dimHeure);
-        //batterie.setSize(dimBatterie);
+        reseau.setSize(dimReseau);
+        heure.setSize(dimHeure);
+        batterie.setSize(dimBatterie);
 
         reseau.setFont(police);
-        //reseau.setBackground(Color.green);
+        reseau.setBackground(Color.green);
         reseau.setOpaque(true);
 
         heure.setFont(police);
-        //heure.setBackground(Color.blue);
+        heure.setPreferredSize(dimHeure);
         heure.setOpaque(true);
 
         batterie.setFont(police);
-        //batterie.setBackground(Color.red);
+        batterie.setBackground(Color.red);
         batterie.setOpaque(true);
 
         heure.addMouseListener(new SourisListenerHeure());
