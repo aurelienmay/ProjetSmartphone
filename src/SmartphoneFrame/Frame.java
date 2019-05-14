@@ -72,7 +72,7 @@ import ComposantIcon.*;
             panelSouth.add(homeButton, BorderLayout.CENTER);
 
             //btnBack parameters
-            homeButton.addActionListener(new BtnBackListener());
+            homeButton.addActionListener(new homeButtonListener());
             homeButton.setHorizontalAlignment(0);
             homeButton.setVerticalAlignment(0);
 
@@ -99,7 +99,7 @@ import ComposantIcon.*;
             }
         }
 
-        class BtnBackListener implements ActionListener {
+        class homeButtonListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
                 panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
             }
