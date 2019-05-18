@@ -2,6 +2,8 @@ package ComposantEcran;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -10,7 +12,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PanelEcranNorth extends JPanel {
+public class PanelEcranNorth extends JPanel{
 
     private Font police = new Font("Arial", Font.BOLD, 10);
 
@@ -18,14 +20,15 @@ public class PanelEcranNorth extends JPanel {
     private Dimension dimHeure = new Dimension(47, 15);
     private Dimension dimBatterie = new Dimension(125, 15);
 
-    private JLabel reseau = new JLabel("Swisscom", JLabel.LEFT);
-    private JLabel heure = new JLabel("14:00", JLabel.CENTER);
+    private JLabel reseau = new JLabel("", JLabel.LEFT);
+    private JLabel heure = new JLabel("", JLabel.CENTER);
     private JLabel batterie = new JLabel("batterie", JLabel.RIGHT);
 
     boolean clicHeure = true ;
 
-    public static String content = "";
-    public static String t = "";
+    private String content = "" ;
+    private String ssid = "" ;
+    private String signal = "" ;
 
     public PanelEcranNorth(){
         setLayout(new BorderLayout());
@@ -37,19 +40,16 @@ public class PanelEcranNorth extends JPanel {
         batterie.setPreferredSize(dimBatterie);
 
         reseau.setFont(police);
-        //reseau.setBackground(Color.green);
+        getSSID();
         reseau.setOpaque(true);
-        reseau.setText(getWLAN());
 
         heure.setFont(police);
-        //heure.setPreferredSize(dimHeure);
         heure.setOpaque(true);
 
         batterie.setFont(police);
-        //batterie.setBackground(Color.red);
         batterie.setOpaque(true);
 
-        heure.addMouseListener(new SourisListenerHeure());
+        heure.addMouseListener(new sourisListenerHeure());
         clock.start();
         clockSS.start();
 
@@ -58,35 +58,45 @@ public class PanelEcranNorth extends JPanel {
         this.add(batterie, BorderLayout.EAST);
     }
 
-    public static String getWLAN(){
-        Process p = null;
-        String ssid =null;
-
-        try {
-            p = Runtime.getRuntime().exec("netsh wlan show interfaces" );
-        } catch (IOException e) {
-            e.printStackTrace();
+    class reseauListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            getSSID();
         }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        boolean done =false;
-        while (true) {
+    }
+
+    public void getSSID(){
+        Process p = null;
+        boolean done = false;
+
             try {
-                if (!((content = reader.readLine()) != null)) break;
+                p = Runtime.getRuntime().exec("netsh wlan show interfaces");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //content = content.substring(20, 30);
-            if(done ==false) {
-                if (content.contains("SSID")) {
-                    ssid = content.substring(29);
-                    done =true;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while (true) {
+                try {
+                    if (!((content = reader.readLine()) != null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                //System.out.println(content);
+                if (content.contains("Signal")) {
+                    signal = content.substring(29);
+                }
+                if (done == false) {
+                    if (content.contains("SSID")) {
+                        ssid = content.substring(29);
+                        done = true;
+                    }
+                }
+                reseau.setText(ssid + " " + signal);
             }
-        }
-        return ssid ;
     }
 
-    class SourisListenerHeure implements MouseListener {
+
+
+    class sourisListenerHeure implements MouseListener {
         int cpt = 0 ;
         public void mouseClicked(MouseEvent e) {
             //System.out.println(e.getX() + " " + e.getY());
@@ -100,15 +110,10 @@ public class PanelEcranNorth extends JPanel {
                 }
             //}
         }
-
         public void mousePressed(MouseEvent e) {}
-
         public void mouseReleased(MouseEvent e) {}
-
         public void mouseEntered(MouseEvent e) {}
-
         public void mouseExited(MouseEvent e) {}
-
     }
 
     Thread clock = new Thread() {

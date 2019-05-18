@@ -167,6 +167,11 @@ public class Calculatrice extends JPanel {
                     tabBtn[i].addActionListener(new ChiffreListener());
                     break;
 
+                //Paramètre du bouton .
+                case 17 :
+                    tabBtn[i].addActionListener(new PointListener());
+                    break;
+
                 //par défaut
                 default:
                     //Listener de tous les boutons de type "chiffre" (par défaut)
@@ -206,18 +211,41 @@ public class Calculatrice extends JPanel {
             }
         }
 
+    class PointListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            String nombre = ecranChiffre.getText();
+            if(!nombre.contains(".")){
+                nombre += "." ;
+                ecranChiffre.setText(nombre);
+            }
+        }
+    }
+
     class EgalListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             ecranChiffre.setFont(policeEcranCalcul);
-            calculAuto();
+
+            //Test in case of division by 0
+            if(Float.parseFloat(ecranChiffre.getText()) != 0){
+                //if the dividend != 0, make the calculation
+                calculAuto();
+            }else{
+                //else show "Erreur"
+                ecranChiffre.setText("Erreur");
+            }
+
         }
     }
 
     class DiviseListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
-            testCalculAuto();
             nombre = Float.parseFloat(ecranChiffre.getText());
+            if(nombre != 0) {
+                testCalculAuto();
+            }else{
+                ecranChiffre.setText("Erreur");
+            }
             operateur = divise ;
             operateurOnOff = on ;
         }
@@ -274,7 +302,6 @@ public class Calculatrice extends JPanel {
                     ecranChiffre.setText("0");
                     nombre = ((JButton) e.getSource()).getText();
                 }
-
                 if (ecranChiffre.getText().equals("-0.0") || ecranChiffre.getText().equals("-0")) {
                     ecranChiffre.setText("-0");
                     nombre = "-" + ((JButton) e.getSource()).getText();

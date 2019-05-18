@@ -61,7 +61,7 @@ import ComposantIcon.*;
             //Shutdown en haut de l'écran
             panelNorthofPanelNorth.setOpaque(onoff);
             panelNorthofPanelNorth.setPreferredSize(new Dimension(323, 25));
-            shutdownBtn.addActionListener(new BtnShutDownListener());
+            shutdownBtn.addActionListener(new btnShutDownListener());
             panelNorth.add(panelNorthofPanelNorth, BorderLayout.NORTH);
             panelNorth.add(shutdownBtn, BorderLayout.SOUTH);
 
@@ -105,7 +105,7 @@ import ComposantIcon.*;
             }
         }
 
-        class  BtnShutDownListener implements ActionListener{
+        class  btnShutDownListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 System.exit(0);
             }

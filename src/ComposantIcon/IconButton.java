@@ -28,6 +28,16 @@ public class IconButton extends JButton {
         setFocusPainted(true);
         setOpaque(false);
     }
+
+    public IconButton(String location, int large, int length, int position) {
+        this.location=location;
+
+        setBorderPainted(false);
+        setContentAreaFilled(true);
+        setFocusPainted(true);
+        setOpaque(false);
+    }
+
     public void paintComponent(Graphics g){
 
         try {
