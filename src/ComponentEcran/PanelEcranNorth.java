@@ -14,11 +14,11 @@ import java.util.Date;
 
 public class PanelEcranNorth extends JPanel{
 
-    private Font police = new Font("Arial", Font.BOLD, 10);
+    private Font police = new Font("Arial", Font.BOLD, 12);
 
-    private Dimension dimReseau = new Dimension(125, 15);
-    private Dimension dimHeure = new Dimension(47, 15);
-    private Dimension dimBatterie = new Dimension(125, 15);
+    private Dimension dimReseau = new Dimension(123, 14);
+    private Dimension dimHeure = new Dimension(51, 14);
+    private Dimension dimBatterie = new Dimension(123, 14);
 
     private JLabel reseau = new JLabel("", JLabel.LEFT);
     private JLabel heure = new JLabel("", JLabel.CENTER);

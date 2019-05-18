@@ -185,21 +185,25 @@ public class Calculatrice extends JPanel {
         public void calculAuto() {
             if(operateur.equals("/")){
                 nombre = nombre/Float.parseFloat(ecranChiffre.getText());
+                setLength(nombre.toString().length());
                 ecranChiffre.setText(String.valueOf(nombre));
                 operateur = "" ;
             }
             if(operateur.equals("*")){
                 nombre = nombre * Float.parseFloat(ecranChiffre.getText());
+                setLength(nombre.toString().length());
                 ecranChiffre.setText(String.valueOf(nombre));
                 operateur = "" ;
             }
             if(operateur.equals("-")){
                 nombre = nombre - Float.parseFloat(ecranChiffre.getText());
+                setLength(nombre.toString().length());
                 ecranChiffre.setText(String.valueOf(nombre));
                 operateur = "" ;
             }
             if(operateur.equals("+")){
                 nombre = nombre + Float.parseFloat(ecranChiffre.getText());
+                setLength(nombre.toString().length());
                 ecranChiffre.setText(String.valueOf(nombre));
                 operateur = "" ;
             }
@@ -233,13 +237,13 @@ public class Calculatrice extends JPanel {
                 //else show "Erreur"
                 ecranChiffre.setText("Erreur");
             }
-
         }
     }
 
     class DiviseListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
+            testCalculAuto();
             nombre = Float.parseFloat(ecranChiffre.getText());
             if(nombre != 0) {
                 testCalculAuto();
@@ -284,55 +288,62 @@ public class Calculatrice extends JPanel {
     class ChiffreListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int length = ecranChiffre.getText().length();
-            ecranChiffre.setFont(policeEcranCalcul);
-            int compteur = 0;
-            float nb = 0;
-            int n = 0;
+
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
 
-            if(length < 13) {
-                //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
-                if (!ecranChiffre.getText().equals("0")) {
-                    nombre = ecranChiffre.getText() + nombre;
-                }
+            //Enlève le 0 du reset et du début, pour ne pas commencer à 08 par exemple
+            if (!ecranChiffre.getText().equals("0")) {
+                nombre = ecranChiffre.getText() + nombre;
+            }
 
-                //en cas de changement de signe, si la calculette affiche 0.0
-                if (ecranChiffre.getText().equals("0.0")) {
-                    ecranChiffre.setText("0");
-                    nombre = ((JButton) e.getSource()).getText();
-                }
-                if (ecranChiffre.getText().equals("-0.0") || ecranChiffre.getText().equals("-0")) {
-                    ecranChiffre.setText("-0");
-                    nombre = "-" + ((JButton) e.getSource()).getText();
-                }
+            //en cas de changement de signe, si la calculette affiche 0.0
+            if (ecranChiffre.getText().equals("0.0")) {
+                ecranChiffre.setText("0");
+                nombre = ((JButton) e.getSource()).getText();
+            }
+            if (ecranChiffre.getText().equals("-0.0") || ecranChiffre.getText().equals("-0")) {
+                ecranChiffre.setText("-0");
+                nombre = "-" + ((JButton) e.getSource()).getText();
+            }
 
-                //Ajout du chiffre sur l'écran de la calculette
-                if (!operateurOnOff) {
+            //Ajout du chiffre sur l'écran de la calculette
+            if (!operateurOnOff) {
+                if(length < 13)
                     ecranChiffre.setText(nombre);
-                } else {
-                    ecranChiffre.setText("");
-                    ecranChiffre.setText(((JButton) e.getSource()).getText());
-                    operateurOnOff = off;
-                }
+            } else {
+                ecranChiffre.setText("");
+                ecranChiffre.setText(((JButton) e.getSource()).getText());
+                operateurOnOff = off;
+            }
 
-                //changement de la police selon la longueur du nombre entré
-                switch (length) {
-                    case 9:
-                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
-                        break;
-                    case 10:
-                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
-                        break;
-                    case 11:
-                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
-                        break;
-                    case 12:
-                        ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
-                        break;
-                }
-            }else
+            //changement de la police selon la longueur du nombre entré
+            setLength(length);
+        }
+    }
+
+    //Méthode qui set la size de l'écran de la calculette lorsque le chiffre ne passe pas sur celui-ci
+    public void setLength(int length){
+        ecranChiffre.setFont(policeEcranCalcul);
+        switch (length) {
+            case 9:
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
+                break;
+            case 10:
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
+                break;
+            case 11:
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
+                break;
+            case 12:
                 ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
+                break;
+            case 13:
+                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
+                break;
+            default:
+                ecranChiffre.setFont(policeEcranCalcul);
+                break;
         }
     }
 
