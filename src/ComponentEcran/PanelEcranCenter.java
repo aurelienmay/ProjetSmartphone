@@ -1,13 +1,12 @@
-package ComposantEcran;
+package ComponentEcran;
 
 import ComponentGallery.Gallery;
 import ComponentSettings.Settings;
-import ComposantCalculatrice.Calculatrice;
-import ComposantIcon.IconButton;
+import ComponentCalculatrice.Calculatrice;
+import ComponentIcon.IconButton;
 
 import javax.swing.*;
-import ComposantIcon.*;
-import ComponentSettings.*;
+import ComponentIcon.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

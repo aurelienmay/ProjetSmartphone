@@ -3,16 +3,10 @@ package Bouton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ComposantIcon.*;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.event.*;
 
-import java.lang.String;
 public class Shutdown extends JPanel{
 
     int large=50,height=50;

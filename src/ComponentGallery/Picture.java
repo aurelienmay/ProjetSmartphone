@@ -1,7 +1,6 @@
 package ComponentGallery;
 
-import ComposantIcon.IconButton;
-import ComponentGallery.Gallery;
+import ComponentIcon.IconButton;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ComposantEcran.*;
+import ComponentEcran.*;
 
-import ComposantIcon.*;
+import ComponentIcon.*;
 
 public class Wallpaper extends JPanel implements ActionListener {
 

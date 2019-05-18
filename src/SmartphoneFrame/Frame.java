@@ -1,7 +1,5 @@
 package SmartphoneFrame;
 
-import ComposantCalculatrice.Calculatrice;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import ComposantEcran.*;
-import ComposantIcon.*;
+import ComponentEcran.*;
+import ComponentIcon.*;
 
     public class Frame extends JFrame {
         //pannels of the frame

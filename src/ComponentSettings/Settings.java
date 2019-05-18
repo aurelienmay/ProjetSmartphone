@@ -6,7 +6,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ComposantIcon.*;
+import ComponentIcon.*;
 
 public class Settings extends JPanel implements ListSelectionListener {
 

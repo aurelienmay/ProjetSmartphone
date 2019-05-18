@@ -2,8 +2,8 @@ package ComponentSettings;
 
 import javax.swing.*;
 import java.awt.*;
-import ComponentSettings.*;
-import ComposantIcon.IconButton;
+
+import ComponentIcon.IconButton;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

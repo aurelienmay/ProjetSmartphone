@@ -1,4 +1,4 @@
-package ComposantEcran;
+package ComponentEcran;
 
 import javax.swing.*;
 import java.awt.*;
