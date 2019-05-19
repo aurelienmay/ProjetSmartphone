@@ -7,37 +7,39 @@ import java.awt.event.ActionListener;
 
 public class Calculatrice extends JPanel {
 
-    String temp ;
+    private String temp ;
 
-    Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 17);
+    private Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
+    private Font policeCaracter = new Font("Arial", Font.BOLD, 17);
 
-    Float nombre, resultat ;
-    String operateur, plus ="+", moins="-", fois="*", divise="/";
-    Boolean operateurOnOff = false;
-    Boolean on = true, off = false;
+    private Float nombre, resultat ;
+    private String operateur, plus ="+", moins="-", fois="*", divise="/";
+    private Boolean operateurOnOff = false;
+    private Boolean on = true, off = false;
 
-    String[] calculetteCaracter = { "AC", "+/-", "%", "/",
+    private String[] calculetteCaracter = { "AC", "+/-", "%", "/",
             "7", "8", "9", "*",
             "4", "5", "6", "-",
             "1", "2", "3", "+",
             "0", ".", "="};
 
     //Dimension des boutons de la calculette, attention le bouton 0 (2x plus grand)
-    Dimension buttonsSize = new Dimension(60, 60);
-    Dimension button0Size = new Dimension(125, 60);
-    Dimension westEastEmptyPannelDim = new Dimension(10,200);
+    private Dimension buttonsSize = new Dimension(60, 60);
+    private Dimension button0Size = new Dimension(125, 60);
+    private Dimension westEastEmptyPannelDim = new Dimension(10,200);
 
-    JButton[] tabBtn = new JButton[calculetteCaracter.length];
+    private JButton[] tabBtn = new JButton[calculetteCaracter.length];
 
-    JPanel chiffreBtn = new JPanel();
-    JPanel panelEast = new JPanel();
-    JPanel panelWest = new JPanel();
-    JPanel panelEast2 = new JPanel();
-    JPanel panelWest2 = new JPanel();
-    JPanel panelNorth = new JPanel();
+    private JPanel chiffreBtn = new JPanel();
+    private JPanel panelEast = new JPanel();
+    private JPanel panelWest = new JPanel();
+    private JPanel panelEast2 = new JPanel();
+    private JPanel panelWest2 = new JPanel();
+    private JPanel panelNorth = new JPanel();
 
-    JLabel ecranChiffre = new JLabel("0");
+    private JLabel ecranChiffre = new JLabel("0");
+
+    private boolean onoff = true ;
 
     public Calculatrice() {
         //taille du panel principal
@@ -45,7 +47,6 @@ public class Calculatrice extends JPanel {
         setLayout(new BorderLayout());
         //setBackground(Color.orange);
 
-        boolean onoff = true ;
         panelWest.setOpaque(onoff);
         panelWest.setPreferredSize(westEastEmptyPannelDim);
         panelWest.setBackground(Color.BLACK);
@@ -120,7 +121,6 @@ public class Calculatrice extends JPanel {
                     tabBtn[i].setBackground(Color.lightGray);
                     tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new PourcentListener());
-
                     break;
 
                 //Paramètre du bouton /
@@ -128,7 +128,6 @@ public class Calculatrice extends JPanel {
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new DiviseListener());
-
                     break;
 
                 //Paramètre du bouton *
@@ -143,7 +142,6 @@ public class Calculatrice extends JPanel {
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new MoinsListener());
-
                     break;
 
                 //Paramètre du bouton +
@@ -151,7 +149,6 @@ public class Calculatrice extends JPanel {
                     tabBtn[i].setBackground(Color.green);
                     tabBtn[i].setForeground(Color.black);
                     tabBtn[i].addActionListener(new PlusListener());
-
                     break;
 
                 //Paramètre du bouton =
@@ -288,6 +285,7 @@ public class Calculatrice extends JPanel {
     class ChiffreListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int length = ecranChiffre.getText().length();
+            ecranChiffre.setFont(policeEcranCalcul);
 
             //On affiche le chiffre additionnel dans le label
             String nombre = ((JButton) e.getSource()).getText();
@@ -311,14 +309,14 @@ public class Calculatrice extends JPanel {
             if (!operateurOnOff) {
                 if(length < 13)
                     ecranChiffre.setText(nombre);
+                //méthode qui change la police selon la longueur du nombre entré
+                setLength(length);
             } else {
+                System.out.println("je passe ici");
                 ecranChiffre.setText("");
                 ecranChiffre.setText(((JButton) e.getSource()).getText());
                 operateurOnOff = off;
             }
-
-            //changement de la police selon la longueur du nombre entré
-            setLength(length);
         }
     }
 
