@@ -36,12 +36,12 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
         setBackground(Color.white);
 
         imageCalculatrice.addActionListener(this);
-        imageShutDown.addActionListener(this);
+        //imageShutDown.addActionListener(this);
         imageSettings.addActionListener(this);
         imageGallery.addActionListener(this);
 
         wallpaper.setLayout(flowLayout);
-        wallpaper.add(imageShutDown);
+        //wallpaper.add(imageShutDown);
         wallpaper.add(imageSettings);
         wallpaper.add(imageCalculatrice);
         wallpaper.add(imageGallery);

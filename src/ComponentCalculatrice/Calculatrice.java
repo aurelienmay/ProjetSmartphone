@@ -312,7 +312,6 @@ public class Calculatrice extends JPanel {
                 //méthode qui change la police selon la longueur du nombre entré
                 setLength(length);
             } else {
-                System.out.println("je passe ici");
                 ecranChiffre.setText("");
                 ecranChiffre.setText(((JButton) e.getSource()).getText());
                 operateurOnOff = off;

@@ -41,12 +41,15 @@ public class PanelEcranNorth extends JPanel{
 
         reseau.setFont(police);
         getSSID();
+        reseau.setBackground(Color.WHITE);
         reseau.setOpaque(true);
 
         heure.setFont(police);
+        heure.setBackground(Color.WHITE);
         heure.setOpaque(true);
 
         batterie.setFont(police);
+        batterie.setBackground(Color.WHITE);
         batterie.setOpaque(true);
 
         heure.addMouseListener(new sourisListenerHeure());
