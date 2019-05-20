@@ -28,7 +28,7 @@ import ComponentIcon.*;
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
         PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
-        public Frame(){
+        public Frame() throws IOException {
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));

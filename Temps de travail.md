@@ -12,6 +12,7 @@ Aurélien
  - 2h
  - 3h
  - 4h
+ - 3h
  + heure de cours
  
  Léonard :

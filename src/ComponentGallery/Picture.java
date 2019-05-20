@@ -12,7 +12,7 @@ public class Picture extends JPanel {
     IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
     IconButton deleteBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
 
-    Gallery g = new Gallery();
+    /*Gallery g = new Gallery();
 
 
 
@@ -28,5 +28,5 @@ public class Picture extends JPanel {
         public void actionPerformed(ActionEvent e){
 
         }
-    }
+    }*/
 }

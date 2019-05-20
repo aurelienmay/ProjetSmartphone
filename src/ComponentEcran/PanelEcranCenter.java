@@ -11,6 +11,7 @@ import ComponentIcon.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PanelEcranCenter extends JPanel implements ActionListener{
 
@@ -31,7 +32,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener{
     public CardLayout gestionnaireCards = new CardLayout();
     FlowLayout flowLayout = new FlowLayout( 30, 37, 30);
 
-    public PanelEcranCenter(){
+    public PanelEcranCenter() throws IOException {
         setLayout(gestionnaireCards);
         setBackground(Color.white);
 
