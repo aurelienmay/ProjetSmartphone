@@ -6,6 +6,9 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import ComponentGallery.Gallery;
 import ComponentIcon.*;
 
 public class Settings extends JPanel implements ListSelectionListener {
@@ -18,11 +21,12 @@ public class Settings extends JPanel implements ListSelectionListener {
     JPanel cardSettings = new JPanel();
     Informations cardInformations = new Informations();
     Wallpaper cardWallpaper = new Wallpaper();
+    Gallery gallery = new Gallery();
 
     JPanel panelNorth = new JPanel();
     JPanel panelCenter = new JPanel();
 
-    String settingsList[]= {"Informations smartphone", "Changer le fond d'écran"};
+    String settingsList[]= {"Informations smartphone", "Changer le fond d'écran", "Gallery"};
 
     JList list = new JList(settingsList);
 
@@ -33,7 +37,7 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     CardLayout cardManager = new CardLayout();
 
-    public Settings(){
+    public Settings() throws IOException {
         setLayout(new BorderLayout());
         panelCenter.setLayout(cardManager);
 
@@ -51,6 +55,7 @@ public class Settings extends JPanel implements ListSelectionListener {
         panelCenter.add(cardSettings, "settings");
         panelCenter.add(cardInformations, "informations");
         panelCenter.add(cardWallpaper, "wallpaper");
+        panelCenter.add(gallery.scrollPane, "gallery");
 
         add(panelCenter, BorderLayout.CENTER);
         add(panelNorth, BorderLayout.NORTH);
@@ -63,6 +68,9 @@ public class Settings extends JPanel implements ListSelectionListener {
         }
         if(t == "Changer le fond d'écran"){
             cardManager.show(panelCenter, "wallpaper");
+        }
+        if(t == "Gallery"){
+            cardManager.show(panelCenter, "gallery");
         }
     }
 

@@ -52,6 +52,10 @@ public class IconButton extends JButton {
         setOpaque(false);
     }
 
+    public void setNewLocation(String location){
+        this.location = location ;
+    }
+
     public void setIconButtonSize(int large, int length){
         this.length=length;
         this.large=large;

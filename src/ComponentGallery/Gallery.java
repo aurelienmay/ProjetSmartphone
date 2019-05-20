@@ -11,34 +11,41 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Gallery extends JPanel {
 
-    PanelEcranCenter pec ;
-
     Font policeTitre = new Font("Arial", Font.BOLD, 40);
 
-    JPanel panelCenter = new JPanel();
-    JPanel panelNorth = new JPanel();
+    public JPanel panelCenter = new JPanel();
+    public JPanel panelNorth = new JPanel();
 
-    JPanel panelEastofPanelNorth = new JPanel();
     JPanel panelWestofPanelNorth = new JPanel();
+    JPanel panelEastofPanelNorth = new JPanel();
     JPanel panelCenterofPanelNorth = new JPanel();
+    JPanel freePanel = new JPanel();
 
-    JScrollPane scrollPane = new JScrollPane(panelCenter);
+    public JScrollPane scrollPane = new JScrollPane(panelCenter);
 
-    JLabel title = new JLabel("Gallerie", JLabel.CENTER);
-    IconButton addPicture = new IconButton("Images\\Icons\\add-image.png", 30,30);
+    public JLabel title = new JLabel("Gallerie", JLabel.CENTER);
+    IconButton addPictureBtn = new IconButton("Images\\Icons\\add-image.png", 30,30);
+    IconButton deletePictureBtn = new IconButton("Images\\Icons\\delete.png", 30,30);
 
     private int large = 90 ;
     private int length = 150 ;
     double percentage ;
     private int compteur ;
+    private int panelCenterMaxLarge = 280 ;
+    private int totalLength ;
+    private int marge = 11 ;
+    private int listSelection = 2 ;
 
-    ArrayList<IconButton> picture = new ArrayList<IconButton>();
+    ArrayList<IconButton> pictures = new ArrayList<IconButton>();
 
     IconButton i1 = new IconButton("Gallery\\i1.jpg");
     IconButton i2 = new IconButton("Gallery\\i2.jpg");
@@ -46,57 +53,62 @@ public class Gallery extends JPanel {
     IconButton i4 = new IconButton("Gallery\\i4.jpg");
     IconButton i5 = new IconButton("Gallery\\i5.jpg");
     IconButton i6 = new IconButton("Gallery\\i6.jpg");
-
-    CardLayout cardManager = new CardLayout();
-    FlowLayout fl = new FlowLayout(25, 25, 25);
-    GridLayout gl = new GridLayout(50,3);
+    IconButton i7 = new IconButton("Gallery\\i7.jpg");
+    IconButton i8 = new IconButton("Gallery\\i8.jpg");
+    IconButton i9 = new IconButton("Gallery\\i9.jpg");
+    IconButton i10 = new IconButton("Gallery\\i10.jpg");
+    IconButton i11 = new IconButton("Gallery\\i11.png");
+    IconButton i12 = new IconButton("Gallery\\i12.jpg");
+    IconButton i13 = new IconButton("Gallery\\i13.jpeg");
+    IconButton i14 = new IconButton("Gallery\\i14.jpeg");
+    IconButton i15 = new IconButton("Gallery\\i15.jpg");
+    IconButton i16 = new IconButton("Gallery\\i16.jpg");
 
     JComboBox list ;
 
     public Gallery() throws IOException {
-        picture.add(i1);
-        picture.add(i2);
-        picture.add(i3);
-        picture.add(i4);
-        picture.add(i5);
-        picture.add(i6);
-
         setLayout(new BorderLayout());
-        panelCenter.setLayout(cardManager);
-        panelCenter.setLayout(fl);
+        panelCenter.setLayout(new FlowLayout(15, 25, 15));
+        panelWestofPanelNorth.setLayout(new FlowLayout(10,10,2));
 
-        addPicture.addActionListener(new addPictureListener());
+        pictures.addAll(Arrays.asList(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16));
 
-        panelEastofPanelNorth.add(addPicture, BorderLayout.WEST);
-        panelEastofPanelNorth.setPreferredSize(new Dimension(50,50));
-        panelEastofPanelNorth.setOpaque(true);
-        panelNorth.add(panelEastofPanelNorth, BorderLayout.WEST);
+        addPictureBtn.addActionListener(new addPictureListener());
 
+        //West of panelNorth
+        panelWestofPanelNorth.setBackground(Color.WHITE);
+        panelWestofPanelNorth.add(addPictureBtn);
+        panelWestofPanelNorth.add(deletePictureBtn);
+        panelWestofPanelNorth.setPreferredSize(new Dimension(40,70));
+        //panelWestofPanelNorth.setBackground(new Color(0,0,0,0));
+        panelWestofPanelNorth.setOpaque(true);
+        panelNorth.add(panelWestofPanelNorth, BorderLayout.WEST);
+
+        //Center of panelNorth
         title.setFont(policeTitre);
+        panelCenterofPanelNorth.setBackground(Color.WHITE);
+        panelCenterofPanelNorth.setPreferredSize(new Dimension(188,70));
+        panelCenterofPanelNorth.setLayout(new FlowLayout(10,20,12));
         panelCenterofPanelNorth.add(title, BorderLayout.CENTER);
         panelNorth.add(panelCenterofPanelNorth, BorderLayout.CENTER);
 
+        //East of panelNorth
         Object[] listeDeroulante = new Object[]{"1", "2", "3", "4"};
         list = new JComboBox(listeDeroulante);
         list.setSelectedIndex(1);
         list.addActionListener(new listZoomListener());
-        panelWestofPanelNorth.add(list, BorderLayout.EAST);
-        panelNorth.add(panelWestofPanelNorth, BorderLayout.EAST);
+        panelEastofPanelNorth.setPreferredSize(new Dimension(40,70));
+        panelEastofPanelNorth.add(list, BorderLayout.EAST);
+        panelNorth.add(panelEastofPanelNorth, BorderLayout.EAST);
 
-        panelCenter.add(picture.get(0));
-        panelCenter.add(picture.get(1));
-        panelCenter.add(picture.get(2));
-        panelCenter.add(picture.get(3));
-        panelCenter.add(picture.get(4));
-        panelCenter.add(picture.get(5));
+        addPicturesToPanelCenter();
 
-        panelCenter.setPreferredSize(new Dimension(280, picture.size()*100));
-        //panelCenter.setMinimumSize(new Dimension(280,100));
-        //panelCenter.setMaximumSize(new Dimension(280, 10000));
         panelNorth.setBackground(Color.WHITE);
         panelNorth.setOpaque(true);
         scrollPane.setBackground(Color.WHITE);
         scrollPane.setOpaque(true);
+
+        adaptPanelLength(listSelection);
 
         add(panelNorth, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -105,10 +117,10 @@ public class Gallery extends JPanel {
     class addPictureListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             String filepath = "" ;
-            if(e.getSource()==addPicture){
+            if(e.getSource()==addPictureBtn){
                 JFileChooser fc = new JFileChooser();
                 fc.setAcceptAllFileFilterUsed(false);
-                fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
+                fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
                 int i=fc.showOpenDialog(null);
                 if(i==JFileChooser.APPROVE_OPTION){
                 File f = fc.getSelectedFile();
@@ -118,76 +130,104 @@ public class Gallery extends JPanel {
                 filepath = selectedFile.getAbsolutePath();
                 }
             }
-            compteur = picture.size() ;
+            compteur = pictures.size() ;
             try {
-                picture.add(new IconButton(filepath));
-                panelCenter.add(picture.get(compteur));
-                compteur++ ;
+                pictures.add(new IconButton(filepath));
+                adaptPictureLength(large, compteur);
+                panelCenter.add(pictures.get(compteur));
             }catch (IOException io){}
 
-            panelCenter.setPreferredSize(new Dimension(280, picture.size()*150));
-
-            try{
-                pec.gestionnaireCards.show(pec, "gallery");
-            }catch (NullPointerException io){}
+            adaptPanelLength(listSelection);
         }
     }
 
     class listZoomListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            String t = list.getSelectedItem().toString();
+            listSelection = Integer.parseInt(list.getSelectedItem().toString());
             try {
-                if (t == "4") {
-                    panelCenter.setLayout(new FlowLayout(11, 11, 11));
-                    for (int i = 0; i < picture.size() ; i++) {
-                        large = 55 ;
-                        percentage = large*100/picture.get(i).pictureLarge;
-                        length = (int) (picture.get(i).pictureLength*(percentage/100));
-                        picture.get(i).setIconButtonSize(large, length);
-                    }
-                    pec.gestionnaireCards.show(pec, "gallery");
-                }
-                if (t == "3") {
-                    panelCenter.setLayout(new FlowLayout(15, 15, 15));
-                    for (int i = 0; i < picture.size(); i++) {
-                        large = 70 ;
-                        percentage = large*100/picture.get(i).pictureLarge;
-                        length = (int) (picture.get(i).pictureLength*(percentage/100));
-                        picture.get(i).setIconButtonSize(large, length);
-                    }
-                    panelCenter.setPreferredSize(new Dimension(280, picture.size()*50));
-                    pec.gestionnaireCards.show(pec, "gallery");
-                }
-                //affichage de base
-                if (t == "2") {
-                    panelCenter.setLayout(fl);
-                    for (int i = 0; i < picture.size(); i++) {
-                        large = 100 ;
-                        percentage = large*100/picture.get(i).pictureLarge;
-                        length = (int) (picture.get(i).pictureLength*(percentage/100));
-                        picture.get(i).setIconButtonSize(large, length);
-                    }
-                    panelCenter.setPreferredSize(new Dimension(280, picture.size()*100));
-                    pec.gestionnaireCards.show(pec, "gallery");
-                }
-                if (t == "1") {
-                    panelCenter.setLayout(new FlowLayout(15, 30, 15));
-                    for (int i = 0; i < picture.size(); i++) {
-                        large = 220 ;
-                        percentage = large*100/picture.get(i).pictureLarge;
-                        length = (int) (picture.get(i).pictureLength*(percentage/100));
-                        picture.get(i).setIconButtonSize(large, length);
-                    }
-                    panelCenter.setPreferredSize(new Dimension(280, picture.size()*360));
-                    pec.gestionnaireCards.show(pec, "gallery");
+                switch (listSelection){
+                    case 4 :
+                        marge = 5 ;
+                        panelCenter.setLayout(new FlowLayout(11, 11, 11));
+                        for (int i = 0; i < pictures.size() ; i++) {
+                            large = 55 ;
+                            adaptPictureLength(large, i);
+                        }
+                        adaptPanelLength(listSelection);
+                        break;
+
+                    case 3 :
+                        marge = 8 ;
+                        panelCenter.setLayout(new FlowLayout(15, 17, 15));
+                        for (int i = 0; i < pictures.size(); i++) {
+                            large = 70 ;
+                            adaptPictureLength(large, i);
+                        }
+
+                        adaptPanelLength(listSelection);
+                        break;
+
+                    case 2 :
+                        marge = 11 ;
+                        panelCenter.setLayout(new FlowLayout(15, 25, 15));
+                        for (int i = 0; i < pictures.size(); i++) {
+                            large = 100 ;
+                            adaptPictureLength(large, i);
+                        }
+
+                        adaptPanelLength(listSelection);
+                        break;
+
+                    case 1 :
+                        marge = 15 ;
+                        panelCenter.setLayout(new FlowLayout(15, 30, 15));
+                        for (int i = 0; i < pictures.size(); i++) {
+                            large = 220 ;
+                            adaptPictureLength(large, i);
+                        }
+
+                        adaptPanelLength(listSelection);
+                        break;
                 }
             }catch (NullPointerException io){ }
         }
     }
 
+    public void adaptPanelLength(int listSelection){
+        totalLength = 0 ;
+        for(int i=0; i<pictures.size(); i+=listSelection){
+            totalLength += pictures.get(i).length ;
+        }
+        totalLength += pictures.size()*marge + marge ;
+        panelCenter.setPreferredSize(new Dimension(panelCenterMaxLarge, totalLength));
+        panelCenter.revalidate();
+    }
+
+    public int adaptPictureLength(int large, int i){
+        percentage = large*100/pictures.get(i).pictureLarge;
+        length = (int) (pictures.get(i).pictureLength*(percentage/100));
+        pictures.get(i).setIconButtonSize(large, length);
+        return length ;
+    }
+
     class pictureListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            Object o = e.getSource();
 
+            for(int i=0; i<pictures.size(); i++){
+                if(o == pictures.get(i)){
+                    pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
+                    pictures.get(i).setBorderPainted(true);
+                }
+            }
+
+        }
+    }
+
+    public void addPicturesToPanelCenter(){
+        for(int i=0; i<pictures.size(); i++){
+            pictures.get(i).addActionListener(new pictureListener());
+            panelCenter.add(pictures.get(i));
         }
     }
 
