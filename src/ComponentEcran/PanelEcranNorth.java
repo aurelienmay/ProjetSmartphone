@@ -144,13 +144,13 @@ public class PanelEcranNorth extends JPanel{
             //if (signal == " ") {
                 //wifi0.setNewLocation("Images\\Icons\\wifi0.jpg");
                 if (i > 0) {
-                    wifi0.setNewLocation("Images\\Icons\\wifi1.jpg");
+                    wifi0.setNewLocation("Images\\Icons\\wifi1.png");
                     if (i > 25) {
-                        wifi0.setNewLocation("Images\\Icons\\wifi2.jpg");
+                        wifi0.setNewLocation("Images\\Icons\\wifi2.png");
                         if (i > 50) {
-                            wifi0.setNewLocation("Images\\Icons\\wifi3.jpg");
+                            wifi0.setNewLocation("Images\\Icons\\wifi3.png");
                             if (i > 80) {
-                                wifi0.setNewLocation("Images\\Icons\\wifi4.jpg");
+                                wifi0.setNewLocation("Images\\Icons\\wifi4.png");
                             }
                         }
                     }
