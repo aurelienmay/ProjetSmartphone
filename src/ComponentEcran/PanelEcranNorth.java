@@ -155,7 +155,7 @@ public class PanelEcranNorth extends JPanel{
                         }
                     }
                 }
-            //}
+            //} je vais tous vous torcher le cul
         }
         wifi0.repaint();
     }
