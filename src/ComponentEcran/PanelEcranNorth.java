@@ -1,5 +1,7 @@
 package ComponentEcran;
 
+import ComponentIcon.IconButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,9 +28,15 @@ public class PanelEcranNorth extends JPanel{
 
     boolean clicHeure = true ;
 
+    private JPanel panelEast = new JPanel();
+
     private String content = "" ;
     private String ssid = "" ;
     private String signal = "" ;
+
+    IconButton wifi0 = new IconButton("Images\\Icons\\wifi0.jpg", 20,14);
+
+    private FlowLayout fl = new FlowLayout(0,100,0);
 
     public PanelEcranNorth(){
         setLayout(new BorderLayout());
@@ -37,67 +45,35 @@ public class PanelEcranNorth extends JPanel{
 
         reseau.setPreferredSize(dimReseau);
         heure.setPreferredSize(dimHeure);
-        batterie.setPreferredSize(dimBatterie);
+        panelEast.setPreferredSize(dimBatterie);
 
         reseau.setFont(police);
-        getSSID();
+        reseau.setForeground(Color.black);
         reseau.setBackground(Color.WHITE);
         reseau.setOpaque(true);
 
         heure.setFont(police);
-        heure.setBackground(Color.WHITE);
+        heure.setBackground(Color.white);
         heure.setOpaque(true);
-
-        batterie.setFont(police);
-        batterie.setBackground(Color.WHITE);
-        batterie.setOpaque(true);
-
         heure.addMouseListener(new sourisListenerHeure());
+
+        //batterie.setFont(police);
+        //batterie.setBackground(Color.WHITE);
+        //batterie.setOpaque(true);
+        panelEast.setBackground(Color.white);
+        panelEast.setOpaque(true);
+
         clock.start();
         clockSS.start();
+        updateSignal.start();
+
+        panelEast.setLayout(fl);
+        panelEast.add(wifi0);
 
         this.add(heure, BorderLayout.CENTER);
         this.add(reseau, BorderLayout.WEST);
-        this.add(batterie, BorderLayout.EAST);
+        this.add(panelEast, BorderLayout.EAST);
     }
-
-    class reseauListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            getSSID();
-        }
-    }
-
-    public void getSSID(){
-        Process p = null;
-        boolean done = false;
-
-            try {
-                p = Runtime.getRuntime().exec("netsh wlan show interfaces");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while (true) {
-                try {
-                    if (!((content = reader.readLine()) != null)) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println(content);
-                if (content.contains("Signal")) {
-                    signal = content.substring(29);
-                }
-                if (done == false) {
-                    if (content.contains("SSID")) {
-                        ssid = content.substring(29);
-                        done = true;
-                    }
-                }
-                reseau.setText(ssid + " " + signal);
-            }
-    }
-
-
 
     class sourisListenerHeure implements MouseListener {
         int cpt = 0 ;
@@ -117,6 +93,71 @@ public class PanelEcranNorth extends JPanel{
         public void mouseReleased(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
+    }
+
+    Thread updateSignal = new Thread() {
+        @Override
+        public void run() {
+            Process p = null;
+            boolean done = false;
+
+            while (true) {
+                try {
+                    p = Runtime.getRuntime().exec("netsh wlan show interfaces");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                while (true) {
+                    try {
+                        if (!((content = reader.readLine()) != null)) break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (content.contains("Signal")) {
+                        signal = content.substring(29, 31);
+                    }
+                    if (done == false) {
+                        if (content.contains("SSID")) {
+                            ssid = content.substring(29);
+                            done = true;
+                        }
+                    }
+                    //méthode qui modifie le logo du wifi selon le pourcentage de signal reçu
+                    setSignalIcon(signal);
+                    reseau.setText(ssid);
+                    try {
+                        sleep(200);
+                    } catch (InterruptedException ie) {
+                    }
+                }
+            }
+        }
+
+    };
+
+    public void setSignalIcon(String signal){
+        int i;
+
+        if (signal != "") {
+            i = Integer.parseInt(signal);
+            //if (signal == " ") {
+                //wifi0.setNewLocation("Images\\Icons\\wifi0.jpg");
+                if (i > 0) {
+                    wifi0.setNewLocation("Images\\Icons\\wifi1.jpg");
+                    if (i > 25) {
+                        wifi0.setNewLocation("Images\\Icons\\wifi2.jpg");
+                        if (i > 50) {
+                            wifi0.setNewLocation("Images\\Icons\\wifi3.jpg");
+                            if (i > 80) {
+                                wifi0.setNewLocation("Images\\Icons\\wifi4.jpg");
+                            }
+                        }
+                    }
+                }
+            //}
+        }
+        wifi0.repaint();
     }
 
     Thread clock = new Thread() {
