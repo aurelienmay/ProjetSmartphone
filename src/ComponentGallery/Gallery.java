@@ -224,10 +224,19 @@ public class Gallery extends JPanel {
         }
     }
 
+    class deletePictureBtnListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            for (int i=0; i<pictures.size(); i++){
+                pictures.get(i).getBorder();
+            }
+        }
+    }
+
     public void addPicturesToPanelCenter(){
         for(int i=0; i<pictures.size(); i++){
             pictures.get(i).addActionListener(new pictureListener());
             panelCenter.add(pictures.get(i));
+
         }
     }
 

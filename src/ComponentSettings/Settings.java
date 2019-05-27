@@ -26,7 +26,7 @@ public class Settings extends JPanel implements ListSelectionListener {
     JPanel panelNorth = new JPanel();
     JPanel panelCenter = new JPanel();
 
-    String settingsList[]= {"Informations smartphone", "Changer le fond d'écran", "Gallery"};
+    String settingsList[]= {"Informations système", "Changer le fond d'écran", "Gallery"};
 
     JList list = new JList(settingsList);
 
@@ -63,7 +63,7 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     public void valueChanged(ListSelectionEvent e){
         String t = list.getSelectedValue().toString();
-        if(t == "Informations smartphone"){
+        if(t == "Informations système"){
             cardManager.show(panelCenter, "informations");
         }
         if(t == "Changer le fond d'écran"){

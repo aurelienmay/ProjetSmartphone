@@ -16,11 +16,11 @@ import java.util.Date;
 
 public class PanelEcranNorth extends JPanel{
 
-    private Font police = new Font("Arial", Font.BOLD, 12);
+    private Font police = new Font("Arial", Font.BOLD, 13);
 
-    private Dimension dimReseau = new Dimension(123, 14);
-    private Dimension dimHeure = new Dimension(51, 14);
-    private Dimension dimBatterie = new Dimension(123, 14);
+    private Dimension dimReseau = new Dimension(123, 18);
+    private Dimension dimHeure = new Dimension(51, 18);
+    private Dimension dimBatterie = new Dimension(123, 18);
 
     private JLabel reseau = new JLabel("", JLabel.LEFT);
     private JLabel heure = new JLabel("", JLabel.CENTER);
@@ -34,7 +34,7 @@ public class PanelEcranNorth extends JPanel{
     private String ssid = "" ;
     private String signal = "" ;
 
-    IconButton wifi0 = new IconButton("Images\\Icons\\wifi0.jpg", 20,14);
+    IconButton wifi0 = new IconButton("Images\\Icons\\wifi0.png", 18,18);
 
     private FlowLayout fl = new FlowLayout(0,100,0);
 
@@ -114,13 +114,21 @@ public class PanelEcranNorth extends JPanel{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                    //Test pour récupérer le signal
                     if (content.contains("Signal")) {
                         signal = content.substring(29, 31);
+                    }else{
+                        signal = "0" ;
                     }
+
+                    //Test pour récupérer le ssid
                     if (done == false) {
                         if (content.contains("SSID")) {
                             ssid = content.substring(29);
                             done = true;
+                        }else{
+                            ssid = "déconnecté" ;
                         }
                     }
                     //méthode qui modifie le logo du wifi selon le pourcentage de signal reçu
@@ -141,22 +149,22 @@ public class PanelEcranNorth extends JPanel{
 
         if (signal != "") {
             i = Integer.parseInt(signal);
-            //if (signal == " ") {
-                //wifi0.setNewLocation("Images\\Icons\\wifi0.jpg");
+            //if (signal == "0") {
+                //wifi0.setNewLocation("Images\\Icons\\wifi0.png");
                 if (i > 0) {
                     wifi0.setNewLocation("Images\\Icons\\wifi1.png");
-                    if (i > 25) {
+                    if (i >= 25) {
                         wifi0.setNewLocation("Images\\Icons\\wifi2.png");
-                        if (i > 50) {
+                        if (i >= 50) {
                             wifi0.setNewLocation("Images\\Icons\\wifi3.png");
-                            if (i > 80) {
+                            if (i >= 80) {
                                 wifi0.setNewLocation("Images\\Icons\\wifi4.png");
                             }
                         }
                     }
                 }
-            //} je vais tous vous torcher le cul
-        }
+            }
+        //}
         wifi0.repaint();
     }
 
