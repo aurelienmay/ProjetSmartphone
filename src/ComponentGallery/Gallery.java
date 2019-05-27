@@ -3,6 +3,7 @@ package ComponentGallery;
 import ComponentEcran.PanelEcranCenter;
 import ComponentIcon.IconButton;
 
+import javax.imageio.IIOException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -28,7 +29,6 @@ public class Gallery extends JPanel {
     JPanel panelWestofPanelNorth = new JPanel();
     JPanel panelEastofPanelNorth = new JPanel();
     JPanel panelCenterofPanelNorth = new JPanel();
-    JPanel freePanel = new JPanel();
 
     public JScrollPane scrollPane = new JScrollPane(panelCenter);
 
@@ -58,7 +58,7 @@ public class Gallery extends JPanel {
     IconButton i9 = new IconButton("Gallery\\i9.jpg");
     IconButton i10 = new IconButton("Gallery\\i10.jpg");
     IconButton i11 = new IconButton("Gallery\\i11.png");
-    IconButton i12 = new IconButton("Gallery\\i12.jpg");
+    IconButton i12 = new IconButton("Gallery\\i12.jpeg");
     IconButton i13 = new IconButton("Gallery\\i13.jpeg");
     IconButton i14 = new IconButton("Gallery\\i14.jpeg");
     IconButton i15 = new IconButton("Gallery\\i15.jpg");
@@ -96,12 +96,14 @@ public class Gallery extends JPanel {
         Object[] listeDeroulante = new Object[]{"1", "2", "3", "4"};
         list = new JComboBox(listeDeroulante);
         list.setSelectedIndex(1);
-        list.addActionListener(new listZoomListener());
+        list.addActionListener(new listListener());
         panelEastofPanelNorth.setPreferredSize(new Dimension(40,70));
         panelEastofPanelNorth.add(list, BorderLayout.EAST);
         panelNorth.add(panelEastofPanelNorth, BorderLayout.EAST);
 
         addPicturesToPanelCenter();
+
+        deletePictureBtn.addActionListener(new deletePictureBtnListener());
 
         panelNorth.setBackground(Color.WHITE);
         panelNorth.setOpaque(true);
@@ -141,7 +143,7 @@ public class Gallery extends JPanel {
         }
     }
 
-    class listZoomListener implements ActionListener {
+    class listListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
             listSelection = Integer.parseInt(list.getSelectedItem().toString());
             try {
@@ -218,6 +220,7 @@ public class Gallery extends JPanel {
                 if(o == pictures.get(i)){
                     pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
                     pictures.get(i).setBorderPainted(true);
+                    pictures.get(i).toBeDeleted = true ;
                 }
             }
 
@@ -227,7 +230,9 @@ public class Gallery extends JPanel {
     class deletePictureBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             for (int i=0; i<pictures.size(); i++){
-                pictures.get(i).getBorder();
+                if(pictures.get(i).toBeDeleted){
+                    deletePictureFile(pictures.get(i));
+                }
             }
         }
     }
@@ -238,6 +243,11 @@ public class Gallery extends JPanel {
             panelCenter.add(pictures.get(i));
 
         }
+    }
+
+    public void deletePictureFile(IconButton i){
+        File f = new File(i.getFileLocation());
+        f.delete();
     }
 
 }

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import ComponentIcon.*;
 
 public class IconPanel extends JPanel {
 
@@ -31,6 +32,7 @@ public class IconPanel extends JPanel {
         setPreferredSize(new Dimension(large, length));
         setOpaque(false);
     }
+
 
     public void paintComponent(Graphics g){
 

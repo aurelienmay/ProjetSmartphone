@@ -15,6 +15,7 @@ public class IconButton extends JButton {
     public int large;
     public int length;
     private String fileLocation = "";
+    public boolean toBeDeleted = false ;
 
     public int pictureLarge ;
     public int pictureLength ;
@@ -68,6 +69,8 @@ public class IconButton extends JButton {
         setOpaque(false);
     }
 
+    public String getFileLocation(){ return location; }
+
     public int getLarge(){
         return large;
     }
@@ -91,8 +94,6 @@ public class IconButton extends JButton {
             }
         }
     }
-
-
 
 }
 
