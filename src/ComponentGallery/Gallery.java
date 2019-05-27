@@ -47,22 +47,8 @@ public class Gallery extends JPanel {
 
     ArrayList<IconButton> pictures = new ArrayList<IconButton>();
 
-    IconButton i1 = new IconButton("Gallery\\i1.jpg");
-    IconButton i2 = new IconButton("Gallery\\i2.jpg");
-    IconButton i3 = new IconButton("Gallery\\i3.jpg");
-    IconButton i4 = new IconButton("Gallery\\i4.jpg");
-    IconButton i5 = new IconButton("Gallery\\i5.jpg");
-    IconButton i6 = new IconButton("Gallery\\i6.jpg");
-    IconButton i7 = new IconButton("Gallery\\i7.jpg");
-    IconButton i8 = new IconButton("Gallery\\i8.jpg");
-    IconButton i9 = new IconButton("Gallery\\i9.jpg");
-    IconButton i10 = new IconButton("Gallery\\i10.jpg");
-    IconButton i11 = new IconButton("Gallery\\i11.png");
-    IconButton i12 = new IconButton("Gallery\\i12.jpeg");
-    IconButton i13 = new IconButton("Gallery\\i13.jpeg");
-    IconButton i14 = new IconButton("Gallery\\i14.jpeg");
-    IconButton i15 = new IconButton("Gallery\\i15.jpg");
-    IconButton i16 = new IconButton("Gallery\\i16.jpg");
+    File galleryFolder = new File("Gallery");
+    String liste[] = galleryFolder.list();
 
     JComboBox list ;
 
@@ -71,7 +57,7 @@ public class Gallery extends JPanel {
         panelCenter.setLayout(new FlowLayout(15, 25, 15));
         panelWestofPanelNorth.setLayout(new FlowLayout(10,10,2));
 
-        pictures.addAll(Arrays.asList(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16));
+        createGalleryPictures(galleryFolder);
 
         addPictureBtn.addActionListener(new addPictureListener());
 
@@ -231,6 +217,12 @@ public class Gallery extends JPanel {
                     deletePictureFile(pictures.get(i));
                 }
             }
+            try {
+                updateScrollPane();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                System.out.println("Problème à la suppression.");
+            }
         }
     }
 
@@ -238,13 +230,29 @@ public class Gallery extends JPanel {
         for(int i=0; i<pictures.size(); i++){
             pictures.get(i).addActionListener(new pictureListener());
             panelCenter.add(pictures.get(i));
-
         }
     }
 
     public void deletePictureFile(IconButton i){
         File f = new File(i.getFileLocation());
         f.delete();
+    }
+
+    public void createGalleryPictures(File folder) throws IOException {
+        if (liste != null) {
+            for (int i = 0; i < liste.length; i++) {
+                String t = liste[i].substring(1);
+                pictures.add(new IconButton("Gallery\\i"+ t));
+            }
+        } else {
+            System.err.println("Nom de repertoire invalide");
+        }
+    }
+
+    public void updateScrollPane() throws IOException {
+        //suppression des données de l'arraylist pour mettre les nouvelles données
+        pictures.clear();
+        createGalleryPictures(galleryFolder);
     }
 
 }

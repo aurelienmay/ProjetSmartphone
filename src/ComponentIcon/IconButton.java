@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -89,6 +90,8 @@ public class IconButton extends JButton {
             try {
                 img = ImageIO.read(new File(fileLocation));
                 g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            } catch (IIOException e2){
+                //en cas de suppression d'image
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
