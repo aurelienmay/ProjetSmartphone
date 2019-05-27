@@ -1,19 +1,22 @@
 # ProjetSmartphone
 
 Heure de travail :
+
 Aurélien
  - 16h
- - 3h
  - 2h
  - 2h
- - 3h
- - 1h30
  - 6h
+ - 1h
+ - 1h
+ - 2h
  - 3h
- - 1h30
+ - 4h
+ - 3h
+ + heure de cours
  
  Léonard :
- - 3h
- - 1h30
- - 3h
- - 1h30
+ - 
+ - 
+ - 
+ + heure de cours

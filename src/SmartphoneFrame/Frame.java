@@ -1,7 +1,5 @@
 package SmartphoneFrame;
 
-import ComposantCalculatrice.Calculatrice;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,24 +7,28 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import ComposantEcran.*;
-import ComposantIcon.Icon;
+import ComponentEcran.*;
+import ComponentIcon.*;
 
     public class Frame extends JFrame {
-        //panels de la frame
+        //pannels of the frame
         JPanel panelSouth = new JPanel();
         JPanel panelNorth = new JPanel();
         JPanel panelWest = new JPanel();
         JPanel panelEast = new JPanel();
         JPanel panelEcran = new JPanel();
 
-        //Applications
-        Calculatrice calculatrice = new Calculatrice();
+        //button to go back to the application menu
+        IconButton homeButton = new IconButton("Images\\btnback.png", 77, 30);
+        JPanel panelNorthofPanelSouth = new JPanel();
+        JPanel panelNorthofPanelNorth = new JPanel();
+
+        IconButton shutdownBtn = new IconButton("Images\\Icons\\shutdown.png", 20, 20);
 
         PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
         PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
-        public Frame(){
+        public Frame() throws IOException {
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));
@@ -54,7 +56,23 @@ import ComposantIcon.Icon;
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
             panelEcran.add(panelEcranCenter, BorderLayout.CENTER);
 
-            //panelCenter.add(calculatrice); //tu peux supprimer ça si jms (c'est juste pour afficher la calculette
+            //Shutdown en haut de l'écran
+            panelNorthofPanelNorth.setOpaque(onoff);
+            panelNorthofPanelNorth.setPreferredSize(new Dimension(323, 25));
+            shutdownBtn.addActionListener(new btnShutDownListener());
+            panelNorth.add(panelNorthofPanelNorth, BorderLayout.NORTH);
+            panelNorth.add(shutdownBtn, BorderLayout.SOUTH);
+
+            //panelNorthOfPanelSouth parameters
+            panelNorthofPanelSouth.setBackground(new Color(0,0,0,0));
+            panelNorthofPanelSouth.setPreferredSize(new Dimension(323, 1));
+            panelSouth.add(panelNorthofPanelSouth, BorderLayout.NORTH);
+            panelSouth.add(homeButton, BorderLayout.CENTER);
+
+            //btnBack parameters
+            homeButton.addActionListener(new homeButtonListener());
+            homeButton.setHorizontalAlignment(0);
+            homeButton.setVerticalAlignment(0);
 
             //Ajout des panels au smartphone (frame)
             add(panelNorth, BorderLayout.NORTH);
@@ -79,16 +97,15 @@ import ComposantIcon.Icon;
             }
         }
 
-        class ShutDownListener implements ActionListener {
+        class homeButtonListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
-                System.exit(0);
+                panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
             }
         }
 
-        class CalculatriceListener implements ActionListener{
+        class  btnShutDownListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
-                //panelNorth.add(calculatrice);
-                //add(panelNorth, BorderLayout.NORTH);
+                System.exit(0);
             }
         }
 
