@@ -125,10 +125,7 @@ public class Gallery extends JPanel {
                 fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
                 int i=fc.showOpenDialog(null);
                 if(i==JFileChooser.APPROVE_OPTION){
-                File f = fc.getSelectedFile();
-                //filepath = f.getPath();
                 File selectedFile = fc.getSelectedFile();
-                //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 filepath = selectedFile.getAbsolutePath();
                 }
             }
