@@ -180,6 +180,80 @@ public class Gallery extends JPanel {
 
     public void adaptPanelLength(int listSelection){
         totalLength = 0 ;
+        for(int i=0; i<pictures.size(); i++){
+            //adaptPanel selon la listSelection (nombre de photo par ligne)
+            switch (listSelection){
+                case 1 :
+                    totalLength += pictures.get(i).length ;
+                    break;
+
+                case 2 :
+                    //test pour ne pas sortir de l'arrayList
+                    if(i < pictures.size()-1) {
+                        if(pictures.get(i).length > pictures.get(i+1).length) {
+                            totalLength += pictures.get(i).length;
+                        }
+                        else {
+                            totalLength += pictures.get(i+1).length;
+                        }
+                    }else {
+                        //Test si le nombre d'image est impaire (pour prendre la plus grande image de la dernière ligne)
+                        if(pictures.size()%2 != 0){
+                            totalLength += pictures.get(pictures.size()-1).length ;
+                        }else {
+                            if (pictures.get(pictures.size() - 2).length > pictures.get(pictures.size() - 1).length) {
+                                totalLength += pictures.get(pictures.size() - 2).length;
+                            } else {
+                                totalLength += pictures.get(pictures.size() - 1).length;
+                            }
+                        }
+                    }
+                    i++;
+                    break;
+
+                case 3 :
+                    if(i+1 < pictures.size()-1) {
+                        if (pictures.get(i).length > pictures.get(i + 1).length) {
+                            if (pictures.get(i).length > pictures.get(i + 2).length) {
+                                totalLength += pictures.get(i).length;
+                            } else {
+                                totalLength += pictures.get(i + 2).length;
+                            }
+                        }else {
+                            if (pictures.get(i + 1).length > pictures.get(i + 2).length) {
+                                totalLength += pictures.get(i + 1).length;
+                            }else{
+                                totalLength += pictures.get(i + 2).length;
+                            }
+                        }
+                    }else {
+                        if(pictures.size()%3 == 1) {
+                            totalLength += pictures.get(pictures.size()).length;
+                        }
+                        if(pictures.size()%3 == 2){
+                            if(pictures.get(pictures.size() - 1).length > pictures.get(pictures.size() - 2).length){
+                                totalLength += pictures.get(pictures.size() - 1).length;
+                            }else{
+                                totalLength += pictures.get(pictures.size() - 2).length;
+                            }
+                        }
+                        //if(pictures.size()%3 == 0)
+                    }
+                    i += 2;
+                    break;
+
+                case 4 :
+
+                    break;
+            }
+        }
+        totalLength += pictures.size()*marge + marge ;
+        panelCenter.setPreferredSize(new Dimension(panelCenterMaxLarge, totalLength));
+        panelCenter.revalidate();
+    }
+
+    public void adaptPanelLengthO(int listSelection){
+        totalLength = 0 ;
         for(int i=0; i<pictures.size(); i+=listSelection){
             totalLength += pictures.get(i).length ;
         }
