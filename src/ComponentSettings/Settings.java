@@ -216,12 +216,16 @@ public class Settings extends JPanel implements ListSelectionListener {
         }
     }
 
+    //------------------------------------------------------------------------
+
+    //SETTINGS GALLERY (CHANGE BACKGROUND)
     public class SettingsGallery extends JPanel{
 
         Gallery gallery = new Gallery();
 
-        JPanel panelCenter = new JPanel();
         JPanel panelNorth = new JPanel();
+
+        public JScrollPane scrollPane = new JScrollPane(gallery.panelCenter);
 
         IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
 
@@ -235,10 +239,12 @@ public class Settings extends JPanel implements ListSelectionListener {
 
             panelNorth.add(backBtn, BorderLayout.WEST);
             panelNorth.add(title, BorderLayout.NORTH);
-            panelCenter.add(gallery.scrollPane);
+
+            scrollPane.setBackground(Color.WHITE);
+            scrollPane.setOpaque(true);
 
             add(panelNorth, BorderLayout.NORTH);
-            add(panelCenter, BorderLayout.CENTER);
+            add(scrollPane, BorderLayout.CENTER);
         }
     }
 

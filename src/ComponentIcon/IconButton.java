@@ -76,6 +76,10 @@ public class IconButton extends JButton {
         return large;
     }
 
+    public boolean getToBeDeleted(){
+        return toBeDeleted;
+    }
+
     public int getLength(){
         return length;
     }
