@@ -10,63 +10,65 @@ import java.io.IOException;
 import ComponentEcran.*;
 import ComponentIcon.*;
 
+/**
+ * Frame est la classe principale du smartphone
+ * @author aurelienmay
+ * @version
+ */
+    @SuppressWarnings("JavaDoc")
     public class Frame extends JFrame {
-        //pannels of the frame
-        JPanel panelSouth = new JPanel();
-        JPanel panelNorth = new JPanel();
-        JPanel panelWest = new JPanel();
-        JPanel panelEast = new JPanel();
-        JPanel panelEcran = new JPanel();
 
-        //button to go back to the application menu
-        IconButton homeButton = new IconButton("Images\\btnback.png", 77, 30);
-        JPanel panelNorthofPanelSouth = new JPanel();
-        JPanel panelNorthofPanelNorth = new JPanel();
+    private final PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
-        IconButton shutdownBtn = new IconButton("Images\\Icons\\shutdown.png", 20, 20);
-
-        PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
-        PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
-
-        public Frame() throws IOException {
+    /**
+     * Création de la frame principale
+     */
+        public Frame(){
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));
 
-            //set les différents Layout
+            JPanel panelEcran = new JPanel();
             panelEcran.setLayout(new BorderLayout());
 
-            //Ajout du background, contour du smartphone
             backgroundImage();
 
-            //Tracement des panels nord, est, ouest et sud ; pour
-            boolean onoff = false ;
-            panelEcran.setOpaque(onoff);
+            //Tracement des panels nord, est, ouest et sud
+            panelEcran.setOpaque(false);
             panelEcran.setBackground(new Color(0,0,0,0));
-            panelNorth.setOpaque(onoff);
+            JPanel panelNorth = new JPanel();
+            panelNorth.setOpaque(false);
             panelNorth.setPreferredSize(new Dimension(323, 65));
-            panelWest.setOpaque(onoff);
+            JPanel panelWest = new JPanel();
+            panelWest.setOpaque(false);
             panelWest.setPreferredSize(new Dimension(13,100));
-            panelEast.setOpaque(onoff);
+            JPanel panelEast = new JPanel();
+            panelEast.setOpaque(false);
             panelEast.setPreferredSize(new Dimension(12, 100));
-            panelSouth.setOpaque(onoff);
+            JPanel panelSouth = new JPanel();
+            panelSouth.setOpaque(false);
             panelSouth.setPreferredSize(new Dimension(323, 57));
 
             //Ajout du panel écran centre (application) et le panel écran nord (barre de contrôle)
+            PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
             panelEcran.add(panelEcranNorth, BorderLayout.NORTH);
             panelEcran.add(panelEcranCenter, BorderLayout.CENTER);
 
             //Shutdown en haut de l'écran
-            panelNorthofPanelNorth.setOpaque(onoff);
+            JPanel panelNorthofPanelNorth = new JPanel();
+            panelNorthofPanelNorth.setOpaque(false);
             panelNorthofPanelNorth.setPreferredSize(new Dimension(323, 25));
+            IconButton shutdownBtn = new IconButton("Images\\Icons\\shutdown.png", 20, 20);
             shutdownBtn.addActionListener(new btnShutDownListener());
             panelNorth.add(panelNorthofPanelNorth, BorderLayout.NORTH);
             panelNorth.add(shutdownBtn, BorderLayout.SOUTH);
 
             //panelNorthOfPanelSouth parameters
+            JPanel panelNorthofPanelSouth = new JPanel();
             panelNorthofPanelSouth.setBackground(new Color(0,0,0,0));
             panelNorthofPanelSouth.setPreferredSize(new Dimension(323, 1));
             panelSouth.add(panelNorthofPanelSouth, BorderLayout.NORTH);
+            IconButton homeButton = new IconButton("Images\\btnback.png", 77, 30);
             panelSouth.add(homeButton, BorderLayout.CENTER);
 
             //btnBack parameters
@@ -84,7 +86,10 @@ import ComponentIcon.*;
             pack();
         }
 
-        public void backgroundImage(){
+    /**
+     * Méthode qui ajoute le fond d'écran de la frame (tour du smartphone)
+     */
+    private void backgroundImage(){
             try {
                 Image backgroundImage = javax.imageio.ImageIO.read(new File("Images\\Smartphone.png"));
                 setContentPane(new JPanel(new BorderLayout()) {
@@ -97,12 +102,18 @@ import ComponentIcon.*;
             }
         }
 
+    /**
+     * Listener du bouton home (revenir au menu)
+     */
         class homeButtonListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
                 panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
             }
         }
 
+    /**
+     * Listener du bouton éteindre
+     */
         class  btnShutDownListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 System.exit(0);

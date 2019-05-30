@@ -1,8 +1,8 @@
 package ComponentGallery;
 
 import ComponentIcon.IconButton;
-import ComponentGallery.*;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -13,40 +13,34 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ * Class Gallery, application Gallery
+ */
 public class Gallery extends JPanel {
 
-    Font policeTitre = new Font("Arial", Font.BOLD, 40);
+    public final JPanel panelCenter = new JPanel();
 
-    public JPanel panelCenter = new JPanel();
-    public JPanel panelNorth = new JPanel();
-
-    JPanel panelWestofPanelNorth = new JPanel();
-    JPanel panelEastofPanelNorth = new JPanel();
-    JPanel panelCenterofPanelNorth = new JPanel();
-
-    public JScrollPane scrollPane = new JScrollPane(panelCenter);
-
-    public JLabel title = new JLabel("Gallerie", JLabel.CENTER);
-    IconButton addPictureBtn = new IconButton("Images\\Icons\\add-image.png", 30,30);
-    IconButton deletePictureBtn = new IconButton("Images\\Icons\\delete.png", 30,30);
+    private final IconButton addPictureBtn = new IconButton("Images\\Icons\\add-image.png", 30,30);
 
     private int large = 90 ;
-    private int length = 150 ;
-    double percentage ;
-    private int compteur ;
-    private int panelCenterMaxLarge = 280 ;
     private int totalLength ;
     private int marge = 11 ;
     private int listSelection = 2 ;
 
-    ArrayList<IconButton> pictures = new ArrayList<IconButton>();
+    private final ArrayList<IconButton> pictures = new ArrayList<>();
 
-    JComboBox list ;
+    private final JComboBox list ;
 
-    public Gallery() throws IOException {
+    /**
+     * Constructeur de la Gallery
+     */
+    @SuppressWarnings("MagicConstant")
+    public Gallery() {
         setLayout(new BorderLayout());
         panelCenter.setLayout(new FlowLayout(15, 25, 15));
+        JPanel panelWestofPanelNorth = new JPanel();
         panelWestofPanelNorth.setLayout(new FlowLayout(10,10,2));
 
         createGalleryPictures();
@@ -56,14 +50,19 @@ public class Gallery extends JPanel {
         //West of panelNorth
         panelWestofPanelNorth.setBackground(Color.WHITE);
         panelWestofPanelNorth.add(addPictureBtn);
+        IconButton deletePictureBtn = new IconButton("Images\\Icons\\delete.png", 30, 30);
         panelWestofPanelNorth.add(deletePictureBtn);
         panelWestofPanelNorth.setPreferredSize(new Dimension(40,70));
         //panelWestofPanelNorth.setBackground(new Color(0,0,0,0));
         panelWestofPanelNorth.setOpaque(true);
+        JPanel panelNorth = new JPanel();
         panelNorth.add(panelWestofPanelNorth, BorderLayout.WEST);
 
         //Center of panelNorth
+        JLabel title = new JLabel("Gallerie", JLabel.CENTER);
+        Font policeTitre = new Font("Arial", Font.BOLD, 40);
         title.setFont(policeTitre);
+        JPanel panelCenterofPanelNorth = new JPanel();
         panelCenterofPanelNorth.setBackground(Color.WHITE);
         panelCenterofPanelNorth.setPreferredSize(new Dimension(188,70));
         panelCenterofPanelNorth.setLayout(new FlowLayout(10,20,12));
@@ -75,6 +74,7 @@ public class Gallery extends JPanel {
         list = new JComboBox(listeDeroulante);
         list.setSelectedIndex(1);
         list.addActionListener(new listListener());
+        JPanel panelEastofPanelNorth = new JPanel();
         panelEastofPanelNorth.setPreferredSize(new Dimension(40,70));
         panelEastofPanelNorth.add(list, BorderLayout.EAST);
         panelNorth.add(panelEastofPanelNorth, BorderLayout.EAST);
@@ -85,6 +85,7 @@ public class Gallery extends JPanel {
 
         panelNorth.setBackground(Color.WHITE);
         panelNorth.setOpaque(true);
+        JScrollPane scrollPane = new JScrollPane(panelCenter);
         scrollPane.setBackground(Color.WHITE);
         scrollPane.setOpaque(true);
 
@@ -94,7 +95,18 @@ public class Gallery extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Listener du bouton d'ajout d'une image
+     */
     class addPictureListener implements ActionListener{
+        /**
+         * Méthode qui va donner la possibilité à l'utilisateur d'ajouter
+         * une image (IconButton) qui sera copiée et renommée dans le dossier
+         * du projet
+         * Fait appelle à copyFile, adaptPictureLength et adaptPanelLength
+         *
+         * @param e event du bouton
+         */
         public void actionPerformed(ActionEvent e){
             String sourcePath = "" ;
             String fileType = "" ;
@@ -110,16 +122,21 @@ public class Gallery extends JPanel {
                 sourcePath = selectedFile.getAbsolutePath();
                 }
             }
-            compteur = pictures.size() ;
+            int compteur = pictures.size();
             try {
                 pictures.add(new IconButton(sourcePath));
                 adaptPictureLength(large, compteur);
                 panelCenter.add(pictures.get(compteur));
-            }catch (IOException io){}
+            }catch (IOException io){
+                System.out.println("Impossible d'ajouter l'image à la gallerie.");
+            }
             
             File source = new File(sourcePath);
-            //File destination = new File("Gallery\\i" + compteur + fileType);
-            fileDestination = "Gallery\\i" + compteur + fileType.substring(fileType.lastIndexOf("."),fileType.length()) ;
+            try {
+                fileDestination = "Gallery\\i" + compteur + fileType.substring(fileType.lastIndexOf("."));
+            }catch (StringIndexOutOfBoundsException s){
+                System.out.println("Impossible de créer la destination du fichier.");
+            }
             File destination = new File(fileDestination);
             copyFile(source, destination);
 
@@ -127,14 +144,24 @@ public class Gallery extends JPanel {
         }
     }
 
+    /**
+     * Listener de la list selon l'affichage choisir par l'utilisateur
+     */
     class listListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            listSelection = Integer.parseInt(list.getSelectedItem().toString());
+            listSelection = Integer.parseInt(Objects.requireNonNull(list.getSelectedItem()).toString());
             setPicturesDisposition(listSelection);
         }
     }
 
-    public void setPicturesDisposition(int listSelection){
+    /**
+     * Met à jour la disposition des images sur le panel selon la list choisi
+     * et qui fait appelle aux méthode adapatPictureLength, pictureToBeDeleted
+     * et adaptPanelLength
+     *
+     * @param listSelection numéro de la liste choisi par l'utilisateur
+     */
+    private void setPicturesDisposition(int listSelection){
         try {
             switch (listSelection){
                 case 3 :
@@ -173,13 +200,26 @@ public class Gallery extends JPanel {
                     adaptPanelLength(listSelection);
                     break;
             }
-        }catch (NullPointerException io){ }
+        }catch (NullPointerException io){
+            io.printStackTrace();
+        }
     }
 
-    public void adaptPanelLength(int listSelection){
+    /**
+     * Méthode qui adapat la longueur du panel (pour la scrollPane)
+     * selon la longueur des images et du choix d'affichage de l'utilisateur
+     *
+     * @param listSelection numéro de la liste choisi par l'utilisateur
+     */
+    private void adaptPanelLength(int listSelection){
         totalLength = 0 ;
         for(int i=0; i<pictures.size(); i++){
-            //adaptPanel selon la listSelection (nombre de photo par ligne)
+            /*
+            adaptPanel selon la listSelection (nombre de photo par ligne)
+            le switch va regarder le numéro de la liste sélectionné
+            puis va compter l'image la plus longue de chaque ligne
+            */
+
             switch (listSelection){
                 case 1 :
                     totalLength += pictures.get(i).length ;
@@ -249,11 +289,16 @@ public class Gallery extends JPanel {
             }
         }
         totalLength += pictures.size()*marge + marge ;
+        int panelCenterMaxLarge = 280;
         panelCenter.setPreferredSize(new Dimension(panelCenterMaxLarge, totalLength));
         panelCenter.revalidate();
     }
 
-    //Test utilisé dans plusieurs case (switch), éviter les doublures
+    /**
+     * Méthode qui test la dernière et l'avant dernière image
+     * Eviter les doublures car code identique à deux endroit de la
+     * méthode ci-dessus : adaptPanelLength
+     */
     private void testLastAndBeforeLast() {
         if (pictures.get(pictures.size()-2).length > pictures.get(pictures.size()-1).length) {
             totalLength += pictures.get(pictures.size()-2).length;
@@ -262,132 +307,155 @@ public class Gallery extends JPanel {
         }
     }
 
-    //Méthode qui adapt la taille de l'image selon la listSelection de l'utilisation
-    //Les images ont toutes la même largeur mais longueur différente d'où ce calcul qui taille l'image selon sa taille réelle
-    public int adaptPictureLength(int large, int i){
-        percentage = large*100/pictures.get(i).pictureLarge;
-        length = (int) (pictures.get(i).pictureLength*(percentage/100));
+    /**
+     * Met à jour la taille (longueur) du panel selon le choix de l'utilisateur
+     * Les images ont toutes la même largeur mais longueur différente d'où ce
+     * calcul qui taille l'image selon sa taille réelle
+     *
+     * @param large largueur de l'image prédéfinie (selon le choix)
+     * @param i "numéro" de l'image
+     */
+    private void adaptPictureLength(int large, int i){
+        double percentage = large * 100 / pictures.get(i).pictureLarge;
+        int length = (int) (pictures.get(i).pictureLength * (percentage / 100));
         pictures.get(i).setIconButtonSize(large, length);
-        return length ;
     }
 
-    //Listener de l'IconButton (l'image) qui entoure l'image en rouge (set la bordure en rouge) image qu'on souhaite supprimé
+    /**
+     * Class Listener de l'IconButton (image)
+     * Entoure l'image en rouge (image à supprimée)
+     */
     class pictureListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Object o = e.getSource();
 
-            for(int i=0; i<pictures.size(); i++){
-                if(o == pictures.get(i)){
-                    if(pictures.get(i).toBeDeleted){
-                        pictures.get(i).setBorderPainted(false);
-                        pictures.get(i).toBeDeleted = false ;
-                    }else{
-                        pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
-                        pictures.get(i).setBorderPainted(true);
-                        pictures.get(i).toBeDeleted = true ;
+            for (IconButton picture : pictures) {
+                if (o == picture) {
+                    if (picture.toBeDeleted) {
+                        picture.setBorderPainted(false);
+                        picture.toBeDeleted = false;
+                    } else {
+                        picture.setBorder(BorderFactory.createLineBorder(Color.RED));
+                        picture.setBorderPainted(true);
+                        picture.toBeDeleted = true;
                     }
                 }
             }
         }
     }
 
-    //Méthode qui garde l'image entouré en rouge (bordure en rouge) même lors de changement d'application (mais pas lors de shut down du smartphone, pas très utile de stocké cette information)
-    public void pictureToBeDeleted(int i){
+    /**
+     * Méthode qui garde l'image entouré en rouge (bordure en rouge) même
+     * lors de changement d'application (mais pas lors de shut down du
+     * smartphone, pas très utile de stocké cette information)
+     *
+     * @param i "numéro" de l'image
+     */
+    private void pictureToBeDeleted(int i){
             if(pictures.get(i).toBeDeleted){
                 pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
                 pictures.get(i).setBorderPainted(true);
             }
     }
 
-    //Listener du bouton corbeille, qui fait appelle à la méthode updatePanelCenter
+    /**
+     * Classe Listener du bouton corbeille
+     * Fait appelle à la méthode deletePictureFile et updatePanelCenter
+     */
     class deletePictureBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
-            for (int i=0; i<pictures.size(); i++){
-                if(pictures.get(i).toBeDeleted){
-                    deletePictureFile(pictures.get(i));
+            for (IconButton picture : pictures) {
+                if (picture.toBeDeleted) {
+                    deletePictureFile(picture);
                 }
             }
             updatePanelCenter();
         }
     }
 
-    //Méthode qui supprime le fichier (l'image) dans le dossier Gallery du projet
-    public void deletePictureFile(IconButton i){
+    /**
+     * Méthode qui supprime le fichier (l'image) dans le dossier Gallery du projet
+     *
+     * @param i "numéro" de l'image
+     */
+    private void deletePictureFile(IconButton i){
         File f = new File(i.getFileLocation());
         f.delete();
     }
 
-    //Méthode qui update le panelCenter, seulement lors de suppression d'images !
-    public void updatePanelCenter(){
+    /**
+     * Met à jour le panelCenter en appelant les méthodes :
+     * - createGalleryPictures
+     * - addPicturesToPanelCenter
+     * - setPicturesDisposition
+     * Méthode utilisée lors de la suppression d'une image
+     */
+    private void updatePanelCenter(){
         pictures.clear();
         panelCenter.removeAll();
-        try {
-            createGalleryPictures();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Problème à la méthode updateScrollPane.");
-        }
+        createGalleryPictures();
         addPicturesToPanelCenter();
         setPicturesDisposition(listSelection);
     }
 
-    //Méthode qui ajoute les images au panelCenter
-    public void addPicturesToPanelCenter(){
-        for(int i=0; i<pictures.size(); i++){
-            pictures.get(i).addActionListener(new pictureListener());
-            panelCenter.add(pictures.get(i));
+    /**
+     * Ajoute les images au panelCenter
+     */
+    private void addPicturesToPanelCenter(){
+        for (IconButton picture : pictures) {
+            picture.addActionListener(new pictureListener());
+            panelCenter.add(picture);
         }
     }
 
-    //Méthode qui crée la gallery et l'ajoute au tableau pictures (qui est ensuite ajouté au panel méthode au dessus^^^)
-    public void createGalleryPictures() throws IOException {
+    /**
+     * Création de la gallery selon les images dans le dossier Gallery
+     */
+    private void createGalleryPictures(){
         File galleryFolder = new File("Gallery");
-        String liste[] = galleryFolder.list();
+        String[] liste = galleryFolder.list();
 
         if (liste != null) {
-            for (int i = 0; i < liste.length; i++) {
-                String t = liste[i].substring(1);
-                pictures.add(new IconButton("Gallery\\i"+ t));
+            for (String s : liste) {
+                String t = s.substring(1);
+                try {
+                    pictures.add(new IconButton("Gallery\\i" + t));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             System.err.println("Nom de repertoire invalide");
         }
     }
 
+    /**
+     * Méthode qui copie le file sélectionné et le dépose dans le dossier
+     * Gallery du projet
+     *
+     * @param source source du fichier
+     * @param destination destination du fichier
+     */
     //Méthode qui copie l'image selectionné par l'utilisateur pour la mettre dans le dossier Gallery
-    public boolean copyFile(File source, File destination){
+    private void copyFile(File source, File destination){
         try {
             // Declaration et ouverture des flux
-            java.io.FileInputStream sourceFile = new java.io.FileInputStream(source);
 
-            try {
-                java.io.FileOutputStream destinationFile = null;
-
-                try {
-                    destinationFile = new FileOutputStream(destination);
-
+            try (java.io.FileInputStream sourceFile = new java.io.FileInputStream(source)) {
+                try (FileOutputStream destinationFile = new FileOutputStream(destination)) {
                     // Lecture par segment de 0.5Mo
-                    byte buffer[] = new byte[512 * 1024];
+                    byte[] buffer = new byte[512 * 1024];
                     int nbLecture;
-
                     while ((nbLecture = sourceFile.read(buffer)) != -1) {
                         destinationFile.write(buffer, 0, nbLecture);
                     }
-                } finally {
-                    destinationFile.close();
                 }
-            } finally {
-                sourceFile.close();
             }
         }catch (FileNotFoundException f){
-            f.printStackTrace();
+            System.out.println("Impossible de copier le fichier.");
         } catch (IOException e){
             e.printStackTrace();
-            return false; // Erreur
         }
-
-        return true; // Résultat OK
     }
 
 }

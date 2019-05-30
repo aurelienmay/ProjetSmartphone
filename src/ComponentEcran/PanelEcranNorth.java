@@ -1,7 +1,6 @@
 package ComponentEcran;
 
 import ComponentIcon.IconButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,40 +12,43 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
+/**
+ * Class PanelEcranNorth (barre de "tâche" au sommet de l'écran
+ *
+ * @author aurelienmay
+ * @version 12.0
+ */
 public class PanelEcranNorth extends JPanel{
 
-    private Font police = new Font("Arial", Font.BOLD, 13);
+    private final JLabel reseau = new JLabel("", JLabel.LEFT);
+    private final JLabel heure = new JLabel("", JLabel.CENTER);
 
-    private Dimension dimReseau = new Dimension(123, 18);
-    private Dimension dimHeure = new Dimension(51, 18);
-    private Dimension dimBatterie = new Dimension(123, 18);
-
-    private JLabel reseau = new JLabel("", JLabel.LEFT);
-    private JLabel heure = new JLabel("", JLabel.CENTER);
-    private JLabel batterie = new JLabel("batterie", JLabel.RIGHT);
-
-    boolean clicHeure = true ;
-
-    private JPanel panelEast = new JPanel();
+    private boolean clicHeure = true ;
 
     private String content = "" ;
     private String ssid = "" ;
-    private String signal = "" ;
 
-    IconButton wifi0 = new IconButton("Images\\Icons\\wifi0.png", 18,18);
+    private final IconButton wifi0 = new IconButton("Images\\Icons\\wifi0.png", 18,18);
 
-    private FlowLayout fl = new FlowLayout(0,100,0);
-
+    /**
+     * Constructeur
+     */
     public PanelEcranNorth(){
         setLayout(new BorderLayout());
         setBackground(Color.lightGray);
         setOpaque(true);
 
+        Dimension dimReseau = new Dimension(123, 18);
         reseau.setPreferredSize(dimReseau);
+        Dimension dimHeure = new Dimension(51, 18);
         heure.setPreferredSize(dimHeure);
+        JPanel panelEast = new JPanel();
+        Dimension dimBatterie = new Dimension(123, 18);
         panelEast.setPreferredSize(dimBatterie);
 
+        Font police = new Font("Arial", Font.BOLD, 13);
         reseau.setFont(police);
         reseau.setForeground(Color.black);
         reseau.setBackground(Color.WHITE);
@@ -55,7 +57,7 @@ public class PanelEcranNorth extends JPanel{
         heure.setFont(police);
         heure.setBackground(Color.white);
         heure.setOpaque(true);
-        heure.addMouseListener(new sourisListenerHeure());
+        heure.addMouseListener(new mouseListenerHeure());
 
         //batterie.setFont(police);
         //batterie.setBackground(Color.WHITE);
@@ -63,41 +65,42 @@ public class PanelEcranNorth extends JPanel{
         panelEast.setBackground(Color.white);
         panelEast.setOpaque(true);
 
-        clock.start();
-        clockSS.start();
-        updateSignal.start();
-
-        panelEast.setLayout(fl);
-        panelEast.add(wifi0);
-
-        this.add(heure, BorderLayout.CENTER);
-        this.add(reseau, BorderLayout.WEST);
-        this.add(panelEast, BorderLayout.EAST);
-    }
-
-    class sourisListenerHeure implements MouseListener {
-        int cpt = 0 ;
-        public void mouseClicked(MouseEvent e) {
-            //System.out.println(e.getX() + " " + e.getY());
-            //if(e.getX()>136 && e.getX()<162 && e.getY()>3 && e.getY()<9) {
-                if(cpt==0) {
-                    clicHeure = false;
-                    cpt++;
-                }else{
-                    clicHeure=true;
-                    cpt=0;
+        //Mise à jour de l'heure
+        Thread clock = new Thread(() -> {
+            while (true) {
+                Date dateHH_mm = new Date();
+                SimpleDateFormat dateFormat;
+                dateFormat = new SimpleDateFormat("HH:mm");
+                String t = "" + dateFormat.format(dateHH_mm);
+                if (clicHeure)
+                    heure.setText(t);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ignored) {
                 }
-            //}
-        }
-        public void mousePressed(MouseEvent e) {}
-        public void mouseReleased(MouseEvent e) {}
-        public void mouseEntered(MouseEvent e) {}
-        public void mouseExited(MouseEvent e) {}
-    }
+            }
+        });
+        clock.start();
 
-    Thread updateSignal = new Thread() {
-        @Override
-        public void run() {
+        //Mise à jour de l'heure en seconde
+        Thread clockSS = new Thread(() -> {
+            while (true) {
+                Date dateHH_mm_ss = new Date();
+                SimpleDateFormat dateFormat;
+                dateFormat = new SimpleDateFormat("HH:mm:ss");
+                String t = "" + dateFormat.format(dateHH_mm_ss);
+                if (!clicHeure)
+                    heure.setText(t);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        });
+        clockSS.start();
+
+        //Met à jour le signal réseau
+        Thread updateSignal = new Thread(() -> {
             Process p = null;
             boolean done = false;
 
@@ -107,19 +110,20 @@ public class PanelEcranNorth extends JPanel{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(p).getInputStream()));
                 while (true) {
                     try {
-                        if (!((content = reader.readLine()) != null)) break;
+                        if ((content = reader.readLine()) == null) break;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     //Test pour récupérer le signal
+                    String signal;
                     if (content.contains("Signal")) {
                         signal = content.substring(29, 31);
-                    }else{
-                        signal = "0" ;
+                    } else {
+                        signal = "0";
                     }
 
                     //Test pour récupérer le ssid
@@ -127,27 +131,60 @@ public class PanelEcranNorth extends JPanel{
                         if (content.contains("SSID")) {
                             ssid = content.substring(29);
                             done = true;
-                        }else{
-                            ssid = "déconnecté" ;
+                        } else {
+                            ssid = "déconnecté";
                         }
                     }
                     //méthode qui modifie le logo du wifi selon le pourcentage de signal reçu
                     setSignalIcon(signal);
                     reseau.setText(ssid);
                     try {
-                        sleep(200);
-                    } catch (InterruptedException ie) {
+                        Thread.sleep(200);
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }
+        });
+        updateSignal.start();
+
+        FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 100, 0);
+        panelEast.setLayout(fl);
+        panelEast.add(wifi0);
+
+        this.add(heure, BorderLayout.CENTER);
+        this.add(reseau, BorderLayout.WEST);
+        this.add(panelEast, BorderLayout.EAST);
+    }
+
+    /**
+     * Class Listener en cas de clic sur l'heure
+     */
+    class mouseListenerHeure implements MouseListener {
+        int cpt = 0 ;
+        public void mouseClicked(MouseEvent e) {
+            if(cpt==0) {
+                clicHeure = false;
+                cpt++;
+            }else{
+                clicHeure=true;
+                cpt=0;
+            }
         }
+        public void mousePressed(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
+    }
 
-    };
-
-    public void setSignalIcon(String signal){
+    /**
+     * Met à jour le logo du wi-fi (signal)
+     *
+     * @param signal signal récupéré
+     */
+    private void setSignalIcon(String signal){
         int i;
 
-        if (signal != "") {
+        if (!Objects.equals(signal, "")) {
             i = Integer.parseInt(signal);
             //if (signal == "0") {
                 //wifi0.setNewLocation("Images\\Icons\\wifi0.png");
@@ -168,39 +205,4 @@ public class PanelEcranNorth extends JPanel{
         wifi0.repaint();
     }
 
-    Thread clock = new Thread() {
-        @Override
-        public void run() {
-            while (true) {
-                Date dateHH_mm = new Date();
-                SimpleDateFormat dateFormat ;
-                dateFormat = new SimpleDateFormat("HH:mm");
-                String t = "" + dateFormat.format(dateHH_mm) ;
-                if(clicHeure)
-                    heure.setText(t);
-                try {
-                    sleep(10);
-                } catch (InterruptedException ie) {
-                }
-            }
-        }
-    };
-
-    Thread clockSS = new Thread() {
-        @Override
-        public void run() {
-            while (true) {
-                Date dateHH_mm_ss = new Date();
-                SimpleDateFormat dateFormat ;
-                dateFormat = new SimpleDateFormat("HH:mm:ss");
-                String t = "" + dateFormat.format(dateHH_mm_ss) ;
-                if(!clicHeure)
-                    heure.setText(t);
-                try {
-                    sleep(10);
-                } catch (InterruptedException ie) {
-                }
-            }
-        }
-    };
 }

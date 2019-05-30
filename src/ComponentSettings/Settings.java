@@ -6,76 +6,85 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
+import java.util.Objects;
 import ComponentEcran.PanelEcranCenter;
 import ComponentGallery.Gallery;
 import ComponentIcon.*;
 
+/**
+ * Class Settings, application Settings
+ *
+ * @author aurelienmay
+ * @version 12.0
+ */
 public class Settings extends JPanel implements ListSelectionListener {
 
-    Font policeTitre = new Font("Arial", Font.BOLD, 50);
-    Font policeCaracter = new Font("Arial", Font.BOLD, 18);
-    Font titleFont = new Font("Arial", Font.BOLD, 20);
+    private final Font titleFont = new Font("Arial", Font.BOLD, 20);
 
-    JLabel settingsName = new JLabel("Settings");
+    private final JPanel panelCenter = new JPanel();
 
-    JPanel cardSettings = new JPanel();
-    Informations cardInformations = new Informations();
-    Wallpaper cardWallpaper = new Wallpaper();
-    JPanel cardGallery = new SettingsGallery();
-    Gallery gallery = new Gallery();
+    private final String[] settingsListContent = {"Informations système", "Gallery"};
 
-    JPanel panelNorth = new JPanel();
-    JPanel panelCenter = new JPanel();
+    @SuppressWarnings("unchecked")
+    private final JList settingsList = new JList(settingsListContent);
 
-    String settingsList[]= {"Informations système", "Changer le fond d'écran", "Gallery"};
+    private final CardLayout cardManager = new CardLayout();
 
-    JList list = new JList(settingsList);
-
-    JPanel panelWest = new JPanel();
-    Dimension westEastEmptyPannelDim = new Dimension(10,200);
-
-    CardLayout cardManager = new CardLayout();
-
-    public Settings() throws IOException {
+    /**
+     * Constructeur de l'application Settings
+     */
+    public Settings(){
         setLayout(new BorderLayout());
         panelCenter.setLayout(cardManager);
 
-        //North Panel
-        settingsName.setFont(policeTitre);
-        list.addListSelectionListener(this::valueChanged);
-        list.setFont(policeCaracter);
-
+        //paramètre du panelNorth
+        Font mainFontTitle = new Font("Arial", Font.BOLD, 50);
+        JLabel settingsName = new JLabel("Réglages");
+        settingsName.setFont(mainFontTitle);
+        JPanel panelNorth = new JPanel();
         panelNorth.add(settingsName, BorderLayout.NORTH);
 
-        cardSettings.add(panelNorth, BorderLayout.NORTH);
-        cardSettings.add(list, BorderLayout.CENTER);
+        //paramètre du panelCenter
+        settingsList.addListSelectionListener(this);
+        Font fontCharacter = new Font("Arial", Font.BOLD, 18);
+        settingsList.setFont(fontCharacter);
 
+        //Ajout des panels à la "card" settings (CardLayout)
+        JPanel cardSettings = new JPanel();
+        cardSettings.add(panelNorth, BorderLayout.NORTH);
+        cardSettings.add(settingsList, BorderLayout.CENTER);
+
+        //Ajout des cards au panelCenter
         panelCenter.add(cardSettings, "settings");
+        Informations cardInformations = new Informations();
         panelCenter.add(cardInformations, "informations");
-        panelCenter.add(cardWallpaper, "wallpaper");
+        JPanel cardGallery = new SettingsGallery();
         panelCenter.add(cardGallery, "gallery");
 
         add(panelCenter, BorderLayout.CENTER);
-        //add(panelNorth, BorderLayout.NORTH);
     }
 
+    /**
+     * Listener de la liste selon le choix de l'utilisateur
+     *
+     * @param e ListSelectionEvent
+     */
     public void valueChanged(ListSelectionEvent e){
-        String t = list.getSelectedValue().toString();
-        if(t == "Informations système"){
+        String t = settingsList.getSelectedValue().toString();
+        if(Objects.equals(t, "Informations système")){
             cardManager.show(panelCenter, "informations");
         }
-        if(t == "Changer le fond d'écran"){
-            cardManager.show(panelCenter, "wallpaper");
-        }
-        if(t == "Gallery"){
+        if(Objects.equals(t, "Gallery")){
             cardManager.show(panelCenter, "gallery");
         }
     }
 
+    /**
+     * Listener du bouton back au sommet de la page lorsque l'utilisateur
+     * est dans un onglet selectionné auparavant
+     */
     class btnBackListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             cardManager.show(panelCenter, "settings");
@@ -84,30 +93,34 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     //------------------------------------------------------------------------
 
-    //INFORMATIONS SYSTEME
-    public class Informations extends JPanel {
+    /**
+     * Class Informations qui contient diverses informations (pour information)
+     */
+    class Informations extends JPanel {
 
-        Font policeCaracter = new Font("Arial", Font.BOLD, 14);
-        Font createdBy = new Font("Arial", Font.BOLD, 16);
+        final JLabel text = new JLabel("Crée par :", JLabel.CENTER);
+        final JLabel creator1 = new JLabel("Aurélien May", JLabel.CENTER);
+        final JLabel creator2 = new JLabel("Léonard Favre", JLabel.CENTER);
+        final JLabel host = new JLabel(getHost(), JLabel.CENTER);
+        final JLabel ip = new JLabel(getIP(), JLabel.CENTER);
 
-        JLabel text = new JLabel("Crée par :", JLabel.CENTER);
-        JLabel creator1 = new JLabel("Aurélien May", JLabel.CENTER);
-        JLabel creator2 = new JLabel("Léonard Favre", JLabel.CENTER);
-        JLabel host = new JLabel(getHost(), JLabel.CENTER);
-        JLabel ip = new JLabel(getIP(), JLabel.CENTER);
+        final JLabel title = new JLabel("Informations système");
 
-        JLabel title = new JLabel("Informations système");
+        final JPanel panelCenter = new JPanel();
+        final JPanel panelNorth = new JPanel();
 
-        JPanel panelCenter = new JPanel();
-        JPanel panelNorth = new JPanel();
+        final IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
 
-        IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
-
-        public Informations(){
+        /**
+         * Constructeur du panel Informations
+         */
+        Informations(){
             setLayout(new BorderLayout());
 
             //Smartphone informations
+            Font createdBy = new Font("Arial", Font.BOLD, 16);
             text.setFont(createdBy);
+            Font policeCaracter = new Font("Arial", Font.BOLD, 14);
             creator1.setFont(policeCaracter);
             creator2.setFont(policeCaracter);
 
@@ -129,75 +142,44 @@ public class Settings extends JPanel implements ListSelectionListener {
             add(panelCenter, BorderLayout.CENTER);
         }
 
-        public String getHost(){
+        /**
+         * Retourne le nom de l'host (de la machine)
+         *
+         * @return le nom de l'host
+         */
+        private String getHost(){
             String host = "";
             try {
                 InetAddress inetadr = InetAddress.getLocalHost();
                 //nom de l'host
-                host = (String) inetadr.getHostName();
+                host = inetadr.getHostName();
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
             return host;
         }
 
-        public String getIP() {
-            String adresseIPLocale = "";
+        /**
+         * Retourne l'adresse IP de la machine
+         *
+         * @return l'adresse IP de la machine
+         */
+        private String getIP() {
+            String addressIPLocale = "";
             try {
                 InetAddress inetadr = InetAddress.getLocalHost();
                 //adresse ip de l'host
-                adresseIPLocale = (String) inetadr.getHostAddress();
+                addressIPLocale = inetadr.getHostAddress();
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
-            return adresseIPLocale;
+            return addressIPLocale;
         }
     }
 
     //------------------------------------------------------------------------
 
-    //WALLPAPER
-    public class Wallpaper extends JPanel implements ActionListener {
-
-        private int large = 55 ;
-        private int length = 100 ;
-
-        JLabel title = new JLabel("Wallpaper");
-
-        IconButton wallpaper1 = new IconButton("Images\\Wallpapers\\wallpaper1.jpg", large, length);
-        IconButton wallpaper2 = new IconButton("Images\\Wallpapers\\wallpaper2.jpg", large, length);
-        IconButton wallpaper3 = new IconButton("Images\\Wallpapers\\wallpaper3.jpg", large, length);
-        IconButton wallpaper4 = new IconButton("Images\\Wallpapers\\wallpaper4.jpg", large, length);
-
-        JPanel panelCenter = new JPanel();
-        JPanel panelNorth = new JPanel();
-
-        IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
-
-        public Wallpaper(){
-            setLayout(new BorderLayout());
-            panelCenter.setLayout(new FlowLayout(15,15,15));
-
-            wallpaper1.addActionListener(this);
-            wallpaper2.addActionListener(this);
-            wallpaper3.addActionListener(this);
-            wallpaper4.addActionListener(this);
-
-            panelCenter.add(wallpaper1);
-            panelCenter.add(wallpaper2);
-            panelCenter.add(wallpaper3);
-            panelCenter.add(wallpaper4);
-
-            title.setFont(titleFont);
-            backBtn.addActionListener(new btnBackListener());
-
-            panelNorth.add(backBtn, BorderLayout.WEST);
-            panelNorth.add(title, BorderLayout.NORTH);
-
-            add(panelNorth, BorderLayout.NORTH);
-            add(panelCenter, BorderLayout.CENTER);
-        }
-
+    /*
         public void actionPerformed(ActionEvent e){
             Object o = e.getSource();
 
@@ -214,24 +196,30 @@ public class Settings extends JPanel implements ListSelectionListener {
                 PanelEcranCenter.wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper4.jpg", 1080, 1920);
             }
         }
-    }
+
+     */
 
     //------------------------------------------------------------------------
 
-    //SETTINGS GALLERY (CHANGE BACKGROUND)
-    public class SettingsGallery extends JPanel{
+    /**
+     * Class qui fait appelle à la gallery
+     */
+    class SettingsGallery extends JPanel{
 
-        Gallery gallery = new Gallery();
+        final Gallery gallery = new Gallery();
 
-        JPanel panelNorth = new JPanel();
+        final JPanel panelNorth = new JPanel();
 
-        public JScrollPane scrollPane = new JScrollPane(gallery.panelCenter);
+        final JScrollPane scrollPane = new JScrollPane(gallery.panelCenter);
 
-        IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
+        final IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
 
-        JLabel title = new JLabel("Gallery");
+        final JLabel title = new JLabel("Gallery");
 
-        public SettingsGallery() throws IOException {
+        /**
+         * Constructeur de la card SettingsGallery
+         */
+        SettingsGallery(){
             setLayout(new BorderLayout());
 
             title.setFont(titleFont);
