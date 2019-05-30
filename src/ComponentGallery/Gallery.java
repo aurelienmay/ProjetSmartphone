@@ -86,8 +86,8 @@ public class Gallery extends JPanel {
         panelNorth.setBackground(Color.WHITE);
         panelNorth.setOpaque(true);
         JScrollPane scrollPane = new JScrollPane(panelCenter);
-        scrollPane.setBackground(Color.WHITE);
-        scrollPane.setOpaque(true);
+        //scrollPane.setBackground(Color.yellow);
+        //scrollPane.setOpaque(true);
 
         adaptPanelLength(listSelection);
 

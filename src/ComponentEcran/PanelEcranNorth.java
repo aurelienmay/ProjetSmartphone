@@ -75,7 +75,8 @@ public class PanelEcranNorth extends JPanel{
                 if (clicHeure)
                     heure.setText(t);
                 try {
-                    Thread.sleep(10);
+                    //update chaque seconde
+                    Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
             }
@@ -92,17 +93,19 @@ public class PanelEcranNorth extends JPanel{
                 if (!clicHeure)
                     heure.setText(t);
                 try {
-                    Thread.sleep(10);
+                    //update chaque seconde
+                    Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
             }
         });
         clockSS.start();
 
-        //Met à jour le signal réseau
+        //Met à jour le signal et le ssid
         Thread updateSignal = new Thread(() -> {
             Process p = null;
             boolean done = false;
+            String signal;
 
             while (true) {
                 try {
@@ -118,28 +121,34 @@ public class PanelEcranNorth extends JPanel{
                         e.printStackTrace();
                     }
 
-                    //Test pour récupérer le signal
-                    String signal;
-                    if (content.contains("Signal")) {
-                        signal = content.substring(29, 31);
-                    } else {
+                    if(content.contains("d�connect�")){
+                        ssid = "déconnecté";
                         signal = "0";
-                    }
-
-                    //Test pour récupérer le ssid
-                    if (done == false) {
-                        if (content.contains("SSID")) {
-                            ssid = content.substring(29);
-                            done = true;
+                        done = false;
+                    }else{
+                        //Test pour récupérer le signal
+                        if (content.contains("Signal")) {
+                            signal = content.substring(29, 31);
                         } else {
-                            ssid = "déconnecté";
+                            signal = "0";
+                        }
+                        //Test pour récupérer le ssid
+                        if (done == false) {
+                            if (content.contains("SSID")) {
+                                ssid = content.substring(29);
+                                done = true;
+                            } else {
+                                ssid = "déconnecté";
+                            }
                         }
                     }
                     //méthode qui modifie le logo du wifi selon le pourcentage de signal reçu
+                    System.out.println(ssid + " " + signal);
                     setSignalIcon(signal);
                     reseau.setText(ssid);
                     try {
-                        Thread.sleep(200);
+                        //timing de la boucle (plus le nombre est élévé plus l'update du ssid et du signal est lente)
+                        Thread.sleep(100);
                     } catch (InterruptedException ignored) {
                     }
                 }
@@ -186,8 +195,9 @@ public class PanelEcranNorth extends JPanel{
 
         if (!Objects.equals(signal, "")) {
             i = Integer.parseInt(signal);
-            //if (signal == "0") {
-                //wifi0.setNewLocation("Images\\Icons\\wifi0.png");
+            if (content.contains("d�connect�")) {
+                wifi0.setNewLocation("Images\\Icons\\wifi0.png");
+            }else{
                 if (i > 0) {
                     wifi0.setNewLocation("Images\\Icons\\wifi1.png");
                     if (i >= 25) {
@@ -201,7 +211,7 @@ public class PanelEcranNorth extends JPanel{
                     }
                 }
             }
-        //}
+        }
         wifi0.repaint();
     }
 
