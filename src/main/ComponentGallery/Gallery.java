@@ -1,8 +1,7 @@
-package ComponentGallery;
+package main.ComponentGallery;
 
-import ComponentIcon.IconButton;
+import main.ComponentIcon.IconButton;
 
-import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -133,7 +132,7 @@ public class Gallery extends JPanel {
             
             File source = new File(sourcePath);
             try {
-                fileDestination = "Gallery\\i" + compteur + fileType.substring(fileType.lastIndexOf("."));
+                fileDestination = "Gallery\\i" + (compteur+1) + fileType.substring(fileType.lastIndexOf("."));
             }catch (StringIndexOutOfBoundsException s){
                 System.out.println("Impossible de créer la destination du fichier.");
             }
@@ -226,7 +225,7 @@ public class Gallery extends JPanel {
                     break;
 
                 case 2 :
-                    //Test pour ne pas sortir de l'arrayList
+                    //test pour ne pas sortir de l'arrayList
                     if(i < pictures.size()-1) {
                         if(pictures.get(i).length > pictures.get(i+1).length) {
                             totalLength += pictures.get(i).length;
@@ -235,7 +234,7 @@ public class Gallery extends JPanel {
                             totalLength += pictures.get(i+1).length;
                         }
                     }else {
-                        //Test si le nombre d'image est impaire (pour prendre la plus grande image de la dernière ligne)
+                        //test si le nombre d'image est impaire (pour prendre la plus grande image de la dernière ligne)
                         if(pictures.size()%2 != 0){
                             totalLength += pictures.get(pictures.size()-1).length ;
                         }else {
@@ -246,7 +245,7 @@ public class Gallery extends JPanel {
                     break;
 
                 case 3 :
-                    //Test pour ne pas sortir de l'arrayList
+                    //test pour ne pas sortir de l'arrayList
                     if(i+1 < pictures.size()-1) {
                         if (pictures.get(i).length > pictures.get(i + 1).length) {
                             if (pictures.get(i).length > pictures.get(i + 2).length) {

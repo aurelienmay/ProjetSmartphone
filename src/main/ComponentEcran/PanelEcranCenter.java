@@ -1,15 +1,14 @@
-package ComponentEcran;
+package main.ComponentEcran;
 
-import ComponentGallery.Gallery;
-import ComponentSettings.Settings;
-import ComponentCalculatrice.Calculatrice;
-import ComponentIcon.IconButton;
+import main.ComponentGallery.Gallery;
+import main.ComponentIcon.IconPanel;
+import main.ComponentSettings.Settings;
+import main.ComponentCalculatrice.Calculatrice;
+import main.ComponentIcon.IconButton;
 import javax.swing.*;
-import ComponentIcon.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
  * Class de l'écran du smartphone

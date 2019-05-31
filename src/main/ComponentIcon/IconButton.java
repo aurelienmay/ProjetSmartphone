@@ -1,4 +1,4 @@
-package ComponentIcon;
+package main.ComponentIcon;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -132,7 +132,7 @@ public class IconButton extends JButton {
     /**
      * Méthode qui dessine l'IconButton
      *
-     * @param g
+     * @param g Graphics
      */
     public void paintComponent(Graphics g){
         try {

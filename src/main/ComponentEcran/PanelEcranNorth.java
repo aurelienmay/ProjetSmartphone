@@ -1,10 +1,8 @@
-package ComponentEcran;
+package main.ComponentEcran;
 
-import ComponentIcon.IconButton;
+import main.ComponentIcon.IconButton;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -75,8 +73,8 @@ public class PanelEcranNorth extends JPanel{
                 if (clicHeure)
                     heure.setText(t);
                 try {
-                    //update chaque seconde
-                    Thread.sleep(1000);
+                    //update chaque 1/10 de seconde
+                    Thread.sleep(100);
                 } catch (InterruptedException ignored) {
                 }
             }
@@ -93,8 +91,8 @@ public class PanelEcranNorth extends JPanel{
                 if (!clicHeure)
                     heure.setText(t);
                 try {
-                    //update chaque seconde
-                    Thread.sleep(1000);
+                    //update chaque 1/10 de seconde
+                    Thread.sleep(100);
                 } catch (InterruptedException ignored) {
                 }
             }
@@ -126,14 +124,14 @@ public class PanelEcranNorth extends JPanel{
                         signal = "0";
                         done = false;
                     }else{
-                        //Test pour récupérer le signal
+                        //test pour récupérer le signal
                         if (content.contains("Signal")) {
                             signal = content.substring(29, 31);
                         } else {
                             signal = "0";
                         }
-                        //Test pour récupérer le ssid
-                        if (done == false) {
+                        //test pour récupérer le ssid
+                        if (!done) {
                             if (content.contains("SSID")) {
                                 ssid = content.substring(29);
                                 done = true;
@@ -143,7 +141,6 @@ public class PanelEcranNorth extends JPanel{
                         }
                     }
                     //méthode qui modifie le logo du wifi selon le pourcentage de signal reçu
-                    System.out.println(ssid + " " + signal);
                     setSignalIcon(signal);
                     reseau.setText(ssid);
                     try {

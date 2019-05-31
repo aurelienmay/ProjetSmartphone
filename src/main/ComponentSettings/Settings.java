@@ -1,4 +1,4 @@
-package ComponentSettings;
+package main.ComponentSettings;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Objects;
-import ComponentEcran.PanelEcranCenter;
-import ComponentGallery.Gallery;
-import ComponentIcon.*;
+
+import main.ComponentGallery.Gallery;
+import main.ComponentIcon.IconButton;
 
 /**
  * Class Settings, application Settings

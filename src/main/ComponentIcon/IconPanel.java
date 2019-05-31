@@ -1,11 +1,10 @@
-package ComponentIcon;
+package main.ComponentIcon;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import ComponentIcon.*;
 
 /**
  * Class IconPanel
@@ -53,7 +52,7 @@ public class IconPanel extends JPanel {
     /**
      * Méthode qui dessine l'IconPanel selon la taille insérée
      *
-     * @param g
+     * @param g Graphics
      */
     public void paintComponent(Graphics g){
         try {

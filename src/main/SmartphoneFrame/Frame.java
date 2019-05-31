@@ -1,4 +1,4 @@
-package SmartphoneFrame;
+package main.SmartphoneFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import ComponentEcran.*;
-import ComponentIcon.*;
+import main.ComponentEcran.*;
+import main.ComponentIcon.IconButton;
 
 /**
  * Frame est la classe principale du smartphone

@@ -1,4 +1,4 @@
-package ComponentCalculatrice;
+package main.ComponentCalculatrice;
 
 import javax.swing.*;
 import java.awt.*;
@@ -277,7 +277,7 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             ecranChiffre.setFont(policeEcranCalcul);
 
-            //Test in case of division by 0
+            //test in case of division by 0
             if(Float.parseFloat(ecranChiffre.getText()) != 0){
                 //if the dividend != 0, make the calculation
                 calculAuto();

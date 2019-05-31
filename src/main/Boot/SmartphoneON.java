@@ -1,15 +1,14 @@
-package Main;
+package main.Boot;
 
-import SmartphoneFrame.Frame;
-import java.io.IOException;
+import main.SmartphoneFrame.Frame;
 
 /**
- * Main du smartphone
+ * main.Boot du smartphone
  * @author aurelienmay
  * @version
  */
 @SuppressWarnings("JavaDoc")
-public class SmartphoneON {
+class SmartphoneON {
 
     /**
      * @param args
