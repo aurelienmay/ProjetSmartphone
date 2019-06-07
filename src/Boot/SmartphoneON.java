@@ -1,9 +1,9 @@
-package main.Boot;
+package Boot;
 
-import main.SmartphoneFrame.Frame;
+import SmartphoneFrame.Frame;
 
 /**
- * main.Boot du smartphone
+ * Boot du smartphone
  * @author aurelienmay
  * @version
  */
@@ -14,6 +14,7 @@ class SmartphoneON {
      * @param args
      */
     public static void main(String []args){
+        System.out.println("Démarrage du SmartPhone en cours...");
         Frame frame = new Frame();
         frame.setSize(323,645);
         frame.setLocationRelativeTo(null);

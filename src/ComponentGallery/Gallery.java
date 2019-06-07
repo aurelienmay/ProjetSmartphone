@@ -1,16 +1,16 @@
-package main.ComponentGallery;
+package ComponentGallery;
 
-import main.ComponentIcon.IconButton;
+import ComponentEcran.PanelEcranCenter;
+import ComponentExceptions.wallpaperSuppressionException;
+import ComponentIcon.IconButton;
+import ComponentIcon.IconPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -27,6 +27,10 @@ public class Gallery extends JPanel {
     private int totalLength ;
     private int marge = 11 ;
     private int listSelection = 2 ;
+
+    private boolean openInGallery = false ;
+    private boolean openInSettings = false ;
+    private boolean openInContact = false ;
 
     private final ArrayList<IconButton> pictures = new ArrayList<>();
 
@@ -116,9 +120,9 @@ public class Gallery extends JPanel {
                 fc.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
                 int i=fc.showOpenDialog(null);
                 if(i==JFileChooser.APPROVE_OPTION){
-                File selectedFile = fc.getSelectedFile();
-                fileType = fc.getSelectedFile().toString();
-                sourcePath = selectedFile.getAbsolutePath();
+                    File selectedFile = fc.getSelectedFile();
+                    fileType = fc.getSelectedFile().toString();
+                    sourcePath = selectedFile.getAbsolutePath();
                 }
             }
             int compteur = pictures.size();
@@ -127,14 +131,14 @@ public class Gallery extends JPanel {
                 adaptPictureLength(large, compteur);
                 panelCenter.add(pictures.get(compteur));
             }catch (IOException io){
-                System.out.println("Impossible d'ajouter l'image à la gallerie.");
+                io.printStackTrace();
             }
-            
+
             File source = new File(sourcePath);
             try {
                 fileDestination = "Gallery\\i" + (compteur+1) + fileType.substring(fileType.lastIndexOf("."));
             }catch (StringIndexOutOfBoundsException s){
-                System.out.println("Impossible de créer la destination du fichier.");
+                s.printStackTrace();
             }
             File destination = new File(fileDestination);
             copyFile(source, destination);
@@ -325,21 +329,98 @@ public class Gallery extends JPanel {
      * Entoure l'image en rouge (image à supprimée)
      */
     class pictureListener implements ActionListener{
+
+        JDialog jd = new JDialog();
+
         public void actionPerformed(ActionEvent e){
             Object o = e.getSource();
+            IconButton ib = (IconButton) e.getSource();
 
-            for (IconButton picture : pictures) {
-                if (o == picture) {
-                    if (picture.toBeDeleted) {
-                        picture.setBorderPainted(false);
-                        picture.toBeDeleted = false;
-                    } else {
-                        picture.setBorder(BorderFactory.createLineBorder(Color.RED));
-                        picture.setBorderPainted(true);
-                        picture.toBeDeleted = true;
+            if(openInContact){
+
+            }
+
+            if (openInSettings){
+                JLabel wallpaperChanged = new JLabel("Modifié avec succès !", JLabel.CENTER);
+                wallpaperChanged.setPreferredSize(new Dimension(140,30));
+                wallpaperChanged.setForeground(Color.WHITE);
+                wallpaperChanged.setBackground(Color.BLACK);
+                wallpaperChanged.setOpaque(true);
+
+                wallpaperModifier(ib);
+                PanelEcranCenter.wallpaper.setLocation(ib.getFileLocation());
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Thread.sleep(1000);
+                            jd.dispose();
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }).start();
+                jd.add(wallpaperChanged);
+
+                    try {
+                        jd.setUndecorated(true);
+                    } catch (IllegalComponentStateException icse){
+                        icse.printStackTrace();
+                    }
+
+                jd.setLocation(700,170); // 890, 283
+                jd.setVisible(true);
+                jd.pack();
+                }
+
+            if(openInGallery) {
+                for (IconButton picture : pictures) {
+                    if (o == picture) {
+                        if (picture.toBeDeleted) {
+                            picture.setBorderPainted(false);
+                            picture.toBeDeleted = false;
+                        } else {
+                            picture.setBorder(BorderFactory.createLineBorder(Color.RED));
+                            picture.setBorderPainted(true);
+                            picture.toBeDeleted = true;
+                        }
                     }
                 }
             }
+
+        }
+    }
+
+    public void setOpenInSettings(boolean b){
+        openInSettings = b;
+    }
+
+    public void setOpenInGallery(boolean b){
+        openInGallery = b;
+    }
+
+    public void setOpenInContact(boolean b){
+        openInContact = b;
+    }
+
+    public void wallpaperModifier(IconButton selectedPicture){
+        IconPanel wallpaper = new IconPanel(selectedPicture.getFileLocation()) ;
+        serializeWallpaper(wallpaper);
+    }
+
+    public static void serializeWallpaper(IconPanel wallpaper) {
+        ObjectOutputStream oos = null ;
+
+        try{
+            final FileOutputStream fichierOut = new FileOutputStream("wallpaper.ser");
+            oos = new ObjectOutputStream(fichierOut);
+            oos.writeObject(wallpaper);
+            oos.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -351,10 +432,10 @@ public class Gallery extends JPanel {
      * @param i "numéro" de l'image
      */
     private void pictureToBeDeleted(int i){
-            if(pictures.get(i).toBeDeleted){
-                pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
-                pictures.get(i).setBorderPainted(true);
-            }
+        if(pictures.get(i).toBeDeleted){
+            pictures.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
+            pictures.get(i).setBorderPainted(true);
+        }
     }
 
     /**
@@ -365,7 +446,10 @@ public class Gallery extends JPanel {
         public void actionPerformed(ActionEvent e){
             for (IconButton picture : pictures) {
                 if (picture.toBeDeleted) {
-                    deletePictureFile(picture);
+                    try {
+                        deletePictureFile(picture);
+                    } catch (wallpaperSuppressionException e1) {
+                    }
                 }
             }
             updatePanelCenter();
@@ -374,12 +458,18 @@ public class Gallery extends JPanel {
 
     /**
      * Méthode qui supprime le fichier (l'image) dans le dossier Gallery du projet
+     * en vérifiant si celle-ci n'est pas le fond d'écran, si c'est le cas, le fichier
+     * ne se supprime pas.
      *
      * @param i "numéro" de l'image
      */
-    private void deletePictureFile(IconButton i){
+    private void deletePictureFile(IconButton i) throws wallpaperSuppressionException {
         File f = new File(i.getFileLocation());
-        f.delete();
+        if (PanelEcranCenter.wallpaper.getFileLocation().equals(i.getFileLocation())){
+            throw new wallpaperSuppressionException() ;
+        }else {
+            f.delete();
+        }
     }
 
     /**
@@ -389,7 +479,7 @@ public class Gallery extends JPanel {
      * - setPicturesDisposition
      * Méthode utilisée lors de la suppression d'une image
      */
-    private void updatePanelCenter(){
+    public void updatePanelCenter(){
         pictures.clear();
         panelCenter.removeAll();
         createGalleryPictures();
@@ -451,7 +541,7 @@ public class Gallery extends JPanel {
                 }
             }
         }catch (FileNotFoundException f){
-            System.out.println("Impossible de copier le fichier.");
+            f.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }

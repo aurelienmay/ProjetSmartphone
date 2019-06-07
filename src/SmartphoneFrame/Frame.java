@@ -1,4 +1,4 @@
-package main.SmartphoneFrame;
+package SmartphoneFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,8 +7,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import main.ComponentEcran.*;
-import main.ComponentIcon.IconButton;
+import ComponentEcran.*;
+import ComponentIcon.IconButton;
+import ComponentIcon.IconPanel;
 
 /**
  * Frame est la classe principale du smartphone
@@ -20,6 +21,8 @@ import main.ComponentIcon.IconButton;
 
     private final PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
+    JPanel panelEcran = new JPanel();
+
     /**
      * Création de la frame principale
      */
@@ -28,7 +31,6 @@ import main.ComponentIcon.IconButton;
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));
 
-            JPanel panelEcran = new JPanel();
             panelEcran.setLayout(new BorderLayout());
 
             backgroundImage();
@@ -90,26 +92,37 @@ import main.ComponentIcon.IconButton;
      * Méthode qui ajoute le fond d'écran de la frame (tour du smartphone)
      */
     private void backgroundImage(){
-            try {
-                Image backgroundImage = javax.imageio.ImageIO.read(new File("Images\\Smartphone.png"));
-                setContentPane(new JPanel(new BorderLayout()) {
-                    @Override public void paintComponent(Graphics g) {
+        try {
+            Image backgroundImage = javax.imageio.ImageIO.read(new File("Images\\Smartphone.png"));
+            setContentPane(new JPanel(new BorderLayout()) {
+                @Override public void paintComponent(Graphics g) {
                         g.drawImage(backgroundImage, 0, 0, null);
                     }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private boolean fileExistingControl(IconPanel ip){
+        File f = new File(ip.getFileLocation());
+        return f.isFile() ;
+    }
 
     /**
      * Listener du bouton home (revenir au menu)
      */
         class homeButtonListener implements ActionListener {
             public void actionPerformed(ActionEvent e){
+                if (!fileExistingControl(PanelEcranCenter.wallpaper)){
+                    PanelEcranCenter.wallpaper.setLocation("Images\\wallpaperBase.png");
+                }else {
+                    panelEcranCenter.wallpaperReader();
+                }
                 panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
             }
         }
+
 
     /**
      * Listener du bouton éteindre

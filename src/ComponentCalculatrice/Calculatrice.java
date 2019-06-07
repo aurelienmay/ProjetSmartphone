@@ -1,4 +1,4 @@
-package main.ComponentCalculatrice;
+package ComponentCalculatrice;
 
 import javax.swing.*;
 import java.awt.*;

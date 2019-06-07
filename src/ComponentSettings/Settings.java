@@ -1,4 +1,4 @@
-package main.ComponentSettings;
+package ComponentSettings;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,8 +10,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Objects;
 
-import main.ComponentGallery.Gallery;
-import main.ComponentIcon.IconButton;
+import ComponentGallery.Gallery;
+import ComponentIcon.IconButton;
 
 /**
  * Class Settings, application Settings
@@ -25,7 +25,7 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     private final JPanel panelCenter = new JPanel();
 
-    private final String[] settingsListContent = {"Informations système", "Gallery"};
+    private final String[] settingsListContent = {"Informations système", "Fond d'écran"};
 
     @SuppressWarnings("unchecked")
     private final JList settingsList = new JList(settingsListContent);
@@ -44,15 +44,18 @@ public class Settings extends JPanel implements ListSelectionListener {
         JLabel settingsName = new JLabel("Réglages");
         settingsName.setFont(mainFontTitle);
         JPanel panelNorth = new JPanel();
+        panelNorth.setBackground(Color.WHITE);
         panelNorth.add(settingsName, BorderLayout.NORTH);
 
-        //paramètre du panelCenter
+        //paramètre settingsList
         settingsList.addListSelectionListener(this);
         Font fontCharacter = new Font("Arial", Font.BOLD, 18);
         settingsList.setFont(fontCharacter);
+        //settingsList.
 
         //Ajout des panels à la "card" settings (CardLayout)
         JPanel cardSettings = new JPanel();
+        cardSettings.setBackground(Color.WHITE);
         cardSettings.add(panelNorth, BorderLayout.NORTH);
         cardSettings.add(settingsList, BorderLayout.CENTER);
 
@@ -60,8 +63,6 @@ public class Settings extends JPanel implements ListSelectionListener {
         panelCenter.add(cardSettings, "settings");
         Informations cardInformations = new Informations();
         panelCenter.add(cardInformations, "informations");
-        JPanel cardGallery = new SettingsGallery();
-        panelCenter.add(cardGallery, "gallery");
 
         add(panelCenter, BorderLayout.CENTER);
     }
@@ -76,7 +77,9 @@ public class Settings extends JPanel implements ListSelectionListener {
         if(Objects.equals(t, "Informations système")){
             cardManager.show(panelCenter, "informations");
         }
-        if(Objects.equals(t, "Gallery")){
+        if(Objects.equals(t, "Fond d'écran")){
+            SettingsGallery cardGallery = new SettingsGallery();
+            panelCenter.add(cardGallery, "gallery");
             cardManager.show(panelCenter, "gallery");
         }
     }
@@ -114,7 +117,7 @@ public class Settings extends JPanel implements ListSelectionListener {
         /**
          * Constructeur du panel Informations
          */
-        Informations(){
+        public Informations(){
             setLayout(new BorderLayout());
 
             //Smartphone informations
@@ -135,8 +138,6 @@ public class Settings extends JPanel implements ListSelectionListener {
             panelNorth.add(backBtn, BorderLayout.NORTH);
             title.setFont(titleFont);
             panelNorth.add(title, BorderLayout.WEST);
-
-            System.out.println(System.getProperty("host.name"));
 
             add(panelNorth, BorderLayout.NORTH);
             add(panelCenter, BorderLayout.CENTER);
@@ -179,28 +180,6 @@ public class Settings extends JPanel implements ListSelectionListener {
 
     //------------------------------------------------------------------------
 
-    /*
-        public void actionPerformed(ActionEvent e){
-            Object o = e.getSource();
-
-            if(o == wallpaper1){
-                PanelEcranCenter.wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper1.jpg", 298, 529);
-            }
-            if(o == wallpaper2){
-                PanelEcranCenter.wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper2.jpg", 1080, 2320);
-            }
-            if(o == wallpaper3){
-                PanelEcranCenter.wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper3.jpg", 1080, 1920);
-            }
-            if(o == wallpaper4){
-                PanelEcranCenter.wallpaper.setIconPanel("Images\\Wallpapers\\wallpaper4.jpg", 1080, 1920);
-            }
-        }
-
-     */
-
-    //------------------------------------------------------------------------
-
     /**
      * Class qui fait appelle à la gallery
      */
@@ -221,6 +200,7 @@ public class Settings extends JPanel implements ListSelectionListener {
          */
         SettingsGallery(){
             setLayout(new BorderLayout());
+            gallery.setOpenInSettings(true);
 
             title.setFont(titleFont);
             backBtn.addActionListener(new btnBackListener());

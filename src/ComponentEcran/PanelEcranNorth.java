@@ -1,6 +1,6 @@
-package main.ComponentEcran;
+package ComponentEcran;
 
-import main.ComponentIcon.IconButton;
+import ComponentIcon.IconButton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;

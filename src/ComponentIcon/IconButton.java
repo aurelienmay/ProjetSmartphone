@@ -1,4 +1,4 @@
-package main.ComponentIcon;
+package ComponentIcon;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -146,6 +146,7 @@ public class IconButton extends JButton {
                 g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
             } catch (IIOException e2){
                 //en cas de suppression d'image
+                e2.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
