@@ -75,7 +75,8 @@ public class PanelEcranNorth extends JPanel{
                 try {
                     //update chaque 1/10 de seconde
                     Thread.sleep(100);
-                } catch (InterruptedException ignored) {
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
                 }
             }
         });
@@ -93,7 +94,8 @@ public class PanelEcranNorth extends JPanel{
                 try {
                     //update chaque 1/10 de seconde
                     Thread.sleep(100);
-                } catch (InterruptedException ignored) {
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
                 }
             }
         });

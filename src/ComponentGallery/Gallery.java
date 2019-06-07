@@ -16,6 +16,9 @@ import java.util.Objects;
 
 /**
  * Class Gallery, application Gallery
+ *
+ * @author aurelienmay
+ * @version 12.0
  */
 public class Gallery extends JPanel {
 
@@ -25,7 +28,7 @@ public class Gallery extends JPanel {
 
     private int large = 90 ;
     private int totalLength ;
-    private int marge = 11 ;
+    private int margin = 11 ;
     private int listSelection = 2 ;
 
     private boolean openInGallery = false ;
@@ -169,7 +172,7 @@ public class Gallery extends JPanel {
         try {
             switch (listSelection){
                 case 3 :
-                    marge = 8 ;
+                    margin = 8 ;
                     panelCenter.setLayout(new FlowLayout(15, 17, 15));
                     for (int i = 0; i < pictures.size(); i++) {
                         large = 70 ;
@@ -181,7 +184,7 @@ public class Gallery extends JPanel {
                     break;
 
                 case 2 :
-                    marge = 11 ;
+                    margin = 11 ;
                     panelCenter.setLayout(new FlowLayout(15, 25, 15));
                     for (int i = 0; i < pictures.size(); i++) {
                         large = 100 ;
@@ -193,7 +196,7 @@ public class Gallery extends JPanel {
                     break;
 
                 case 1 :
-                    marge = 15 ;
+                    margin = 15 ;
                     panelCenter.setLayout(new FlowLayout(15, 30, 15));
                     for (int i = 0; i < pictures.size(); i++) {
                         large = 220 ;
@@ -292,7 +295,7 @@ public class Gallery extends JPanel {
                     break;
             }
         }
-        totalLength += pictures.size()*marge + marge ;
+        totalLength += pictures.size()*margin + margin ;
         int panelCenterMaxLarge = 280;
         panelCenter.setPreferredSize(new Dimension(panelCenterMaxLarge, totalLength));
         panelCenter.revalidate();
@@ -331,15 +334,11 @@ public class Gallery extends JPanel {
      */
     class pictureListener implements ActionListener{
 
-        JDialog jd = new JDialog();
+        final JDialog jd = new JDialog();
 
         public void actionPerformed(ActionEvent e){
             Object o = e.getSource();
             IconButton ib = (IconButton) e.getSource();
-
-            if(openInContact){
-
-            }
 
             if (openInSettings){
                 JLabel wallpaperChanged = new JLabel("Modifié avec succès !", JLabel.CENTER);
@@ -351,15 +350,12 @@ public class Gallery extends JPanel {
                 wallpaperModifier(ib);
                 PanelEcranCenter.wallpaper.setLocation(ib.getFileLocation());
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.sleep(1000);
-                            jd.dispose();
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
+                new Thread(() -> {
+                    try{
+                        Thread.sleep(1000);
+                        jd.dispose();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
                     }
                 }).start();
                 jd.add(wallpaperChanged);
@@ -393,33 +389,59 @@ public class Gallery extends JPanel {
         }
     }
 
+    /**
+     * Méthode qui va set le boolean qui va dire dans quelle application Gallery est ouverte.
+     *
+     * @param b boolean
+     */
     public void setOpenInSettings(boolean b){
         openInSettings = b;
     }
 
+    /**
+     * Méthode qui va set le boolean qui va dire dans quelle application Gallery est ouverte.
+     *
+     * @param b boolean
+     */
     public void setOpenInGallery(boolean b){
         openInGallery = b;
     }
 
+    /**
+     * Méthode qui va set le boolean qui va dire dans quelle application Gallery est ouverte.
+     *
+     * @param b boolean
+     */
     public void setOpenInContact(boolean b){
         openInContact = b;
     }
 
-    public void wallpaperModifier(IconButton selectedPicture){
+    /**
+     * Méthode qui permet prend un IconButton en paramèetre et le "transforme" en
+     * IconPanel pour pouvoir utiliser la méthode appelée "serializeWallpaper"
+     *
+     * @param selectedPicture IconButton l'image que l'utilisateur à choisi pour
+     *                        le fond d'écran
+     */
+    private void wallpaperModifier(IconButton selectedPicture){
         IconPanel wallpaper = new IconPanel(selectedPicture.getFileLocation()) ;
         serializeWallpaper(wallpaper);
     }
 
+    /**
+     * Méthode qui va écrire dans le fichier wallpaper.ser pour enregistrer le fond d'écran
+     * pour le prochain démarrage
+     *
+     * @param wallpaper IconPanel
+     */
     public static void serializeWallpaper(IconPanel wallpaper) {
-        ObjectOutputStream oos = null ;
+        ObjectOutputStream oos;
 
         try{
             final FileOutputStream fichierOut = new FileOutputStream("wallpaper.ser");
             oos = new ObjectOutputStream(fichierOut);
             oos.writeObject(wallpaper);
             oos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -480,7 +502,7 @@ public class Gallery extends JPanel {
      * - setPicturesDisposition
      * Méthode utilisée lors de la suppression d'une image
      */
-    public void updatePanelCenter(){
+    private void updatePanelCenter(){
         pictures.clear();
         panelCenter.removeAll();
         createGalleryPictures();
@@ -541,10 +563,8 @@ public class Gallery extends JPanel {
                     }
                 }
             }
-        }catch (FileNotFoundException f){
+        } catch (IOException f){
             f.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
         }
     }
 

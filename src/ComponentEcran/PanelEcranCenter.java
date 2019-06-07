@@ -106,7 +106,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
      * choisi lors du dernier usage du smartphone
      */
     public void wallpaperReader(){
-        ObjectInputStream ois = null ;
+        ObjectInputStream ois;
 
         try {
             final FileInputStream fichierIn = new FileInputStream("wallpaper.ser");
@@ -115,11 +115,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         }catch (IIOException iio){
             iio.printStackTrace();
             Gallery.serializeWallpaper(new IconPanel("Images\\wallpaperBase.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
 

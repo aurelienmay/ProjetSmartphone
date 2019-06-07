@@ -21,7 +21,7 @@ import ComponentIcon.IconPanel;
 
     private final PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
-    JPanel panelEcran = new JPanel();
+    private final JPanel panelEcran = new JPanel();
 
     /**
      * Création de la frame principale
