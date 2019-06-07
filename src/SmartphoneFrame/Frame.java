@@ -112,25 +112,26 @@ import ComponentIcon.IconPanel;
     /**
      * Listener du bouton home (revenir au menu)
      */
-        class homeButtonListener implements ActionListener {
-            public void actionPerformed(ActionEvent e){
-                if (!fileExistingControl(PanelEcranCenter.wallpaper)){
-                    PanelEcranCenter.wallpaper.setLocation("Images\\wallpaperBase.png");
-                }else {
-                    panelEcranCenter.wallpaperReader();
-                }
-                panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
+    class homeButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e){
+            if (!fileExistingControl(PanelEcranCenter.wallpaper)){
+                PanelEcranCenter.wallpaper.setLocation("Images\\wallpaperBase.png");
+            }else {
+                panelEcranCenter.wallpaperReader();
             }
+            panelEcranCenter.updatePanel();
+            panelEcranCenter.gestionnaireCards.show(panelEcranCenter, "menu");
         }
+    }
 
 
     /**
      * Listener du bouton éteindre
      */
-        class  btnShutDownListener implements ActionListener{
-            public void actionPerformed(ActionEvent e){
-                System.exit(0);
-            }
+    class  btnShutDownListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            System.exit(0);
         }
+    }
 
     }

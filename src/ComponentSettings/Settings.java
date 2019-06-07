@@ -73,7 +73,15 @@ public class Settings extends JPanel implements ListSelectionListener {
      * @param e ListSelectionEvent
      */
     public void valueChanged(ListSelectionEvent e){
-        String t = settingsList.getSelectedValue().toString();
+        String t = "";
+
+        try{
+            t = settingsList.getSelectedValue().toString();
+        }catch (NullPointerException np){
+
+            //np.printStackTrace();
+        }
+
         if(Objects.equals(t, "Informations système")){
             cardManager.show(panelCenter, "informations");
         }
@@ -90,6 +98,7 @@ public class Settings extends JPanel implements ListSelectionListener {
      */
     class btnBackListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            settingsList.clearSelection();
             cardManager.show(panelCenter, "settings");
         }
     }

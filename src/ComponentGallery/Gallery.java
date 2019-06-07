@@ -56,7 +56,6 @@ public class Gallery extends JPanel {
         IconButton deletePictureBtn = new IconButton("Images\\Icons\\delete.png", 30, 30);
         panelWestofPanelNorth.add(deletePictureBtn);
         panelWestofPanelNorth.setPreferredSize(new Dimension(40,70));
-        //panelWestofPanelNorth.setBackground(new Color(0,0,0,0));
         panelWestofPanelNorth.setOpaque(true);
         JPanel panelNorth = new JPanel();
         panelNorth.add(panelWestofPanelNorth, BorderLayout.WEST);
@@ -78,6 +77,7 @@ public class Gallery extends JPanel {
         list.setSelectedIndex(1);
         list.addActionListener(new listListener());
         JPanel panelEastofPanelNorth = new JPanel();
+        panelEastofPanelNorth.setBackground(Color.white);
         panelEastofPanelNorth.setPreferredSize(new Dimension(40,70));
         panelEastofPanelNorth.add(list, BorderLayout.EAST);
         panelNorth.add(panelEastofPanelNorth, BorderLayout.EAST);
@@ -141,6 +141,7 @@ public class Gallery extends JPanel {
                 s.printStackTrace();
             }
             File destination = new File(fileDestination);
+            System.out.println(source + " " + destination);
             copyFile(source, destination);
 
             adaptPanelLength(listSelection);

@@ -51,14 +51,8 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         //wallpaperCreator();
         wallpaperReader();
 
-        FlowLayout flowLayout = new FlowLayout(30, 37, 30);
-        wallpaper.setLayout(flowLayout);
-        wallpaper.add(imageSettings);
-        wallpaper.add(imageCalculatrice);
-        wallpaper.add(imageGallery);
-        wallpaper.add(imageContact);
+        updatePanel();
 
-        this.add(wallpaper, "menu");
         JPanel cardCalculatrice = new Calculatrice();
         this.add(cardCalculatrice, "calculatrice");
         this.add(cardGallery, "gallery");
@@ -93,11 +87,24 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         }
     }
 
-
-    public void wallpaperCreator(){
-        Gallery.serializeWallpaper(wallpaper);
+    /**
+     * Méthode qui met à jour le panel wallpaper, elle est utilisée pour initialisé le panel
+     * mais aussi lors de changement du fond d'écran
+     */
+    public void updatePanel(){
+        FlowLayout flowLayout = new FlowLayout(30, 37, 30);
+        wallpaper.setLayout(flowLayout);
+        wallpaper.add(imageSettings);
+        wallpaper.add(imageCalculatrice);
+        wallpaper.add(imageGallery);
+        wallpaper.add(imageContact);
+        this.add(wallpaper, "menu");
     }
 
+    /**
+     * Méthode qui lit le fichier wallpaper.ser pour mettre le fond d'écran
+     * choisi lors du dernier usage du smartphone
+     */
     public void wallpaperReader(){
         ObjectInputStream ois = null ;
 
