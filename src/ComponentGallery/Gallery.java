@@ -548,12 +548,9 @@ public class Gallery extends JPanel {
      * @param source source du fichier
      * @param destination destination du fichier
      */
-    //Méthode qui copie l'image selectionné par l'utilisateur pour la mettre dans le dossier Gallery
     private void copyFile(File source, File destination){
         try {
-            // Declaration et ouverture des flux
-
-            try (java.io.FileInputStream sourceFile = new java.io.FileInputStream(source)) {
+            try (FileInputStream sourceFile = new FileInputStream(source)) {
                 try (FileOutputStream destinationFile = new FileOutputStream(destination)) {
                     // Lecture par segment de 0.5Mo
                     byte[] buffer = new byte[512 * 1024];

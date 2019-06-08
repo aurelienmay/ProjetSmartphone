@@ -19,7 +19,7 @@ public class Calculatrice extends JPanel {
     private final Font policeEcranCalcul = new Font("Arial", Font.BOLD, 50);
     private final Font policeCaracter = new Font("Arial", Font.BOLD, 17);
 
-    private Float nombre;
+    private double nombre;
     private String operateur;
     private Boolean operateurOnOff = false;
     private final Boolean on = true;
@@ -197,28 +197,28 @@ public class Calculatrice extends JPanel {
      * Méthode qui fait les calculs selon l'opérateur sélectionné par
      * l'utilisateur
      */
-    private void calculAuto() {
+    public void calculAuto() {
         if(operateur.equals("/")){
-            nombre = nombre/Float.parseFloat(ecranChiffre.getText());
-            setLength(nombre.toString().length());
+            nombre = nombre/Double.parseDouble(ecranChiffre.getText());
+            setLength(String.valueOf(nombre).length());
             ecranChiffre.setText(String.valueOf(nombre));
             operateur = "" ;
         }
         if(operateur.equals("*")){
-            nombre = nombre * Float.parseFloat(ecranChiffre.getText());
-            setLength(nombre.toString().length());
+            nombre = nombre * Double.parseDouble(ecranChiffre.getText());
+            setLength(String.valueOf(nombre).length());
             ecranChiffre.setText(String.valueOf(nombre));
             operateur = "" ;
         }
         if(operateur.equals("-")){
-            nombre = nombre - Float.parseFloat(ecranChiffre.getText());
-            setLength(nombre.toString().length());
+            nombre = nombre - Double.parseDouble(ecranChiffre.getText());
+            setLength(String.valueOf(nombre).length());
             ecranChiffre.setText(String.valueOf(nombre));
             operateur = "" ;
         }
         if(operateur.equals("+")){
-            nombre = nombre + Float.parseFloat(ecranChiffre.getText());
-            setLength(nombre.toString().length());
+            nombre = nombre + Double.parseDouble(ecranChiffre.getText());
+            setLength(String.valueOf(nombre).length());
             ecranChiffre.setText(String.valueOf(nombre));
             operateur = "" ;
         }
@@ -278,7 +278,7 @@ public class Calculatrice extends JPanel {
             ecranChiffre.setFont(policeEcranCalcul);
 
             //test in case of division by 0
-            if(Float.parseFloat(ecranChiffre.getText()) != 0){
+            if(Double.parseDouble(ecranChiffre.getText()) != 0){
                 //if the dividend != 0, make the calculation
                 calculAuto();
             }else{
@@ -298,7 +298,7 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
             testCalculAuto();
-            nombre = Float.parseFloat(ecranChiffre.getText());
+            nombre = Double.parseDouble(ecranChiffre.getText());
             if(nombre != 0) {
                 testCalculAuto();
             }else{
@@ -319,7 +319,7 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
             testCalculAuto();
-            nombre = Float.parseFloat(ecranChiffre.getText());
+            nombre = Double.parseDouble(ecranChiffre.getText());
             operateur = "+";
             operateurOnOff = on ;
         }
@@ -335,7 +335,7 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
             testCalculAuto();
-            nombre = Float.parseFloat(ecranChiffre.getText());
+            nombre = Double.parseDouble(ecranChiffre.getText());
             operateur = "-";
             operateurOnOff = on ;
         }
@@ -351,7 +351,7 @@ public class Calculatrice extends JPanel {
         public void actionPerformed(ActionEvent e){
             //méthode qui test lors de changement d'opérateur durant le calcul
             testCalculAuto();
-            nombre = Float.parseFloat(ecranChiffre.getText());
+            nombre = Double.parseDouble(ecranChiffre.getText());
             operateur = "*";
             operateurOnOff = on ;
         }
@@ -409,7 +409,7 @@ public class Calculatrice extends JPanel {
     class PlusMoinsListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             temp = ecranChiffre.getText() ;
-            float chiffre = Float.parseFloat(temp);
+            double chiffre = Double.parseDouble(temp);
             if(Objects.equals(temp, "0") || Objects.equals(temp, "-0")){
                 if(Objects.equals(temp, "0"))
                     ecranChiffre.setText("-0");
@@ -432,9 +432,9 @@ public class Calculatrice extends JPanel {
     class PourcentListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             //création d'un float temporaire pour garder en mémoire le chiffre précédent en cas de 100*8% (garder le 100 en mémoire)
-            float t ;
+            double t ;
             temp = ecranChiffre.getText();
-            t = Float.parseFloat(temp);
+            t = Double.parseDouble(temp);
             t /= 100 ;
             ecranChiffre.setText(String.valueOf(t));
         }
@@ -462,26 +462,30 @@ public class Calculatrice extends JPanel {
      */
     private void setLength(int length){
         ecranChiffre.setFont(policeEcranCalcul);
-        switch (length) {
-            case 9:
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
-                break;
-            case 10:
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
-                break;
-            case 11:
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
-                break;
-            case 12:
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
-                break;
-            case 13:
-                //noinspection DuplicateBranchesInSwitch, la taille reste la même
-                ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
-                break;
-            default:
-                ecranChiffre.setFont(policeEcranCalcul);
-                break;
+        if(length < 13) {
+            switch (length) {
+                case 9:
+                    ecranChiffre.setFont(new Font("Arial", Font.BOLD, 45));
+                    break;
+                case 10:
+                    ecranChiffre.setFont(new Font("Arial", Font.BOLD, 40));
+                    break;
+                case 11:
+                    ecranChiffre.setFont(new Font("Arial", Font.BOLD, 35));
+                    break;
+                case 12:
+                    ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
+                    break;
+                case 13:
+                    //noinspection DuplicateBranchesInSwitch, la taille reste la même
+                    ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
+                    break;
+                default:
+                    ecranChiffre.setFont(policeEcranCalcul);
+                    break;
+            }
+        }else{
+            ecranChiffre.setFont(new Font("Arial", Font.BOLD, 34));
         }
     }
 }

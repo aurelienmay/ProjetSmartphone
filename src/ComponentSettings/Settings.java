@@ -126,7 +126,7 @@ public class Settings extends JPanel implements ListSelectionListener {
         /**
          * Constructeur du panel Informations
          */
-        Informations(){
+        public Informations(){
             setLayout(new BorderLayout());
 
             //Smartphone informations
