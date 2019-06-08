@@ -139,15 +139,8 @@ public class IconButton extends JButton {
             Image i = ImageIO.read(new File(location));
             g.drawImage(i, 0, 0, this.getWidth(), this.getHeight(), this);
         } catch (IOException e) {
-            Image img;
-            try {
-                String fileLocation = "";
-                img = ImageIO.read(new File(fileLocation));
-                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-            } catch (IOException e2){
-                //en cas de suppression d'image
-                e2.printStackTrace();
-            }
+            //en cas de suppression d'image
+            e.printStackTrace();
         }
     }
 
