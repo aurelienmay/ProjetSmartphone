@@ -104,7 +104,7 @@ import ComponentIcon.IconPanel;
         }
     }
 
-    private boolean fileExistingControl(IconPanel ip){
+    public boolean fileExistingControl(IconPanel ip){
         File f = new File(ip.getFileLocation());
         return f.isFile() ;
     }
@@ -128,7 +128,7 @@ import ComponentIcon.IconPanel;
     /**
      * Listener du bouton éteindre
      */
-    class  btnShutDownListener implements ActionListener{
+    class btnShutDownListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             System.exit(0);
         }
