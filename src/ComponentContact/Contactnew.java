@@ -24,16 +24,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.io.*;
+
+/**
+ * Class Contactnew, création des nouveaux contacts
+ *
+ * @author Léonard Favre
+ * @version 11.0
+ */
+@SuppressWarnings("unused")
 public class Contactnew extends JPanel implements MouseListener{
-    int largeur = 100, hauteur=20;
-    JPanel info = new JPanel();
-    JPanel controlbuton = new JPanel();
-    JTextField nom = new JTextField("nom");
-    JTextField prenom = new JTextField("prenom");
-    JTextField numero = new JTextField("n° telephone");
-    JButton save = new JButton("save");
-    SaveListener saving = new SaveListener();
-    String defaultcontactpicture = new String("image\\inconnu.jpg");
+    private final int largeur = 100;
+    private final int hauteur=20;
+    private final JPanel info = new JPanel();
+    private final JPanel controlbuton = new JPanel();
+    private final JTextField nom = new JTextField("nom");
+    private final JTextField prenom = new JTextField("prenom");
+    private final JTextField numero = new JTextField("n° telephone");
+    final JButton save = new JButton("save");
+    private final SaveListener saving = new SaveListener();
+    private final String defaultcontactpicture = "image\\inconnu.jpg";
+
+    /**
+     * constructeur de la réception des informations pour les nouveaux contacts
+     * nom,prénom,numéro de teléphone
+     */
     Contactnew() {
 
         save.addActionListener(saving);
@@ -63,7 +77,13 @@ public class Contactnew extends JPanel implements MouseListener{
         add(info,BorderLayout.CENTER);
     }
 
-    protected boolean savecontact(){
+
+    /**
+     * méthode éffectuant la sauvegarde des informations de contact entrée et gardé en mémoire dans un fichier texte
+     * Fait appel a legitcontact
+     *
+     */
+    private void savecontact(){
         boolean test=true;
         String name= nom.getText();
         String surname= prenom.getText();
@@ -76,14 +96,13 @@ public class Contactnew extends JPanel implements MouseListener{
             valeur = buff.readLine();
             valeurint = Integer.parseInt(valeur);
             valeurint += 1;
-            System.out.println(valeurint);
             buff.close();
             PrintWriter writer = new PrintWriter(chiffre);
             valeur = String.valueOf(valeurint);
             writer.write(valeur);
             writer.close();
             String fichiercontact = "contact\\" + name + surname + valeurint + ".txt";
-            if (legitcontact(test)) {
+            if (legitcontact(true)) {
                 File file = new File(fichiercontact);
                 PrintWriter output = new PrintWriter(file);
                 output.println(name);
@@ -93,18 +112,20 @@ public class Contactnew extends JPanel implements MouseListener{
                 output.close();
             } else {
                 JOptionPane.showMessageDialog(info, "Veuilllez remplir les champs", "Inane warning", JOptionPane.WARNING_MESSAGE);
-                test = false;
             }
-        } catch (FileNotFoundException e) {
-            System.out.printf("ERROR: %s\n", e);
-        } catch (IOException e) {
-            System.out.printf("ERROR: %s\n", e);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             System.out.printf("ERROR: %s\n", e);
         }
-        return test;
+
 
     }
+
+    /**
+     * méthode vérifiant les données entrées pour l'utilisateur
+     *
+     * @param test valeur boolean true/false
+     * @return return true/false si le contact respect les entrées
+     */
     private boolean legitcontact(boolean test) {
         if(nom.getText().isBlank()|| nom.getText().contentEquals("nom")
                 ||prenom.getText().isBlank()||prenom.getText().contentEquals("prenom")
@@ -114,7 +135,15 @@ public class Contactnew extends JPanel implements MouseListener{
         return test;
     }
 
+    /**
+     * écouteur du bouton save
+     */
     class SaveListener  implements ActionListener{
+        /**
+         * méthode permettant au bouton save de lancer la sauvegarde
+         *
+         * @param e event du bouton save
+         */
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if(obj == save) {
@@ -123,11 +152,13 @@ public class Contactnew extends JPanel implements MouseListener{
         }
     }
 
+
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
+
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -135,6 +166,9 @@ public class Contactnew extends JPanel implements MouseListener{
 
     }
 
+    /**
+     * @param e évènement du click dans une zone JTextfield
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub

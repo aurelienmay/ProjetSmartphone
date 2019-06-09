@@ -39,36 +39,45 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.http.WebSocket;
 import java.util.Arrays;
+import java.util.Objects;
 
 
+/**
+ * Class Contact application contact
+ *
+ * @author Favre Léonard
+ * @version 11.0
+ */
 public class Contact extends JPanel implements ActionListener{
     private static final long serialVersionUID = 1L;
     //Usefull panel
-    JPanel boutoncontact = new JPanel();
-    JPanel panelcontrol = new JPanel();
+    private final JPanel boutoncontact = new JPanel();
+    private final JPanel panelcontrol = new JPanel();
     public final JPanel panelCenter = new JPanel();
     // Panel for the Cardlayout
-    JPanel accueil = new JPanel();
-    CardLayout cards = new CardLayout();
+    private final JPanel accueil = new JPanel();
+    private final CardLayout cards = new CardLayout();
     //String
-    String pathtoExplore= "contact\\";
-    //Int
-    private int contactsum=0;
+    private final String pathtoExplore= "contact\\";
     //Dimension
-    Dimension boutonDim = new Dimension(280,50);
+    private final Dimension boutonDim = new Dimension(280,50);
     //Button
-    JButton newContact = new JButton("new Contact");
-    JButton back = new JButton("back");
-    JButton invisible= new JButton();
+    private final JButton newContact = new JButton("new Contact");
+    private final JButton back = new JButton("back");
+    private final JButton invisible= new JButton();
     //Scrollpane
 
     // background color
-    Color emeraude = new Color(1,215,88);
+    private final Color emeraude = new Color(1,215,88);
     //Font fontbouton = new Font("Verdana",Font.BOLD,15);
     private boolean openInContact = false ;
-    Ecouteur ecouteur=new Ecouteur();
+    private final Ecouteur ecouteur=new Ecouteur();
 
+    /**
+     * Constructeur Contact
+     */
    public  Contact() {
         //new panel for the cardlayout
 
@@ -89,9 +98,10 @@ public class Contact extends JPanel implements ActionListener{
     try {
         File personne = new File(pathtoExplore);
         File[] file = personne.listFiles();
-        Arrays.sort(file);
-        contactsum = file.length;
-        JButton listebouton[] = new JButton[contactsum];
+        Arrays.sort(Objects.requireNonNull(file));
+        //Int
+        int contactsum = file.length;
+        JButton[] listebouton = new JButton[contactsum];
         for (int i = 0; i < listebouton.length; i++) {
             String name;
             String surname;
@@ -135,7 +145,18 @@ public class Contact extends JPanel implements ActionListener{
 
 
 
+    /**
+     * Listener des boutons newContact et back
+     */
     class Ecouteur extends Contactnew implements ActionListener {
+
+        /**
+         * méthode permettant d'accéder au cardlayout de la création de contact
+         * et de revenir sur le cardLayout précédent tout en réactualisant les contacts
+         *
+         *
+         * @param e event du bouton
+         */
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if(obj == newContact) {
@@ -154,7 +175,7 @@ public class Contact extends JPanel implements ActionListener{
                 try {
                     File personne2 = new File(pathtoExplore);
                     File[] file2 = personne2.listFiles();
-                    Arrays.sort(file2);
+                    Arrays.sort(Objects.requireNonNull(file2));
                     int contactsum2 = file2.length;
                     updatebuttonlist(contactsum2,file2);
                 } catch (IOException e1) {
@@ -163,8 +184,16 @@ public class Contact extends JPanel implements ActionListener{
             }
         }
     }
-    public void updatebuttonlist (int contactsum2,File[] file2) throws IOException {
-        JButton listebouton2 [] = new JButton[contactsum2];
+
+    /**
+     * méthode permettant l'actualisation des contacts
+     *
+     * @param contactsum2 somme des contacts
+     * @param file2 tableau des boutons
+     * @throws IOException gère l'exception lors de la lecture des fichiers
+     */
+    private void updatebuttonlist(int contactsum2, File[] file2) throws IOException {
+        JButton[] listebouton2 = new JButton[contactsum2];
         boutoncontact.removeAll();
         for(int i=0; i<listebouton2.length;i++) {
             String name2;
@@ -195,6 +224,11 @@ public class Contact extends JPanel implements ActionListener{
         }
     }
 
+    /**
+     * méthode permettant l'accès aux informations des contacts
+     *
+     * @param e evenement des boutons de contact
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub

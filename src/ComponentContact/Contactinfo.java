@@ -15,30 +15,37 @@ import java.util.Arrays;
 
 import javax.swing.*;
 
+/**
+ * Class Contactinfo
+ *
+ * @author Favre Léonard
+ * @version 11.0
+ */
 public class Contactinfo extends JPanel implements ActionListener{
-    int largeur = 100, hauteur=20;
-    JPanel info = new JPanel();
-    JPanel controlbuton = new JPanel();
-    JPanel panelBG = new JPanel();
-    JPanel pContact = new JPanel();
-    JTextField nom = new JTextField();
-
-    String name;
-    JTextField prenom = new JTextField();
-    String surname;
-    JTextField numero = new JTextField();
-    String number;
-    JButton save = new JButton("save");
-    JButton modify = new JButton("modify");
-    JButton delete = new JButton("delete");
-    String nomfichier,nomimage;
-    String pathtoExplore= "contact\\";
-    Iconlistener ecouteurimage = new Iconlistener();
-    private final CardLayout cardManager = new CardLayout();
+    private final int largeur = 100;
+    private final int hauteur=20;
+    private final JPanel info = new JPanel();
+    private final JPanel controlbuton = new JPanel();
+    private final JTextField nom = new JTextField();
+    private String name;
+    private final JTextField prenom = new JTextField();
+    private String surname;
+    private final JTextField numero = new JTextField();
+    private String number;
+    private final JButton save = new JButton("save");
+    private final JButton modify = new JButton("modify");
+    private final JButton delete = new JButton("delete");
+    private final String nomfichier;
+    private String nomimage;
+    private String pathtoExplore= "contact\\";
     private final Font titleFont = new Font("Arial", Font.BOLD, 20);
 
+    /**
+     * Constructeur des informations de contact
+     *
+     * @param filename nom du fichier correspondant au bouton sur lequel l'utilisateur click
+     */
     Contactinfo(String filename){
-        panelBG.setLayout(cardManager);
         pathtoExplore+=filename;
         nomfichier=pathtoExplore;
 
@@ -53,12 +60,7 @@ public class Contactinfo extends JPanel implements ActionListener{
             numero.setText(number);
             nomimage= buff.readLine();
             buff.close();
-        }
-        catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -75,7 +77,6 @@ public class Contactinfo extends JPanel implements ActionListener{
         delete.addActionListener(this);
         modify.addActionListener(this);
         save.addActionListener(this);
-        icon.addActionListener(ecouteurimage);
 
         save.setVisible(false);
         controlbuton.add(delete);
@@ -97,46 +98,42 @@ public class Contactinfo extends JPanel implements ActionListener{
         info.add(prenom);
         info.add(numero);
 
-        //this.setLayout(new BorderLayout());
-        JPanel test = new JPanel();
-        JLabel lable = new JLabel("alsakdlp");
-        test.add(lable);
-        //pContact.add(info,BorderLayout.CENTER);
-        //pContact.add(controlbuton,BorderLayout.SOUTH);
+        this.setLayout(new BorderLayout());
         this.add(controlbuton,BorderLayout.SOUTH);
-        System.out.println("ici");
-        panelBG.add(info, "contactInfo");
-        panelBG.add(test, "essai");
-        cardManager.show(panelBG, "contactInfo");
+        this.add(info,BorderLayout.CENTER);
+
+
     }
 
-    protected boolean savecontactmodification() {
+    /**
+     * méthode sauvegardant les modifications apportant au contact
+     */
+    private void savecontactmodification() {
             boolean test = true;
         String name = nom.getText();
         String surname = prenom.getText();
         String number = numero.getText();
             try {
-                if (legitcontact(test)) {
+                if (legitcontact(true)) {
                     File file = new File(nomfichier);
                     PrintWriter output = new PrintWriter(file);
                     output.println(name);
                     output.println(surname);
                     output.println(number);
-                    output.println();
+                    output.println(nomimage);
                     output.close();
                 } else {
                     JOptionPane.showMessageDialog(info, "Veuilllez remplir les champs", "Inane warning", JOptionPane.WARNING_MESSAGE);
-                    test = false;
                 }
-            } catch (FileNotFoundException e) {
-                System.out.printf("ERROR: %s\n", e);
-            } catch (IOException e) {
-                System.out.printf("ERROR: %s\n", e);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IOException e) {
                 System.out.printf("ERROR: %s\n", e);
             }
-            return test;
-        }
+    }
+
+    /**
+     * @param test valeur boolean true/false
+     * @return true/false si le contact respect les entrées
+     */
         private boolean legitcontact(boolean test) {
             if(nom.getText().isBlank()|| nom.getText().contentEquals("nom")
                     ||prenom.getText().isBlank()||prenom.getText().contentEquals("prenom")
@@ -146,18 +143,13 @@ public class Contactinfo extends JPanel implements ActionListener{
             return test;
         }
 
-    class Iconlistener implements ActionListener{
-            public void actionPerformed(ActionEvent e){
 
-
-                IconButton ib = (IconButton) e.getSource();
-                System.out.println("hello");
-                ContactGallery cardGallery = new ContactGallery();
-                panelBG.add(cardGallery, "gallery");
-                cardManager.show(panelBG, "essai");
-            }
-    }
-
+    /**
+     * méthode permettant d'afficher ou de cacher les boutons
+     * et ou de permettre d'écrire dans les JTextfield
+     *
+     * @param e event des boutons modify/save/delete
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
@@ -169,7 +161,6 @@ public class Contactinfo extends JPanel implements ActionListener{
             save.setVisible(true);
             modify.setVisible(false);
             delete.setVisible(false);
-
         }
         if(obj == save) {
             savecontactmodification();
@@ -179,52 +170,10 @@ public class Contactinfo extends JPanel implements ActionListener{
             save.setVisible(false);
             modify.setVisible(true);
             delete.setVisible(true);
-
         }
         if (obj== delete) {
             File f = new File(pathtoExplore);
             f.delete();
-        }
-    }
-    /**
-     * Class qui fait appelle à la gallery
-     */
-    class ContactGallery extends JPanel{
-
-        final Gallery gallery = new Gallery();
-
-        final JPanel panelNorth = new JPanel();
-
-        final JScrollPane scrollPane = new JScrollPane(gallery.panelCenter);
-
-        final IconButton backBtn = new IconButton("Images\\Icons\\backbtn.png", 20, 20);
-
-        final JLabel title = new JLabel("Gallery");
-
-        /**
-         * Constructeur de la card ContactGallery
-         */
-        ContactGallery(){
-            setLayout(new BorderLayout());
-            gallery.setOpenInContact(true);
-
-            title.setFont(titleFont);
-            //backBtn.addActionListener(new Contactinfo.btnBackListener());
-
-            panelNorth.add(backBtn, BorderLayout.WEST);
-            panelNorth.add(title, BorderLayout.NORTH);
-
-            scrollPane.setBackground(Color.WHITE);
-            scrollPane.setOpaque(true);
-
-            add(panelNorth, BorderLayout.NORTH);
-            add(scrollPane, BorderLayout.CENTER);
-        }
-    }
-    class btnBackListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            //settingsList.clearSelection();
-            cardManager.show(panelBG, "contact");
         }
     }
 }
