@@ -33,7 +33,6 @@ public class Gallery extends JPanel {
 
     private boolean openInGallery = false ;
     private boolean openInSettings = false ;
-    private boolean openInContact = false ;
 
     private final ArrayList<IconButton> pictures = new ArrayList<>();
 
@@ -413,7 +412,7 @@ public class Gallery extends JPanel {
      * @param b boolean
      */
     public void setOpenInContact(boolean b){
-        openInContact = b;
+        boolean openInContact = b;
     }
 
     /**
@@ -472,6 +471,7 @@ public class Gallery extends JPanel {
                     try {
                         deletePictureFile(picture);
                     } catch (wallpaperSuppressionException e1) {
+                        e1.printStackTrace();
                     }
                 }
             }

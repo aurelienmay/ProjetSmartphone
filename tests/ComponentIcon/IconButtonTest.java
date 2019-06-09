@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class IconButtonTest {
 
-    IconButton ib = new IconButton("Images\\Icons\\calculator.png", 50, 100);
+    private final IconButton ib = new IconButton("Images\\Icons\\calculator.png", 50, 100);
 
     /**
      * Test si la méthode retourne bien la location du fichier

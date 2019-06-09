@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
  */
 public class FrameTest {
 
-    Frame f = new Frame();
-    IconPanel iconPanel = new IconPanel("Gallery\\i4.jpg");
+    private final Frame f = new Frame();
+    private final IconPanel iconPanel = new IconPanel("Gallery\\i4.jpg");
 
     /**
      * Méthode de test qui test si l'iconPanel (le fichier lié à celui-ci)
@@ -24,7 +24,7 @@ public class FrameTest {
      */
     @Test
     public void fileExistingControl(){
-        assertEquals(true, f.fileExistingControl(iconPanel));
+        assertTrue(f.fileExistingControl(iconPanel));
     }
 
 }

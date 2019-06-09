@@ -21,8 +21,6 @@ import ComponentIcon.IconPanel;
 
     private final PanelEcranCenter panelEcranCenter = new PanelEcranCenter();
 
-    private final JPanel panelEcran = new JPanel();
-
     /**
      * Création de la frame principale
      */
@@ -31,6 +29,7 @@ import ComponentIcon.IconPanel;
             setUndecorated(true);
             setBackground(new Color(0,0,0,0));
 
+            JPanel panelEcran = new JPanel();
             panelEcran.setLayout(new BorderLayout());
 
             backgroundImage();

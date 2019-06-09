@@ -1,9 +1,9 @@
 package ComponentEcran;
 
+import ComponentCalculatrice.Calculator;
 import ComponentGallery.Gallery;
 import ComponentIcon.IconPanel;
 import ComponentSettings.Settings;
-import ComponentCalculatrice.Calculatrice;
 import ComponentIcon.IconButton;
 
 import javax.imageio.IIOException;
@@ -53,7 +53,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
 
         updatePanel();
 
-        JPanel cardCalculatrice = new Calculatrice();
+        JPanel cardCalculatrice = new Calculator();
         this.add(cardCalculatrice, "calculatrice");
         this.add(cardGallery, "gallery");
 
