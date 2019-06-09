@@ -187,7 +187,7 @@ public class Settings extends JPanel implements ListSelectionListener {
         }
     }
 
-    //------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
     /**
      * Class qui fait appelle à la gallery
