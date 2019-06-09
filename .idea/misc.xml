@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="ComponentIcon.IconPanel large" />
+      <entry_point TYPE="field" FQNAME="ComponentIcon.IconPanel length" />
+      <entry_point TYPE="field" FQNAME="ComponentIcon.IconButton toBeDeleted" />
+    </entry_points>
+    <pattern value="ComponentIcon.IconPanel" />
+    <pattern value="ComponentIcon.IconPanel" method="setIconPanel" />
+    <pattern value="ComponentIcon.IconButton" method="getFileLocation" />
+    <pattern value="ComponentIcon.IconButton" method="getLarge" />
+    <pattern value="ComponentIcon.IconButton" method="getLength" />
+    <pattern value="ComponentIcon.IconButton" method="getToBeDeleted" />
+    <pattern value="ComponentIcon.IconButton" />
+    <pattern value="ComponentIcon.IconButton" method="IconButton" />
+    <pattern value="ComponentIcon.IconButton" method="setIconButtonSize" />
+    <pattern value="ComponentIcon.IconButton" method="setNewLocation" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
