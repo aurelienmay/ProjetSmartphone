@@ -146,6 +146,7 @@ public class Gallery extends JPanel {
             copyFile(source, destination);
 
             adaptPanelLength(listSelection);
+            updatePanelCenter();
         }
     }
 
@@ -406,15 +407,6 @@ public class Gallery extends JPanel {
     }
 
     /**
-     * Méthode qui va set le boolean qui va dire dans quelle application Gallery est ouverte.
-     *
-     * @param b boolean
-     */
-    public void setOpenInContact(boolean b){
-        boolean openInContact = b;
-    }
-
-    /**
      * Méthode qui permet prend un IconButton en paramèetre et le "transforme" en
      * IconPanel pour pouvoir utiliser la méthode appelée "serializeWallpaper"
      *
@@ -502,11 +494,13 @@ public class Gallery extends JPanel {
      * Méthode utilisée lors de la suppression d'une image
      */
     private void updatePanelCenter(){
-        pictures.clear();
         panelCenter.removeAll();
+        pictures.clear();
         createGalleryPictures();
         addPicturesToPanelCenter();
         setPicturesDisposition(listSelection);
+        panelCenter.repaint();
+        panelCenter.revalidate();
     }
 
     /**

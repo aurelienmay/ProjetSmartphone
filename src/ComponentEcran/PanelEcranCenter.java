@@ -1,6 +1,7 @@
 package ComponentEcran;
 
 import ComponentCalculatrice.Calculator;
+import ComponentContact.Contact;
 import ComponentGallery.Gallery;
 import ComponentIcon.IconPanel;
 import ComponentSettings.Settings;
@@ -34,8 +35,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
 
     private final Gallery cardGallery = new Gallery();
 
-    //Pour ajout de l'app contact (ligne 63 et 86)
-    //private final Contact cardGallery = new Contact();
+    private final Contact cardContact = new Contact();
 
     /**
      * Constructeur de l'écran du smartphone
@@ -58,8 +58,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         this.add(cardCalculatrice, "calculatrice");
         this.add(cardGallery, "gallery");
 
-        //Pour ajout de l'app contact
-        //this.add(cardContact, "contact");
+        this.add(cardContact, "contact");
     }
 
     /**
@@ -82,8 +81,6 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
             gestionnaireCards.show(this, "gallery");
         }
         if (o == imageContact) {
-            //Pour l'app contact
-            //cardContact.setOpenInContact(true);
             gestionnaireCards.show(this, "contact");
         }
     }

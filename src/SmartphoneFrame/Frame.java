@@ -48,7 +48,7 @@ import ComponentIcon.IconPanel;
             panelEast.setPreferredSize(new Dimension(12, 100));
             JPanel panelSouth = new JPanel();
             panelSouth.setOpaque(false);
-            panelSouth.setPreferredSize(new Dimension(323, 57));
+            panelSouth.setPreferredSize(new Dimension(323, 56));
 
             //Ajout du panel écran centre (application) et le panel écran nord (barre de contrôle)
             PanelEcranNorth panelEcranNorth = new PanelEcranNorth();
