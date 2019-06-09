@@ -1,5 +1,6 @@
 package ComponentEcran;
 
+import ComponentContact.Contact;
 import ComponentGallery.Gallery;
 import ComponentIcon.IconPanel;
 import ComponentSettings.Settings;
@@ -33,7 +34,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
     public static IconPanel wallpaper = new IconPanel("Gallery\\i4.jpg");
 
     private final Gallery cardGallery = new Gallery();
-
+   private final Contact cardContact = new Contact();
     //Pour ajout de l'app contact (ligne 63 et 86)
     //private final Contact cardGallery = new Contact();
 
@@ -47,7 +48,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         imageCalculatrice.addActionListener(this);
         imageSettings.addActionListener(this);
         imageGallery.addActionListener(this);
-
+        imageContact.addActionListener(this);
         //wallpaperCreator();
         wallpaperReader();
 
@@ -58,7 +59,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         this.add(cardGallery, "gallery");
 
         //Pour ajout de l'app contact
-        //this.add(cardContact, "contact");
+        this.add(cardContact, "contact");
     }
 
     /**
