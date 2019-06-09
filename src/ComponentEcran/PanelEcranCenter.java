@@ -47,6 +47,7 @@ public class PanelEcranCenter extends JPanel implements ActionListener {
         imageCalculatrice.addActionListener(this);
         imageSettings.addActionListener(this);
         imageGallery.addActionListener(this);
+        imageContact.addActionListener(this);
 
         //wallpaperCreator();
         wallpaperReader();

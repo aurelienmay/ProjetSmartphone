@@ -143,7 +143,6 @@ public class Gallery extends JPanel {
                 s.printStackTrace();
             }
             File destination = new File(fileDestination);
-            System.out.println(source + " " + destination);
             copyFile(source, destination);
 
             adaptPanelLength(listSelection);
